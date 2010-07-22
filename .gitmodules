@@ -1,0 +1,3 @@
+[submodule "assets/js/forms"]
+	path = assets/js/forms
+	url = git://github.com/malsup/form.git
