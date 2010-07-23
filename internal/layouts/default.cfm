@@ -1,7 +1,7 @@
 <cfscript>
-    if (this.config.environment EQ "DEVELOPMENT") {
+    if (this.config.stage EQ "DEVELOPMENT") {
         if (isDefined("rc.designId")){
-            pageHeader = designId;
+            pageHeader = rc.designId;
         } else {
             pageHeader = this.config.name;
         }
@@ -14,10 +14,10 @@
     }
     else
     {
-        if (isDefined("variables.pageTitle")){
+        if (isDefined("rc.title")){
            pageTitle = this.config.short_name & " - " & rc.title;
         } else {
-            pageTitle = this.config.name;
+            pageTitle = this.config.short_name;
         }
         pageHeader = pageTitle;
     }
@@ -47,19 +47,29 @@
 <body>
 <div id="wrapper">
     <div id="header">
-		<h1><cfoutput>#pageTitle#</cfoutput></h1>
-        <p><cfoutput>Logged in as Eric Hayes (EHayes)</cfoutput></p>
-		<p><a href=".">Home</a> | <a href="searchCriteria.cfm">Search</a> | <a href="about.cfm">About</a></p>
+        <cfoutput>
+		<h1>#pageTitle#</h1>
+        <p>Logged in as Eric Hayes (EHayes)</p>
+		<p><a href="#buildURL('admin:')#">Home</a> | <a href="#buildURL('search:')#">Search</a> | <a href="#buildURL('admin:main.about')#">About</a></p>
+        </cfoutput>
 	</div>
-    
+    <cfif StructKeyExists(rc,"notice")>
+    <div class="<cfoutput>#rc.notice.type#</cfoutput>"><image src="<cfoutput>assets/img/#rc.notice.type#.png</cfoutput>" height="15" />&nbsp;<cfoutput>#rc.notice.message#</cfoutput></div>
+    </cfif>
     <cfoutput>#body#</cfoutput>
 
     <div id="footer">
     <p>
-    <i>&copy;<cfoutput>#dateFormat(now(),"YYYY")#</cfoutput> Department of Pesticide Regulation.  
-    <cfif this.config.debug EQ True>Page generated in <cfoutput>#DateDiff("s", GetPageContext().GetFusionContext().GetStartTime(), Now())#</cfoutput> seconds.  </cfif>
-    Problems?  <a href="http://csd" target="_blank">Submit a Track-It ticket</a> 
-    or <a href="mailto:<cfoutput>#this.config.steward_email#</cfoutput>">Contact the Data Steward</a>.</i></p>
+        <i>
+            <!--- Format the footer in a friendly way --->
+            &copy;<cfoutput>#dateFormat(now(),"YYYY")#</cfoutput> Department of Pesticide Regulation.  
+            <cfif this.config.debug EQ True>
+                Page generated in <cfoutput>#DateDiff("s", GetPageContext().GetFusionContext().GetStartTime(), Now())#</cfoutput> seconds.  
+            </cfif>
+            Problems?  <a href="http://csd" target="_blank">Submit a Track-It ticket</a> 
+            or <a href="mailto:<cfoutput>#this.config.steward_email#</cfoutput>">Contact the Data Steward</a>.
+        </i>
+    </p>
     </div>
 </div>
 

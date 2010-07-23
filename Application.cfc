@@ -1,9 +1,6 @@
 component extends="framework" {
-    // location of config file
-	this.configFile = "#GetDirectoryFromPath(GetCurrentTemplatePath())#config.ini";
-	
-	// load environment settings
-	this.config = new Config(this.configFile).getSettings();
+	// load environment configuration settings
+	this.config = new Config(ExpandPath("./config.ini")).getSettings();
     
     // set the application information
     this.sessionManagement = true;
@@ -17,28 +14,16 @@ component extends="framework" {
 		cfclocation="./model",
 		eventhandling="true",
 		eventhandler="model.eventHandler",
-		logsql="true"
+		logsql="false"
 	};
-    
-    // the environment will determine the layout subsystem
-    switch(UCase(this.config.environment)){
-        case "STAGING":
-        case "PRODUCTION":
-            layoutSubsystem="external";
-            break;
-        case "DEVELOPMENT":
-        case "TESTING":
-        default:
-            layoutSubsystem="internal";
-    }
     
     // Setup the application
 	variables.framework = {
         usingSubsystems = true,
         defaultSubsystem = 'admin',
-        defaultItem = 'main.default',
-        siteWideLayoutSubsystem = layoutSubsystem,
-		reloadApplicationOnEveryRequest = true
+        defaultItem = 'index',
+        siteWideLayoutSubsystem = this.config.environment,
+		reloadApplicationOnEveryRequest = this.config.debug
 	};
     
     // if necessary, reset the application
@@ -46,7 +31,7 @@ component extends="framework" {
 		if(structKeyExists(url, "init")) {
 			setupApplication();
 			ormReload();
-			location(url="index.cfm",addToken=false);
+			location(url=".",addToken=false);
 		}	
 	}
 }

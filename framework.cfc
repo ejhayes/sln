@@ -838,7 +838,7 @@
 	<cffunction name="buildURL" access="public" output="false">
 		<cfargument name="action" type="string" />
 		<cfargument name="path" type="string" default="#variables.framework.baseURL#" />
-
+        
 		<cfset var initialDelim = '?' />
 
 		<cfif arguments.path eq "useCgiScriptName">
