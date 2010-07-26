@@ -31,7 +31,7 @@ component extends="framework" {
 		if(structKeyExists(url, "init")) {
 			setupApplication();
 			ormReload();
-			location(url=".",addToken=false);
+			//location(url=".",addToken=false);
 		}	
 	}
 }
