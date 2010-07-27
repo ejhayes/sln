@@ -41,6 +41,7 @@
 	<script type="text/javascript">
 	$(function() {
 		$(".multiselect").multiselect();
+        $(".datepicker").datepicker();
 	});
 	</script>
 </head>

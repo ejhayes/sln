@@ -1,7 +1,7 @@
-<h3>Enter a Special Use Number to edit (or create a <a href="<cfoutput>#buildURL('registrationApplication.view')#</cfoutput>">new one</a>)</h3>
+<h3>Enter a Special Use Number to edit (or create a <a href="<cfoutput>#buildURL('registration.app')#</cfoutput>">new one</a>)</h3>
 
-<form action="<cfoutput>#buildURL('registrationApplication.view')#</cfoutput>" method="post">
-    <input name="specialUseNumber" type="text"></input>
+<form action="<cfoutput>#buildURL('registration.app')#</cfoutput>" method="post">
+    <input name="application" type="text"></input>
     <input name="edit" type="submit" value="Edit"></input>
 </form>
 
@@ -36,7 +36,7 @@ The following applications do not currently have a special use number associated
             <td>ACTIVE</td> 
             <td>2 days ago by Eric Hayes</td> 
             <td>0</td>
-            <td><a href="<cfoutput>#buildURL('registrationApplication.view&specialUseNumber=1234')#</cfoutput>">Open</a></td>
+            <td><a href="<cfoutput>#buildURL('registration.app&specialUseNumber=1234')#</cfoutput>">Open</a></td>
         </tr> 
     </tbody> 
 </table> 
