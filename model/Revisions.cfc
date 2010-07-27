@@ -10,6 +10,11 @@ component schema="SPECUSE" table="AR_APPLICATION_REVS"
     property name="Approved" column="APPROVAL_DATE";
     property name="Label" column="LABEL_FILENAME";
     
+    // Revision Specific Counties
+    property name="Sites" type="array" fieldtype="one-to-many" fkcolumn="AR_ID" cfc="RevisionSites";
+    property name="Pests" type="array" fieldtype="one-to-many" fkcolumn="AR_ID" cfc="RevisionPests";
+    property name="Counties" type="array" fieldtype="one-to-many" fkcolumn="AR_ID" cfc="RevisionCounties";
+    
     // Auditing fields
     property name="CreatedBy" column="CREATED_USER";
     property name="Created" column="CREATED_DATE";
