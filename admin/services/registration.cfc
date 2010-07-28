@@ -1,7 +1,6 @@
 component {
 	function init() {
-		// nothing
-        return "hey!";
+        // do nothing
 	}
     
     function app() {

@@ -1,7 +1,7 @@
 /**
  * @persistent
  */
-component schema="SPECUSE" table="A_APPLICATIONS" 
+component schema="SPECUSE" table="A_APPLICATIONS"
 {
     property name="Id" fieldtype="id" generator="sequence" ormtype="int" params="{sequence='A_SEQ'}";
     property name="SpecialUseNumber" column="SPECUSE_NO" ormtype="int";
