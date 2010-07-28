@@ -9,7 +9,7 @@ component {
         var ret = StructNew();
         
         // return application details
-        if( request.context.application EQ "NEW" ){
+        if( request.context.application EQ "" ){
             ret['app'] = EntityNew('Applications');
         } else {
             app = EntityLoad('Applications', request.context.application, true);
@@ -37,5 +37,8 @@ component {
     function save() {
         // persist stuff to the database
         //return EntitySave(request.context.data.app);
+        //var app = EntityNew("Applications");
+        
+        //return app;
     }
 }
