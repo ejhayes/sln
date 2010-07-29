@@ -5,6 +5,10 @@ component {
 	}
     
     function index() {
-		//return EntityToQuery(ormExecuteQuery("from UseTypes"));
+		var ret = {};
+        ret.incomplete = ormExecuteQuery('from Applications where specuse_no is null');
+        ret.totalActiveRecords = ormExecuteQuery("select count(*) from Applications where s_code = 'A'")[1];
+        
+        return ret;
     }
 }
