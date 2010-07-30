@@ -6,9 +6,8 @@ component {
     
     function index() {
 		var ret = {};
-        ret.incomplete = ormExecuteQuery('from Applications where specuse_no is null');
+        ret.incomplete = ormExecuteQuery('from Applications where specuse_no is null order by updated_date desc');
         ret.totalActiveRecords = ormExecuteQuery("select count(*) from Applications where s_code = 'A'")[1];
-        
         return ret;
     }
 }

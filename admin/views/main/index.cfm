@@ -1,3 +1,5 @@
+<cfset helper = new assets.cfc.helpers() />
+
 <h3>Enter a Special Use Number to edit (or create a <a href="<cfoutput>#buildURL('registration.app')#</cfoutput>">new one</a>)</h3>
 
 <form action="<cfoutput>#buildURL('registration.app')#</cfoutput>" method="post">
@@ -38,8 +40,8 @@ The following applications do not currently have a special use number associated
             <td>#DateFormat(i.getIssued(),"m/d/yy")#</td> 
             <td>#DateFormat(i.getExpired(),"m/d/yy")#</td> 
             <td>#i.getStatus().getDescription()#</td> 
-            <td>#i.getUpdated()# by #i.getUpdatedBy()#</td> 
-            <td>0</td>
+            <td>#helper.relativeDate(i.getUpdated())# by #REReplaceNoCase(i.getUpdatedBy(),"DPRNTDOM\\","")#</td> 
+            <td>#ArrayLen(i.getRevisions())#</td>
             <td><a href="<cfoutput>#buildURL(action='registration.app&id=' & i.getId())#</cfoutput>">Open</a></td>
         </tr> 
         </cfoutput>

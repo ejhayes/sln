@@ -1,6 +1,6 @@
-component extends="framework" {
+component extends="assets.cfc.framework" {
 	// load environment configuration settings
-	this.config = new Config(ExpandPath("./config.ini")).getSettings();
+	this.config = new assets.cfc.Config(ExpandPath("./config.ini")).getSettings();
     
     // set the application information
     this.sessionManagement = true;
@@ -39,6 +39,6 @@ component extends="framework" {
             
             // now reload the orm
 			ormReload();
-		}	
+		}
 	}
 }
