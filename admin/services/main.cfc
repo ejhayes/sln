@@ -10,4 +10,9 @@ component {
         ret.totalActiveRecords = ormExecuteQuery("select count(*) from Applications where s_code = 'A'")[1];
         return ret;
     }
+    
+    remote function lookup(string q="") {
+        if( q == "" ) return EntityToQuery(EntityLoad("Counties"));
+        return EntityToQuery(ormExecuteQuery("from Counties where description like '%" & arguments.q & "%'"));
+    }
 }
