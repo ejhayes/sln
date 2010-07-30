@@ -40,4 +40,9 @@ component {
     function startRev(any rc){
     
     }
+    
+    function endRev(any rc){
+        rc.title="Details: SLN CA-56012-1";
+        rc.designId="I-3-0";
+    }
 }
