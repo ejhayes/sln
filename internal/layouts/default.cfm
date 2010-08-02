@@ -36,11 +36,15 @@
 	<link rel="stylesheet"  href="assets/css/ui.multiselect.css" type="text/css" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="assets/js/ui.multiselect.js"></script>
+	<script type="text/javascript" src="assets/js/tmpl/jquery.tmpl.1.1.1.js"></script> 
+	<script type="text/javascript" src="assets/js/blockUI/jquery.blockUI.js"></script> 
+    <script type="text/javascript" src="assets/js/ui.multiselect.js"></script>
     </cfoutput>
 	<script type="text/javascript">
 	$(function() {
-		$(".multiselect").multiselect();
+		//$(".multiselect").multiselect({remoteUrl:"index.cfm?action=admin:main.lookup", remoteParams: {src:'Sites'}});
+        $('.multiselect').each(function() { $(this).multiselect({remoteUrl:"index.cfm?action=admin:main.lookup", remoteParams: {src:$(this).attr('data-src')}}); })
+        
         $(".datepicker").datepicker();
 	});
 	</script>
