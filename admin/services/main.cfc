@@ -11,7 +11,7 @@ component {
         return ret;
     }
     
-    remote function lookup(string src="", string q="") {
+    function lookup(string src="", string q="") {
         // do the prep work
         if( arguments.src == "" ) return ""; // no need to do more work
         arguments.q = UCase(arguments.q); // capitalize for a case insensitive search
@@ -31,5 +31,10 @@ component {
         catch(Exception e){
             return "";
         }
+    }
+    
+    function autocomplete(string src="", string term="") {
+        // this is pretty much the lookup function with a different function signature
+        return lookup(src=arguments.src,q=arguments.term);
     }
 }

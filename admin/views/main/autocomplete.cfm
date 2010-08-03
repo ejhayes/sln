@@ -1,0 +1,1 @@
+<cfset request.layout="no" /><cfcontent reset="yes" type="text/plain" />[<cfif !IsSimpleValue(rc.data) ><cfoutput query="rc.data">{"id":"#CODE#","label":"#DESCRIPTION#","value":"#DESCRIPTION#"}<cfif rc.data.CurrentRow NEQ rc.data.RecordCount>,</cfif></cfoutput></cfif>]

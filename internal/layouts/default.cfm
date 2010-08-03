@@ -42,8 +42,31 @@
     </cfoutput>
 	<script type="text/javascript">
 	$(function() {
-		//$(".multiselect").multiselect({remoteUrl:"index.cfm?action=admin:main.lookup", remoteParams: {src:'Sites'}});
         $('.multiselect').each(function() { $(this).multiselect({remoteUrl:"index.cfm?action=admin:main.lookup", remoteParams: {src:$(this).attr('data-src')}}); })
+        
+        $(".autocomplete").each(function() {
+            $(this).autocomplete({
+                source: "index.cfm?action=admin:main.autocomplete&src=" + $(this).attr("data-src"),
+                minLength: 3,
+                select: function(event, ui){
+                    var thisObj = $(this);
+                    var thisId = "#" + thisObj.attr("id");
+                    
+                    //console.debug(thisObj);
+                    //console.debug(thisId);
+                    
+                    //remove existing value
+                    $(thisId + "-value").remove();
+                    
+                    $("<input />")
+                        .attr("type","hidden")
+                        .attr("id",thisObj.attr("id")+"-value")
+                        .attr("name", thisObj.attr("id"))
+                        .attr("value", ui.item.id)
+                        .insertAfter(this);
+                }
+            });
+        });
         
         $(".datepicker").datepicker();
 	});
