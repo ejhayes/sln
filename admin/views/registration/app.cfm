@@ -91,8 +91,8 @@
     </cfif>
     
     <!--- Let the user initiate a new revision --->
-    <form action="#buildURL('registration.addRevision')#">
-        <label><strong>Create a new revision from Tracking ID</strong>: </label><input name="trackingId" type="text" />
+    <form action="<cfoutput>#buildURL('registration.addRevision&application=' & rc.app.record.getId() )#</cfoutput>">
+        <label><strong>Create a new revision from Tracking ID</strong>: </label><input name="correspondenceCode" type="text" />
         <input type="submit" name="submit" value="Add Revision" />
     </form>
 </cfif>
