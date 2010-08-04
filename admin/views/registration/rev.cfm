@@ -4,6 +4,9 @@
 <cfoutput>Tracking ID <a href="#helper.linkTo('TrackingSystem',rc.rev.record.getCorrespondence().getCode())#" target="_blank">#rc.rev.record.getCorrespondence().getCode()#</a> #rc.rev.record.getCorrespondence().getFirmName()#</cfoutput>
 
 <form action="#buildURL('registration.saveRev')#">
+    <!--- Hold the ID of the current application revision record --->
+    <input name="id" type="hidden" value="<cfoutput>#rc.rev.record.getId()#</cfoutput>" />
+
     <table>
     <tr>
         <td><label>Special Use Subtype: </label></td>   

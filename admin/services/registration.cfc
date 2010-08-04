@@ -112,18 +112,82 @@ component {
             if( arguments.specialUseNumber == "" ) ret.app.setSpecialUseNumber(JavaCast("null",""));
             else ret.app.setSpecialUseNumber(arguments.specialUseNumber);
             ret.app.setRegistrationType(local.registrationType);
-            ret.app.setIssued(arguments.issued);
-            ret.app.setExpired(arguments.expired);
-            ret.app.setInternalComments(arguments.internalComments);
-            ret.app.setPublicComments(arguments.publicComments);
+            
+            // issued
+            if( arguments.issued == "" ) ret.app.setIssued(JavaCast("null",""));
+            else ret.app.setIssued(arguments.issued);
+            
+            // expired
+            if( arguments.expired == "" ) ret.app.setExpired(JavaCast("null",""));
+            else ret.app.setExpired(arguments.expired);
+            
+            //internal comments
+            if( arguments.internalComments == "" ) ret.app.setInternalComments(JavaCast("null",""));
+            else ret.app.setInternalComments(arguments.internalComments);
+            
+            //public comments
+            if( arguments.publicComments == "" ) ret.app.setPublicComments(JavaCast("null",""));
+            else ret.app.setPublicComments(arguments.publicComments);
             
             EntitySave(ret.app);
             ormFlush(); // if there is an error, it will be reported asap
         }
         catch(java.lang.Exception e) {
             // my name is grace and i'm ful
-            // incase hibernate has any issues persisting to the db
-            ret.error = e;
+            // incase hibernate has any issues persisting to the db do nothing
+            ret.error = {message=e};
+        }
+        
+        return ret;
+    }
+    
+    function saveRevision(string id, string registrationSubtype, string approved, string product, string label, array pests, array counties){
+        // save the revision
+        local.ret = {};
+        
+        // can i get your name please?
+        if( arguments.id == "" ){
+            ret.error = {message="Revision not specified"};
+            return ret;
+        }
+        
+        // i have a large order of fries good to go
+        ret.rev = EntityLoadByPK("Revisions",arguments.id);
+        
+        // my bad, there were no fries.  have a nice day
+        if( isNull(ret.rev) ){
+            ret.error = {message="Could not find revision with id " & arguments.id};
+            return ret;
+        }
+        
+        // set it, save it, love it
+        try {
+            // registration subtype
+            if( arguments.registrationSubtype == "" ) ret.rev.setRegtistrationSubtype(JavaCast("null",""));
+            else ret.rev.setRegistrationSubtype(EntityLoadByPK("RegistrationSubtypes",arguments.registrationSubtype));
+            
+            // approval date
+            if( arguments.approved == "" ) ret.rev.setApproved(JavaCast("null",""));
+            else ret.rev.setApproved(arguments.approved);
+            
+            // pesticide product
+            if( arguments.product == "" ) ret.rev.setProduct(JavaCast("null",""));
+            else ret.rev.setProduct(EntityLoadByPK("Products",arguments.product));
+
+            // label
+            if( arguments.label == "" ) ret.rev.setLabel(JavaCast("null",""));
+            else ret.rev.setLabel(arguments.label);
+            
+            // pests
+            
+            // counties
+            EntitySave(ret.rev);
+            ormFlush(); // if there is an error, it will be reported asap
+        }
+        catch(java.lang.Exception e) {
+            // my name is grace and i'm ful
+            // incase hibernate has any issues persisting to the db do nothing
+            ret.error={message=e};
         }
         
         return ret;
