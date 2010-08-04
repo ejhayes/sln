@@ -48,7 +48,7 @@
         $(".autocomplete").each(function() {
             $(this).autocomplete({
                 source: "index.cfm?action=admin:main.autocomplete&src=" + $(this).attr("data-src"),
-                minLength: 3,
+                minLength: $(this).attr("data-minLength"),
                 select: function(event, ui){
                     var thisObj = $(this);
                     var thisId = "#" + thisObj.attr("id");

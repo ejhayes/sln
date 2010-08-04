@@ -12,6 +12,14 @@ component {
         else variables.fw.service("registration.new","app");
     }
     
+    private function loadRev(any rc){ // provides us with lookups, app persistent model, and official application revision name
+        // load rev dependencies
+        variables.fw.service("registration.revisionLookups","lookups");
+        
+        // load the revision (we will never create a stub)
+        if( structKeyExists(rc,"id") ) variables.fw.service("registration.getRevision","rev");
+    }
+    
     function startApp(any rc) {
         loadApp(rc);
     }
@@ -38,11 +46,20 @@ component {
     }
     
     function startRev(any rc){
-    
+        loadRev(rc);
     }
     
     function endRev(any rc){
-        rc.title="Details: SLN CA-56012-1";
-        rc.designId="I-3-0";
+        //rc.title="Details: SLN CA-56012-1";
+        //rc.designId="I-3-0";
+        
+        if( isNull(rc.rev) ){
+            rc.notice = {type="error", message="Record " & rc.specialUseNumber & " does not exist"};
+            variables.fw.redirect("","notice");
+        }
+    
+        // set the page title
+        rc.title = "Edit Revision: " & rc.rev.name;
+        
     }
 }

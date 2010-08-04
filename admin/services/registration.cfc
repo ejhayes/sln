@@ -12,6 +12,14 @@ component {
         return ret;
     }
     
+    function revisionLookups(){
+        // returns lookups needed by application revisions
+        ret = {};
+        ret['registrationSubtypes'] = EntityToQuery(EntityLoad("RegistrationSubtypes"));
+        
+        return ret;
+    }
+    
     function new(){
         // return a new skeleton app
         var ret = {};
@@ -22,6 +30,27 @@ component {
         ret.record.setStatus(EntityLoadByPK("Statuses","P"));
         ret.record.setRegistrationType(EntityLoadByPK("RegistrationTypes","B0"));
 
+        return ret;
+    }
+    
+    function addRevision(string correspondenceCode="", string application=""){
+        // create a new revision for the current application
+        var ret = {};
+        var app = EntityLoadByPK("Applications",arguments.application);
+        ret.rev = EntityNew("Revisions");
+        
+        // set the correspondence on the new revision object
+        ret.rev.setCorrespondence(EntityLoadByPK("Correspondences",arguments.correspondenceCode));
+        
+        try {
+            // save the revision (done implicitly)
+            app.addRevisions(rev);
+        }
+        catch(java.lang.Exception e){
+            // incase hibernate throws any errors at us
+            ret.error = e;
+        }
+        
         return ret;
     }
     
@@ -37,6 +66,32 @@ component {
         
         if( ret.record.getSpecialUseNumber() == "" ) ret.name = "UNKNOWN";
         else ret.name = "CA-" & ret.record.getSpecialUseNumber();
+        
+        return ret;
+    }
+    
+    function getRevision(string id, string correspondenceCode){
+        // retrieves  and application revision
+        var ret = {};
+        
+        if( StructKeyExists(arguments,"id") && isNumeric(arguments.id) ) ret.record = EntityLoadByPK("Revisions", arguments.id);
+        else if( StructKeyExists(arguments,"correspondenceCode") && isNumeric(arguments.correspondenceCode) ){
+            // setup a skeleton object that meets the criteria we desire
+            local.cor = EntityNew("Correspondence");
+            local.cor.setCode(arguments.correspondenceCode);
+            local.rev = EntityNew("Revisions");
+            local.rev.setCorrespondence(local.cor);
+            
+            // and load it  by "Example" (true so we don't get an array returned!)
+            ret.record = EntityLoadByExample(local.rev, true);
+        }
+        else return;
+        
+        // if we get nothing, return nothing
+        if( isNull(ret.record) ) return;
+        
+        if( ret.record.getCorrespondence().getCode() == "" ) ret.name = "UNKNOWN";
+        else ret.name = "CA-" & ret.record.getApplication().getSpecialUseNumber() & " rev. " & ret.record.getCorrespondence().getCode();
         
         return ret;
     }
