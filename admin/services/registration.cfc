@@ -141,7 +141,39 @@ component {
         return ret;
     }
     
-    function saveRevision(string id, string registrationSubtype, string approved, string product, string label, array pests, array counties){
+    private function processDiff(array ormData, array userData){
+        // determines what needs to be added and what needs to be removed
+        // uses underlying java set class for speed and access to set
+        // operations such as intersect/disjoint!
+        var ret = {};
+        var toAdd = createObject("java", "java.util.HashSet").init(arguments.userData);
+        var currentData = ArrayNew(1);
+        
+        // alleviate casting issues between cf and underlying java
+        for( i=1; i<=ArrayLen(arguments.ormData); i++){
+            ArrayAppend(local.currentData,javaCast("string",arguments.ormData[i]));
+        }
+        
+        // use our converted data here
+        local.matching = createObject("java", "java.util.HashSet").init(local.currentData);
+        local.toRemove = createObject("java", "java.util.HashSet").init(local.currentData);
+        
+        // determine what is matching
+        matching.retainAll(arguments.userData);
+        
+        // what needs to be removed?
+        toRemove.removeAll(local.matching);
+        ret.remove = local.toRemove.toArray();
+        
+        // what needs to be added?
+        toAdd.removeAll(local.matching);
+        ret.add = local.toAdd.toArray();
+        
+        // thank you!
+        return ret;
+    }
+    
+    function saveRevision(string id, string registrationSubtype="", string approved="", string product="", string label="", string pests="", string counties=""){
         // save the revision
         local.ret = {};
         
@@ -178,9 +210,19 @@ component {
             if( arguments.label == "" ) ret.rev.setLabel(JavaCast("null",""));
             else ret.rev.setLabel(arguments.label);
             
-            // pests
-            
             // counties
+            local.countyActions = processDiff(
+                ormExecuteQuery("select County.Code from RevisionCounties where Revision.Id=?",[arguments.id]), 
+                ListToArray(arguments.counties)
+            ); // which counties need to be added or removed?
+            
+            // pests
+            local.pestActions = processDiff(
+                ormExecuteQuery("select Pest.Code from RevisionPests where Revision.Id=?",[arguments.id]), 
+                ListToArray(arguments.pests)
+            ); // which pests need to be added or removed?
+            
+            // save it all up
             EntitySave(ret.rev);
             ormFlush(); // if there is an error, it will be reported asap
         }

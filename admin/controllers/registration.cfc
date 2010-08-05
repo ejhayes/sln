@@ -45,6 +45,17 @@ component {
         }
     }
     
+    function endSaveRevision(any rc){
+        if( !isNull(rc.data.error) ){
+            rc.notice = {type="error", message=rc.data.error.message};
+            rc.id = rc.data.rev.getId();
+            variables.fw.redirect("registration.rev","notice,id");
+        } else {
+            rc.id = rc.data.rev.getId();
+            variables.fw.redirect(action="registration.rev",append="id");
+        }
+    }
+    
     function startRev(any rc){
         loadRev(rc);
     }

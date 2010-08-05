@@ -3,7 +3,7 @@
 <h3>Revision Details</h3>
 <cfoutput>Tracking ID <a href="#helper.linkTo('TrackingSystem',rc.rev.record.getCorrespondence().getCode())#" target="_blank">#rc.rev.record.getCorrespondence().getCode()#</a> #rc.rev.record.getCorrespondence().getFirmName()#</cfoutput>
 
-<form action="#buildURL('registration.saveRev')#">
+<form action="<cfoutput>#buildURL('registration.saveRevision')#</cfoutput>" method="post">
     <!--- Hold the ID of the current application revision record --->
     <input name="id" type="hidden" value="<cfoutput>#rc.rev.record.getId()#</cfoutput>" />
 
@@ -22,7 +22,7 @@
     </tr>
     <tr>
         <td><label>Product OR Registration Number: </label></td>
-        <td><cfoutput><input style="width:500px;" id="Product" class="autocomplete" data-src="Products" data-minLength="6" value="#rc.rev.record.getProduct().getDescription()#"></cfoutput></td>
+        <td><cfoutput><input style="width:500px;" id="Product" class="autocomplete" data-src="Products" data-minLength="6" data-value="<cfif !isNull(rc.rev.record.getProduct())>#rc.rev.record.getProduct().getCode()#</cfif>" value="<cfif !isNull(rc.rev.record.getProduct())>#rc.rev.record.getProduct().getDescription()#</cfif>"></cfoutput></td>
     </tr>
     <tr>
         <td><label>Label PDF <cfif !isNull(rc.rev.record.getLabel())><cfoutput>(<a href="#rc.rev.record.getLabel()#" target="_blank">view</a>)</cfoutput></cfif>: </label></td>
@@ -52,6 +52,7 @@
     </p>
 
     <input type="button" name="next" value="Save and Continue" onclick="javascript:window.location='editSites.cfm?revisionId=3&mode=add'"/>
-    <input type="button" name="saveClose" value="Save" onclick="javascript:window.location='?revisionId=3'"/>
+    <input type="button" name="saveClose" value="Save1" onclick="javascript:window.location='?revisionId=3'"/>
     <input type="button" name="cancel" value="Close Revision" onclick="javascript:window.location='editApplication.cfm?specialUseNumber=1234'"/>
+    <input type="submit" name="Save" value="Save" />
 </form>

@@ -46,27 +46,30 @@
         $('.multiselect').each(function() { $(this).multiselect({remoteUrl:"index.cfm?action=admin:main.lookup", remoteParams: {src:$(this).attr('data-src')}}); })
         
         $(".autocomplete").each(function() {
-            $(this).autocomplete({
+			
+			$(this).autocomplete({
                 source: "index.cfm?action=admin:main.autocomplete&src=" + $(this).attr("data-src"),
                 minLength: $(this).attr("data-minLength"),
-                select: function(event, ui){
+                change: function(event, ui){
                     var thisObj = $(this);
                     var thisId = "#" + thisObj.attr("id");
+                    var updateTo = "";
+                    if(ui.item!=null) updateTo = ui.item.id;
                     
                     //console.debug(thisObj);
                     //console.debug(thisId);
                     
-                    //remove existing value
-                    $(thisId + "-value").remove();
-                    
-                    $("<input />")
-                        .attr("type","hidden")
-                        .attr("id",thisObj.attr("id")+"-value")
-                        .attr("name", thisObj.attr("id"))
-                        .attr("value", ui.item.id)
-                        .insertAfter(this);
+                    //update the existing value
+                    $(thisId + "-value").attr("value",updateTo);
                 }
             });
+            
+            $("<input />")
+                .attr("type","hidden")
+                .attr("id",$(this).attr("id")+"-value")
+                .attr("name", $(this).attr("id"))
+                .attr("value", $(this).attr("data-value"))
+                .insertAfter(this);
         });
         
         $(".datepicker").datepicker();
