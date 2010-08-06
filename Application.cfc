@@ -24,7 +24,9 @@ component extends="assets.cfc.framework" {
         defaultSubsystem = 'admin',
         defaultItem = 'index',
         siteWideLayoutSubsystem = this.config.environment,
-		reloadApplicationOnEveryRequest = this.config.debug
+		reloadApplicationOnEveryRequest = this.config.debug,
+        maxNumContextsPreserved=2,
+        preserveKeyURLKey='p'
 	};
     
     // if necessary, reset the application

@@ -35,24 +35,42 @@ component {
     }
     
     function endSave(any rc){
+        // was there an error?
         if( !isNull(rc.data.error) ){
             rc.notice = {type="error", message=rc.data.error.message};
-            rc.id = rc.data.app.getId();
-            variables.fw.redirect("registration.app","notice,id");
         } else {
-            rc.id = rc.data.app.getId();
-            variables.fw.redirect(action="registration.app",append="id");
+            rc.notice = {type="success", message="Record saved"};
         }
+
+        // oki doki, to the page!
+        rc.id = rc.data.app.getId();
+        variables.fw.redirect("registration.app","notice","id");
     }
     
     function endSaveRevision(any rc){
+        // was there an error?
         if( !isNull(rc.data.error) ){
             rc.notice = {type="error", message=rc.data.error.message};
-            rc.id = rc.data.rev.getId();
-            variables.fw.redirect("registration.rev","notice,id");
         } else {
+            rc.notice = {type="success", message="Record saved"};
+        }
+
+        // oki doki, to the page!
+        rc.id = rc.data.rev.getId();
+        variables.fw.redirect("registration.rev","notice","id");
+    }
+    
+    function endAddRevision(any rc){
+        // was there an error?
+        if( !isNull(rc.data.error) ){
+            rc.notice = {type="error", message=rc.data.error.message};
+            rc.id = rc.application; // the application id that was in scope when we tried to add this
+            variables.fw.redirect("registration.app","notice","id");
+        } else {
+            // oki doki, to the page!
+            rc.notice = {type="success", message="Revision created."};
             rc.id = rc.data.rev.getId();
-            variables.fw.redirect(action="registration.rev",append="id");
+            variables.fw.redirect("registration.rev","notice","id");
         }
     }
     

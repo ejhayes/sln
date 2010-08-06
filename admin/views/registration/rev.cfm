@@ -12,7 +12,8 @@
         <td><label>Special Use Subtype: </label></td>   
         <td>
             <select name="registrationSubtype">
-                <cfoutput query="rc.lookups.registrationSubtypes"><option value="#CODE#" <cfif rc.rev.record.getRegistrationSubtype().getCode() EQ CODE >selected="selected"</cfif> >#DESCRIPTION#</option></cfoutput>
+                    <option value=""></option>
+                    <cfoutput query="rc.lookups.registrationSubtypes"><option value="#CODE#" <cfif !isNull(rc.rev.record.getRegistrationSubtype())><cfif rc.rev.record.getRegistrationSubtype().getCode() EQ CODE >selected="selected"</cfif></cfif> >#DESCRIPTION#</option></cfoutput>
             </select>
         </td>
     </tr>
@@ -51,8 +52,8 @@
     </select>
     </p>
 
-    <input type="button" name="next" value="Save and Continue" onclick="javascript:window.location='editSites.cfm?revisionId=3&mode=add'"/>
-    <input type="button" name="saveClose" value="Save1" onclick="javascript:window.location='?revisionId=3'"/>
-    <input type="button" name="cancel" value="Close Revision" onclick="javascript:window.location='editApplication.cfm?specialUseNumber=1234'"/>
     <input type="submit" name="Save" value="Save" />
+    <input type="button" name="Continue" value="Save and Continue"/>
+    <input type="button" name="Close" value="Close Revision" onclick="javascript:window.location='<cfoutput>#buildURL('registration.app&id=' & rc.rev.record.getApplication().getId())#</cfoutput>'"/>
+    
 </form>

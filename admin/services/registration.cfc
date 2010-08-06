@@ -36,19 +36,21 @@ component {
     function addRevision(string correspondenceCode="", string application=""){
         // create a new revision for the current application
         var ret = {};
-        var app = EntityLoadByPK("Applications",arguments.application);
-        ret.rev = EntityNew("Revisions");
-        
-        // set the correspondence on the new revision object
-        ret.rev.setCorrespondence(EntityLoadByPK("Correspondences",arguments.correspondenceCode));
         
         try {
-            // save the revision (done implicitly)
-            app.addRevisions(rev);
+            ret.rev = EntityNew("Revisions");
+        
+            // setup the correspondence and parent application on the new revision object
+            ret.rev.setCorrespondence(EntityLoadByPK("Correspondences",arguments.correspondenceCode));
+            ret.rev.setApplication(EntityLoadByPK("Applications",arguments.application));
+            
+            // save the revision
+            EntitySave(ret.rev);
+            ormFlush(); // if there is an error, it will be reported asap
         }
         catch(java.lang.Exception e){
             // incase hibernate throws any errors at us
-            ret.error = e;
+            ret.error = {message=e};
         }
         
         return ret;

@@ -4,31 +4,40 @@
 <cfdump var="#rc.data#" />
 </cfif>
 <h3>Details</h3>
-<cfform action="#buildURL('registration.save')#">
+<form action="#buildURL('registration.save')#" method="post">
     <!--- Hold the ID of the current application record --->
-    <cfinput name="id" type="hidden" value="#rc.app.record.getId()#" />
+    <input name="id" type="hidden" value="#rc.app.record.getId()#" />
     
     <!--- Display Primary Application Details --->
     <table>
         <tr>
             <td><label>Status: </label></td>
-            <td><cfselect name="status" query="rc.lookups.statuses" value="code" display="description" selected="#rc.app.record.getStatus().getCode()#" /></td>
+            <td>
+                <select name="status">
+                        <cfoutput query="rc.lookups.statuses"><option value="#CODE#" <cfif rc.app.record.getStatus().getCode() EQ CODE >selected="selected"</cfif> >#DESCRIPTION#</option></cfoutput>
+                </select>
+            </td>
+            
         </tr>
         <tr>
             <td><label>Special Use Number: </label></td>
-            <td><cfinput name="specialUseNumber" type="text" value="#rc.app.record.getSpecialUseNumber()#" /></td>
+            <td><input name="specialUseNumber" type="text" value="<cfoutput>#rc.app.record.getSpecialUseNumber()#</cfoutput>" /></td>
         </tr>
         <tr>
             <td><label>Special Use Type: </label></td>
-            <td><cfselect name="registrationType" query="rc.lookups.registrationTypes" value="code" display="description" selected="#rc.app.record.getRegistrationType().getCode()#" /></td>
+            <td>
+                <select name="registrationType">
+                    <cfoutput query="rc.lookups.registrationTypes"><option value="#CODE#" <cfif rc.app.record.getRegistrationType().getCode() EQ CODE >selected="selected"</cfif> >#DESCRIPTION#</option></cfoutput>
+                </select>
+            </td>
         </tr>
         <tr>
             <td><label>Issue Date: </label></td>
-            <td><cfinput class="datepicker" name="issued" type="text" value="#DateFormat(rc.app.record.getIssued(),'mm/dd/yyyy')#" /></td>
+            <td><input class="datepicker" name="issued" type="text" value="<cfoutput>#DateFormat(rc.app.record.getIssued(),'mm/dd/yyyy')#</cfoutput>" /></td>
         </tr>
         <tr>
             <td><label>Expiration Date: </label></td>
-            <td><cfinput class="datepicker" name="expired" type="text" value="#DateFormat(rc.app.record.getExpired(),'mm/dd/yyyy')#" /></td>
+            <td><input class="datepicker" name="expired" type="text" value="<cfoutput>#DateFormat(rc.app.record.getExpired(),'mm/dd/yyyy')#</cfoutput>" /></td>
         </tr>
     <table>
     <br />
@@ -41,8 +50,8 @@
                 <td><h3>Public Comments</h3></td>
             </tr>
             <tr>
-                <td><cftextarea name="internalComments" style="width:98%;height:150px"><cfoutput>#rc.app.record.getInternalComments()#</cfoutput></cftextarea></td>
-                <td><cftextarea name="publicComments" style="width:98%;height:150px"><cfoutput>#rc.app.record.getPublicComments()#</cfoutput></cftextarea></td>
+                <td><textarea name="internalComments" style="width:98%;height:150px"><cfoutput>#rc.app.record.getInternalComments()#</cfoutput></textarea></td>
+                <td><textarea name="publicComments" style="width:98%;height:150px"><cfoutput>#rc.app.record.getPublicComments()#</cfoutput></textarea></td>
             </tr>
         </tbody>
     </table>
@@ -50,15 +59,15 @@
     
     <!--- Is the user creating, or updating? --->
     <cfif rc.app.record.getId() EQ "">
-        <cfinput type="submit" name="submit" value="Create Application" />
+        <input type="submit" name="submit" value="Create Application" />
     <cfelse>
-        <cfinput type="submit" name="submit" value="Update Application" />
-        <cfinput type="button" name="viewReport" value="View Report" onclick="javascript:window.location='generateReport.cfm?appId=2'"/>
+        <input type="submit" name="submit" value="Update Application" />
+        <input type="button" name="viewReport" value="View Report" onclick="javascript:window.location='<cfoutput>#buildURL('search:main.report&applications=' & rc.app.record.getId())#</cfoutput>"/>
     </cfif>
     
     <!--- Close this application --->
-    <cfinput type="button" name="cancel" value="Close" onclick="javascript:window.location='.'"/>
-</cfform>
+    <input type="button" name="cancel" value="Close" onclick="javascript:window.location='<cfoutput>#buildURL('')#</cfoutput>'"/>
+</form>
 
 <!--- For existing applications, show the revision history --->
 <cfif rc.app.record.getId() NEQ "">
@@ -93,7 +102,7 @@
     </cfif>
     
     <!--- Let the user initiate a new revision --->
-    <form action="<cfoutput>#buildURL('registration.addRevision&application=' & rc.app.record.getId() )#</cfoutput>">
+    <form action="<cfoutput>#buildURL('registration.addRevision&application=' & rc.app.record.getId() )#</cfoutput>" method="post">
         <label><strong>Create a new revision from Tracking ID</strong>: </label><input name="correspondenceCode" type="text" />
         <input type="submit" name="submit" value="Add Revision" />
     </form>
