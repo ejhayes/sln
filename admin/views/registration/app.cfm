@@ -4,9 +4,9 @@
 <cfdump var="#rc.data#" />
 </cfif>
 <h3>Details</h3>
-<form action="#buildURL('registration.save')#" method="post">
+<form action="<cfoutput>#buildURL('registration.save')#</cfoutput>" method="post">
     <!--- Hold the ID of the current application record --->
-    <input name="id" type="hidden" value="#rc.app.record.getId()#" />
+    <input name="id" type="hidden" value="<cfoutput>#rc.app.record.getId()#</cfoutput>" />
     
     <!--- Display Primary Application Details --->
     <table>
