@@ -141,7 +141,7 @@ component {
         return ret;
     }
     
-    private function processDiff(array ormData, array userData){
+    private function processDiff(any ormData, any userData){
         // determines what needs to be added and what needs to be removed
         // uses underlying java set class for speed and access to set
         // operations such as intersect/disjoint!
@@ -163,11 +163,13 @@ component {
         
         // what needs to be removed?
         toRemove.removeAll(local.matching);
-        ret.remove = local.toRemove.toArray();
+        ret["remove"] = [];
+        ret["remove"].addAll(CreateObject( "java", "java.util.Arrays" ).AsList(toRemove.toArray()));
         
         // what needs to be added?
         toAdd.removeAll(local.matching);
-        ret.add = local.toAdd.toArray();
+        ret["add"] = [];
+        ret["add"].addAll(CreateObject( "java", "java.util.Arrays" ).AsList(toAdd.toArray()));
         
         // thank you!
         return ret;
@@ -216,11 +218,53 @@ component {
                 ListToArray(arguments.counties)
             ); // which counties need to be added or removed?
             
+            // add each county and link to the rev
+            for( i=1; i<= ArrayLen(local.countyActions.add); i++ ){
+                local.revisionCounty = EntityNew("RevisionCounties");
+                local.revisionCounty.setRevision(ret.rev);
+                local.revisionCounty.setCounty(EntityLoadByPK("Counties",local.countyActions.add[i]));
+                EntitySave(local.revisionCounty);
+            }
+            
+            // remove each county and unlink from the rev
+            for( i=1; i<= ArrayLen(local.countyActions.remove); i++ ){
+                EntityDelete(
+                    EntityLoad("RevisionCounties",
+                        {
+                            Revision=ret.rev,
+                            County=EntityLoadByPK("Counties",local.countyActions.remove[i])
+                        },
+                        true
+                    )
+                );
+            }
+            
             // pests
             local.pestActions = processDiff(
                 ormExecuteQuery("select Pest.Code from RevisionPests where Revision.Id=?",[arguments.id]), 
                 ListToArray(arguments.pests)
             ); // which pests need to be added or removed?
+            
+            // add each pest and link to the rev
+            for( i=1; i<= ArrayLen(local.pestActions.add); i++ ){
+                local.revisionPest = EntityNew("RevisionPests");
+                local.revisionPest.setRevision(ret.rev);
+                local.revisionPest.setPest(EntityLoadByPK("Pests",local.pestActions.add[i]));
+                EntitySave(local.revisionPest);
+            }
+            
+            // remove each pest and unlink from the rev
+            for( i=1; i<= ArrayLen(local.pestActions.remove); i++ ){
+                EntityDelete(
+                    EntityLoad("RevisionPests",
+                        {
+                            Revision=ret.rev,
+                            Pest=EntityLoadByPK("Pests",local.pestActions.remove[i])
+                        },
+                        true
+                    )
+                );
+            }
             
             // save it all up
             EntitySave(ret.rev);

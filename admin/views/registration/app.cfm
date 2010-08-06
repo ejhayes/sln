@@ -1,3 +1,5 @@
+<cfset helper = new assets.cfc.helpers() />
+
 <cfif StructKeyExists(rc,"data")>
 <cfdump var="#rc.data#" />
 </cfif>
@@ -80,8 +82,8 @@
                 <cfloop array="#rc.app.record.getRevisions()#" index="i">
                 <tr> 
                     <td>2</td> 
-                    <td><a href="http://registration/track/reports/trackid_action.cfm?RequestTimeout=500&track_id=<cfoutput>#i.getCorrespondence().getCode()#</cfoutput>" target="_blank"><cfoutput>#i.getCorrespondence().getCode()#</cfoutput></a></td> 
-                    <td><cfoutput>#DateFormat(i.getUpdated(),"m/d/yyyy")# by #i.getUpdatedBy()#</cfoutput></td> 
+                    <td><a href="<cfoutput>#helper.linkTo('TrackingSystem',i.getCorrespondence().getCode())#</cfoutput>" target="_blank"><cfoutput>#i.getCorrespondence().getCode()#</cfoutput></a></td> 
+                    <td><cfoutput>#helper.relativeDate(i.getUpdated())# by #i.getUpdatedBy()#</cfoutput></td> 
                     <td><a href="<cfoutput>#buildURL("registration.rev&id=" & i.getId())#</cfoutput>">Edit</a></td>
                 </tr>
                 </cfloop>
