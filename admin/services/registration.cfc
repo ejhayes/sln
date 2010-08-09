@@ -20,6 +20,15 @@ component {
         return ret;
     }
     
+    function revisionSiteLookups(){
+        // returns lookups needed by application revisions
+        ret = {};
+        ret['preHarvestMeasurements'] = EntityToQuery(EntityLoad("PreHarvestMeasurements"));
+        ret['reEntryMeasurements'] = EntityToQuery(EntityLoad("ReEntryMeasurements"));
+        
+        return ret;
+    }
+    
     function new(){
         // return a new skeleton app
         var ret = {};
@@ -175,6 +184,19 @@ component {
         
         // thank you!
         return ret;
+    }
+    
+    function saveRevisionSites(
+        string id, 
+        string sites, 
+        string qualifier, 
+        string reEntryInterval, 
+        string reEntryIntervalMeasurement, 
+        string preHarvestInterval, 
+        string preHarvestIntervalMeasurement){
+    
+        // save site information for the revision
+        
     }
     
     function saveRevision(string id, string registrationSubtype="", string approved="", string product="", string label="", string pests="", string counties=""){

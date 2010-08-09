@@ -20,6 +20,14 @@ component {
         if( structKeyExists(rc,"id") ) variables.fw.service("registration.getRevision","rev");
     }
     
+    private function loadRevSite(any rc){ // provides us with lookups, app persistent model, and official application revision name
+        // load site detail dependencies
+        variables.fw.service("registration.revisionSiteLookups","lookups");
+        
+        // load the site details (from the revision)
+        if( structKeyExists(rc,"id") ) variables.fw.service("registration.getRevision","rev");
+    }
+    
     function startApp(any rc) {
         loadApp(rc);
     }
@@ -90,5 +98,19 @@ component {
         // set the page title
         rc.title = "Edit Revision: " & rc.rev.name;
         
+    }
+    
+    function startRevSite(any rc){
+        loadRevSite(rc);
+    }
+    
+    function endRevSite(any rc){
+        if( isNull(rc.rev) ){
+            rc.notice = {type="error", message="Record does not exist"};
+            variables.fw.redirect("","notice");
+        }
+    
+        // set the page title
+        rc.title = "Edit Revision Sites: " & rc.rev.name;
     }
 }
