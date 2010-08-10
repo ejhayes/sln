@@ -73,6 +73,10 @@
         });
         
         $(".datepicker").datepicker();
+        
+        $(".checkAll").click(function() {
+            $("input[name=" + $(this).attr('data-target') + "]").attr('checked', $(this).is(':checked'))
+        });
 	});
 	</script>
 </head>

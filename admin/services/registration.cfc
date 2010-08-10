@@ -267,7 +267,9 @@ component {
     }
     
     function saveSites(
-        string id, 
+        string mode, // Add|Update|Edit|Delete
+        string id,
+        string revisionSites="", // if we are updating this will not be empty
         string sites, 
         string qualifier, 
         string reEntryInterval, 
@@ -276,7 +278,63 @@ component {
         string preHarvestIntervalMeasurement){
     
         // save site information for the revision
+        local.ret = {};
         
+        // these parameters need to be set if we aren't deleting!
+        if( arguments.mode != "delete" ){
+            local.qualifier = EntityLoadByPK("Qualifiers",arguments.qualifier);
+            local.reEntryIntervalMeasurement = EntityLoadByPK("ReEntryMeasurements",arguments.reEntryIntervalMeasurement);
+            local.preHarvestIntervalMeasurement = EntityLoadByPK("preHarvestMeasurements",arguments.preHarvestIntervalMeasurement);
+        }
+        
+        // set it, save it, love it
+        try {
+            switch(arguments.mode){
+                // ADD SITES: Create new entities, apply properties, persist
+                case "add":
+                    for( i = 1; i <= ListLen(arguments.sites); i++){
+                        local.revSite = EntityNew("RevisionSites");
+                        local.revSite.setRevision(EntityLoadByPK("Revisions", arguments.id));
+                        local.revSite.setSite(EntityLoadByPK("Sites",ListGetAt(arguments.sites,i)));
+                        local.revSite.setQualifier(local.Qualifier);
+                        local.revSite.setReEntryInterval(arguments.reEntryInterval);
+                        local.revSite.setReEntryIntervalMeasurement(local.reEntryIntervalMeasurement);
+                        local.revSite.setPreHarvestInterval(arguments.preHarvestInterval);
+                        local.revSite.setPreHarvestIntervalMeasurement(local.preHarvestIntervalMeasurement);
+                        EntitySave(local.revSite);
+                    }
+                    break;
+                
+                // DELETE SITES: Loop through entities, delete
+                case "delete":
+                    for( i = 1; i <= ListLen(arguments.revisionSites); i++){
+                        EntityDelete(EntityLoadByPK("RevisionSites", ListGetAt(arguments.sites,i)));
+                    }
+                    break;
+                    
+                // UPDATE SITES: Load entities, modify, persist
+                case "update":
+                    for( i = 1; i <= ListLen(arguments.revisionSites); i++){
+                        local.revSite = EntityLoadByPK("RevisionSites", ListGetAt(arguments.revisionSites,i));
+                        local.revSite.setQualifier(local.Qualifier);
+                        local.revSite.setReEntryInterval(arguments.reEntryInterval);
+                        local.revSite.setReEntryIntervalMeasurement(local.reEntryIntervalMeasurement);
+                        local.revSite.setPreHarvestInterval(arguments.preHarvestInterval);
+                        local.revSite.setPreHarvestIntervalMeasurement(local.preHarvestIntervalMeasurement);
+                        EntitySave(local.revSite);
+                    }
+                    break;
+            }
+
+            ormFlush(); // if there is an error, it will be reported asap
+        }
+        catch(java.lang.Exception e) {
+            // my name is grace and i'm ful
+            // incase hibernate has any issues persisting to the db do nothing
+            ret.error = {message=e};
+        }
+        
+        return ret;
     }
     
     // HELPER FUNCTIONS

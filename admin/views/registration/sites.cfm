@@ -1,130 +1,117 @@
-<cfdump var="#rc#" />
-<cfabort />
-<cfparam name="url.mode" default="add" />
-<cfparam name="url.revisionid" default="1" />
+<cfset helper = new assets.cfc.helpers() />
 
-<cfswitch expression="#url.mode#">
-    <cfcase value="add">
-        <cfset variables.pageTitle="Sites: SLN CA-56012-" & url.revisionId />
-        <cfset variables.interfaceId="I-9-1" />
-    </cfcase>
-    <cfcase value="edit">
-        <cfset variables.pageTitle="Sites: SLN CA-56012-" & url.revisionId />
-        <cfset variables.interfaceId="I-9-2" />
-    </cfcase>
-    <cfcase value="delete">
-    
-    </cfcase>
-    <cfcase value="view">
-        <cfset variables.pageTitle="Sites: SLN CA-56012-" & url.revisionId />
-        <cfset variables.interfaceId="I-9-0" />
-    </cfcase>
-    <cfdefaultcase>
-        <h1>Invalid Mode</h1>
-        <cfabort />
-    </cfdefaultcase>
-</cfswitch>
-
-<cfform>
-
-<cfif url.mode EQ "add">
-<div class="notice">
-<h3>Add New Sites</h3>
-<table>
-<tr>
-<td>
-    <select name="sites" multiple="yes" class="multiselect" data-src="Sites">
+<form id="saveForm" action="<cfoutput>#buildURL('registration.saveSites')#</cfoutput>" method="post">
+    <!--- Hold the ID of the current application revision record --->
+    <input name="id" type="hidden" value="<cfoutput>#rc.rev.record.getId()#</cfoutput>" />
+    <input name="revisionSites" type="hidden" value="<cfoutput>#rc.revisionSites#</cfoutput>" />
         
-    </select>
-</td>
-<td>
+    <div class="notice">
+    <cfswitch expression="#rc.mode#">
+        <cfcase value="edit">
+            <h3>Editing Application Details for these sites</h3>
+            <table width="100%">
+                <thead>
+                    <th>Site</th>
+                    <th>Qualifier</th>
+                    <th>Pre-Harvest Interval</th>
+                    <th>Re-Entry Interval</th>
+                </thead>
+                <tbody>
+                <cfloop array="#rc.rev.record.getSites()#" index="i">
+                    <cfif ListContains(rc.revisionSites,i.getId())>
+                        <tr>
+                            <cfoutput>
+                                <td>#i.getSite().getDescription()#</td>
+                                <td>#i.getQualifier().getDescription()#</td>
+                                <td>#i.getPreHarvestInterval()# #i.getPreHarvestIntervalMeasurement().getDescription()#</td>
+                                <td>#i.getReEntryInterval()# #i.getReEntryIntervalMeasurement().getDescription()#</td>
+                            </cfoutput>
+                        </tr>
+                    </cfif>
+                </cfloop>
+                </tbody>
+            </table>
+        </cfcase>
+        <cfdefaultcase>
+            <h3>Add New Sites</h3>
+            <select id="sites" name="sites" multiple="yes" class="multiselect" data-src="Sites"></select>
+        </cfdefaultcase>
+    </cfswitch>
+    <br />
 
-</td>
-</tr>
-</table><br />
-<cfelseif url.mode EQ "edit">
-<div class="notice">
-<h3>Editing Application Details for these sites</h3>
-<ul>
-    <li>Blackberries</li>
-    <li>Peaches</li>
-    <li>Cobbler</li>
-    <li>Raisins</li>
-</ul>
+    <h3>Usage Details <img src="usage.png" height="15"></h3>
+    <table>
+        <tr>
+            <td><label>Qualifier: </label></td>
+            <td><input style="width:200px;" id="Qualifier" class="autocomplete" data-src="Qualifiers" data-minLength="3" data-value="" value=""></td>
+        </tr>
+        <tr>
+            <td><label>Pre-Harvest Interval: </label></td>
+            <td>
+                <input type="text" style="width:30px;" name="preHarvestInterval" />
+                
+                <select name="preHarvestIntervalMeasurement">
+                    <cfoutput query="rc.lookups.preHarvestMeasurements"><option value="#CODE#">#DESCRIPTION#</option></cfoutput>
+                </select>
+                
+            </td>
+        </tr>
+        <tr>
+            <td><label>Re-Entry Interval: </label></td>
+            <td>
+                <input type="text" style="width:30px;" name="reEntryInterval" />
+                
+                <select name="reEntryIntervalMeasurement">
+                    <cfoutput query="rc.lookups.reEntryMeasurements"><option value="#CODE#">#DESCRIPTION#</option></cfoutput>
+                </select>
+            </td>
+        </tr>
+    </table>
+
+    <!--- The save area --->
+    <cfoutput>
+        <input type="submit" name="save" value="#iif(rc.mode EQ 'add',de('Add'),de('Update'))#" />
+        <input type="button" name="cancel" value="Cancel" onclick="javascript:window.location='#buildURL('registration.sites&id=' & rc.id)#'"/>
+    </cfoutput>
+    </div>
+</form>
+
 <br />
-</cfif>
-<cfif url.mode EQ "edit" OR url.mode EQ "add">
-<h3>Usage Details <img src="usage.png" height="15"></h3>
-<table>
-    <tr><td><label>Qualifier: </label></td><td><input style="width:200px;" id="Qualifier" class="autocomplete" data-src="Qualifiers" data-minLength="3" data-value="" value=""></td></tr>
-    <tr><td><label>Pre-Harvest Interval: </label></td></td><td><cfinput type="text" style="width:30px;" name="preHarvestInterval" /> <cfselect name="preHarvestIntervalMeasurement"><option value="day">Day(s)</option><option value="hour">Hour(s)</option><option value="minute">Minute(s)</option></cfselect></td></tr>
-    <tr><td><label>Re-Entry Interval: </label></td></td><td><cfinput type="text" style="width:30px;" name="reEntryInterval" /> <cfselect name="reEntryIntervalMeasurement"><option value="day">Day(s)</option><option value="hour">Hour(s)</option><option value="minute">Minute(s)</option></cfselect></td></tr>
-</table>
-<cfif url.mode EQ "edit">
-    <cfinput type="button" name="saveClose" value="Save" onclick="javascript:window.location='?revisionId=2&mode=view'"/>
-    <cfinput type="button" name="cancel" value="Cancel" onclick="javascript:window.location='?revisionId=2&mode=view'"/>
-<cfelse>
-    <cfinput type="button" name="saveClose" value="Add" onclick="javascript:window.location='?revisionId=2&mode=view'"/>
-    <cfinput type="button" name="cancel" value="Cancel" onclick="javascript:window.location='?revisionId=2&mode=view'"/>
-</cfif>
 
-</div>
-</cfif>
-</cfform>
+<h3>Associated Sites <img src="site.png" height="15"></h3>
+<form action="<cfoutput>#buildURL('registration.saveSites')#</cfoutput>" method="post">
+<!--- Hold the ID of the current application revision record --->
+<input name="id" type="hidden" value="<cfoutput>#rc.rev.record.getId()#</cfoutput>" />
 
-<br />
-
-<h3>Associated Sites <img src="site.png" height="15"><cfif url.mode NEQ "add"> (<a href="?revisionId=3&mode=add">add more</a>)</cfif></h3>
 <table width="100%">
-<thead>
-    <th></th>
-    <th>Site</th>
-    <th>Qualifier</th>
-    <th>Pre-Harvest Interval</th>
-    <th>Re-Entry Interval</th>
-</thead>
-<tbody>
-<tr>
-    <td><input type="checkbox" /></td>
-    <td>GARLIC</td>
-    <td>POULTRY DROPPINGS</td>
-    <td>1 day(s)</td>
-    <td>18 minute(s)</td>
-</tr>
-<tr>
-    <td><input type="checkbox" /></td>
-    <td>GARLIC</td>
-    <td>POULTRY DROPPINGS</td>
-    <td>1 day(s)</td>
-    <td>18 minute(s)</td>
-</tr>
-<tr>
-    <td><input type="checkbox" /></td>
-    <td>GARLIC</td>
-    <td>POULTRY DROPPINGS</td>
-    <td>1 day(s)</td>
-    <td>18 minute(s)</td>
-</tr>
-<tr>
-    <td><input type="checkbox" /></td>
-    <td>GARLIC</td>
-    <td>POULTRY DROPPINGS</td>
-    <td>1 day(s)</td>
-    <td>18 minute(s)</td>
-</tr>
-<tr>
-    <td><input type="checkbox" /></td>
-    <td>GARLIC</td>
-    <td>POULTRY DROPPINGS</td>
-    <td>1 day(s)</td>
-    <td>18 minute(s)</td>
-</tr>
-</tbody>
+    <thead>
+        <th><input id="CheckAllRevisionSites" type="checkbox" class="checkAll" data-target="revisionSites" /></th>
+        <th>Site</th>
+        <th>Qualifier</th>
+        <th>Pre-Harvest Interval</th>
+        <th>Re-Entry Interval</th>
+    </thead>
+    <tbody>
+    <cfloop array="#rc.rev.record.getSites()#" index="i">
+        <cfif !ListContains(rc.revisionSites,i.getId())>
+            <tr>
+                <cfoutput>
+                    <td><input type="checkbox" name="revisionSites" value="#i.getId()#" /></td>
+                    <td>#i.getSite().getDescription()#</td>
+                    <td>#i.getQualifier().getDescription()#</td>
+                    <td>#i.getPreHarvestInterval()# #i.getPreHarvestIntervalMeasurement().getDescription()#</td>
+                    <td>#i.getReEntryInterval()# #i.getReEntryIntervalMeasurement().getDescription()#</td>
+                </cfoutput>
+            </tr>
+        </cfif>
+    </cfloop>
+    </tbody>
 </table>
 
-<input type="button" value="Edit" onclick="javascript:window.location='?revisionId=28&mode=edit'" />
-<input type="button" value="Delete" onclick="javascript:window.location='?revisionId=28&mode=delete'" />
+<input type="submit" name="save" value="Edit" />
+<input type="submit" name="save" value="Delete" />
+</form>
 
 <br /><br /><hr>
-<input type="button" value="Back to Revision Details" onclick="javascript:window.location='editRevision.cfm?revisionId=28'" />
+<cfoutput><input type="button" value="Back to Revision Details" onclick="javascript:window.location='#buildURL('registration.rev&id=' & rc.rev.record.getId())#'" /></cfoutput>
 <input type="button" value="Close Revision" onclick="javascript:window.location='editApplication.cfm?specialUseNumber=1234'" />

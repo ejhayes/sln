@@ -120,8 +120,35 @@ component {
             rc.notice = {type="error", message="Record does not exist"};
             variables.fw.redirect("","notice");
         }
+        
+        param name="rc.mode" default="add";
+        param name="rc.revisionSites" default="";
     
         // set the page title
         rc.title = "Edit Revision Sites: " & rc.rev.name;
+    }
+    
+    function startSaveSites(any rc){
+        // if we are about to start an edit, no additional processing is needed here
+        if(rc.save == "Edit"){
+            rc.mode = 'edit';
+            variables.fw.redirect("registration.sites","revisionSites","id,mode");
+        }
+        
+        // all additional processing will be done by the service
+        rc.mode = LCase(rc.save);
+    }
+    
+    function endSaveSites(any rc){
+        // was there an error?
+        if( !isNull(rc.data.error) ){
+            rc.notice = {type="error", message=rc.data.error.message};
+        } else {
+            rc.notice = {type="success", message="Record saved"};
+        }
+
+        // oki doki, to the page!
+        rc.id = rc.id;
+        variables.fw.redirect("registration.sites","notice","id");
     }
 }
