@@ -1,8 +1,15 @@
+/*
+	Special Use Tracking System
+    Copyright (c) 2010, California Department of Pesticide Regulation
+
+	Provides view specific functionality to special use registrations.
+*/
 component {
     function init(fw) {
         variables.fw = fw;
     }
     
+    // LOADING FUNCTIONS
     private function loadApp(any rc){ // provides us with lookups, app persistent model, and official application name
         // load app dependencies
         variables.fw.service("registration.lookups","lookups");
@@ -28,6 +35,7 @@ component {
         if( structKeyExists(rc,"id") ) variables.fw.service("registration.getRevision","rev");
     }
     
+    // REGISTRATION APPLICATIONS
     function startApp(any rc) {
         loadApp(rc);
     }
@@ -55,19 +63,7 @@ component {
         variables.fw.redirect("registration.app","notice","id");
     }
     
-    function endSaveRevision(any rc){
-        // was there an error?
-        if( !isNull(rc.data.error) ){
-            rc.notice = {type="error", message=rc.data.error.message};
-        } else {
-            rc.notice = {type="success", message="Record saved"};
-        }
-
-        // oki doki, to the page!
-        rc.id = rc.data.rev.getId();
-        variables.fw.redirect("registration.rev","notice","id");
-    }
-    
+    // REGISTRATION APPLICATION REVISIONS
     function endAddRevision(any rc){
         // was there an error?
         if( !isNull(rc.data.error) ){
@@ -100,11 +96,26 @@ component {
         
     }
     
-    function startRevSite(any rc){
+    function endSaveRevision(any rc){
+        // was there an error?
+        if( !isNull(rc.data.error) ){
+            rc.notice = {type="error", message=rc.data.error.message};
+        } else {
+            rc.notice = {type="success", message="Record saved"};
+        }
+
+        // oki doki, to the page!
+        rc.id = rc.data.rev.getId();
+        variables.fw.redirect("registration.rev","notice","id");
+    }
+    
+    // REGISTRATION APPLICATION REVISION SITE INFORMATION (shortened to "Sites")
+    // THIS IS THE "MEAT" OF THE APPLICATION!
+    function startSites(any rc){
         loadRevSite(rc);
     }
     
-    function endRevSite(any rc){
+    function endSites(any rc){
         if( isNull(rc.rev) ){
             rc.notice = {type="error", message="Record does not exist"};
             variables.fw.redirect("","notice");

@@ -1,7 +1,12 @@
+/*
+	Special Use Tracking System
+    Copyright (c) 2010, California Department of Pesticide Regulation
+
+	Provides support functionality for the admin area.
+*/
 component {
 	function init() {
-		// nothing
-        return "hey!";
+		// do nothing
 	}
     
     function index() {
@@ -11,6 +16,7 @@ component {
         return ret;
     }
     
+    // MULTISELECT LOOKUP FUNCTION
     function lookup(string src="", string q="") {
         // do the prep work
         if( arguments.src == "" ) return ""; // no need to do more work
@@ -29,8 +35,9 @@ component {
         }
     }
     
+    // AUTOCOMPLETE LOOKUP FUNCTION
     function autocomplete(string src="", string term="") {
         // this is pretty much the lookup function with a different function signature
-        return lookup(src=arguments.src,q=arguments.term);
+        return lookup(src=arguments.src, q=arguments.term);
     }
 }

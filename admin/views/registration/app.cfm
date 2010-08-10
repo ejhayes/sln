@@ -78,7 +78,7 @@
     <!--- If there are revisions, display information about them --->
     <cfif rc.app.record.hasRevisions() >
         <p>
-        <table width="70%"> 
+        <table width="90%"> 
             <thead> 
                 <tr> 
                     <th>Revision Number</th> 
@@ -91,7 +91,10 @@
                 <cfloop array="#rc.app.record.getRevisions()#" index="i">
                 <tr> 
                     <td>2</td> 
-                    <td><a href="<cfoutput>#helper.linkTo('TrackingSystem',i.getCorrespondence().getCode())#</cfoutput>" target="_blank"><cfoutput>#i.getCorrespondence().getCode()#</cfoutput></a></td> 
+                    <td>
+                        <a href="<cfoutput>#helper.linkTo('TrackingSystem',i.getCorrespondence().getCode())#</cfoutput>" target="_blank"><cfoutput>#i.getCorrespondence().getCode()#</cfoutput></a>&nbsp;
+                        <cfoutput>#i.getProduct().getDescription()#</cfoutput>
+                    </td>
                     <td><cfoutput>#helper.relativeDate(i.getUpdated())# by #i.getUpdatedBy()#</cfoutput></td> 
                     <td><a href="<cfoutput>#buildURL("registration.rev&id=" & i.getId())#</cfoutput>">Edit</a></td>
                 </tr>

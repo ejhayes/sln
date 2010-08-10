@@ -1,8 +1,15 @@
+/*
+	Special Use Tracking System
+    Copyright (c) 2010, California Department of Pesticide Regulation
+
+	Provides support functionality for special use registrations.
+*/
 component {
 	function init() {
         // do nothing
 	}
     
+    // LOOKUP FUNCTIONS
     function lookups(){
         // returns lookups needed by apps
         ret = {};
@@ -29,6 +36,7 @@ component {
         return ret;
     }
     
+    // MODEL CREATION FUNCTIONS
     function new(){
         // return a new skeleton app
         var ret = {};
@@ -65,6 +73,7 @@ component {
         return ret;
     }
     
+    // GET FUNCTIONS
     function get(string id, string specialUseNumber){
         // this function grabs an application
         var ret = {};
@@ -107,6 +116,7 @@ component {
         return ret;
     }
     
+    // SAVE FUNCTIONS
     function save(string id, string status, string specialUseNumber, string registrationType, string issued, string expired, string internalComments, string publicComments){
         // save the app
         local.ret = {};
@@ -150,53 +160,6 @@ component {
         }
         
         return ret;
-    }
-    
-    private function processDiff(any ormData, any userData){
-        // determines what needs to be added and what needs to be removed
-        // uses underlying java set class for speed and access to set
-        // operations such as intersect/disjoint!
-        var ret = {};
-        var toAdd = createObject("java", "java.util.HashSet").init(arguments.userData);
-        var currentData = ArrayNew(1);
-        
-        // alleviate casting issues between cf and underlying java
-        for( i=1; i<=ArrayLen(arguments.ormData); i++){
-            ArrayAppend(local.currentData,javaCast("string",arguments.ormData[i]));
-        }
-        
-        // use our converted data here
-        local.matching = createObject("java", "java.util.HashSet").init(local.currentData);
-        local.toRemove = createObject("java", "java.util.HashSet").init(local.currentData);
-        
-        // determine what is matching
-        matching.retainAll(arguments.userData);
-        
-        // what needs to be removed?
-        toRemove.removeAll(local.matching);
-        ret["remove"] = [];
-        ret["remove"].addAll(CreateObject( "java", "java.util.Arrays" ).AsList(toRemove.toArray()));
-        
-        // what needs to be added?
-        toAdd.removeAll(local.matching);
-        ret["add"] = [];
-        ret["add"].addAll(CreateObject( "java", "java.util.Arrays" ).AsList(toAdd.toArray()));
-        
-        // thank you!
-        return ret;
-    }
-    
-    function saveRevisionSites(
-        string id, 
-        string sites, 
-        string qualifier, 
-        string reEntryInterval, 
-        string reEntryIntervalMeasurement, 
-        string preHarvestInterval, 
-        string preHarvestIntervalMeasurement){
-    
-        // save site information for the revision
-        
     }
     
     function saveRevision(string id, string registrationSubtype="", string approved="", string product="", string label="", string pests="", string counties=""){
@@ -300,6 +263,55 @@ component {
             ret.error={message=e};
         }
         
+        return ret;
+    }
+    
+    function saveSites(
+        string id, 
+        string sites, 
+        string qualifier, 
+        string reEntryInterval, 
+        string reEntryIntervalMeasurement, 
+        string preHarvestInterval, 
+        string preHarvestIntervalMeasurement){
+    
+        // save site information for the revision
+        
+    }
+    
+    // HELPER FUNCTIONS
+    private function processDiff(any ormData, any userData){
+        /* determines what needs to be added and what needs to be removed
+         * uses underlying java set class for speed and access to set
+         * operations such as intersect/disjoint!
+         */
+        var ret = {};
+        var toAdd = createObject("java", "java.util.HashSet").init(arguments.userData);
+        var currentData = ArrayNew(1);
+        
+        // alleviate casting issues between cf and underlying java
+        for( i=1; i<=ArrayLen(arguments.ormData); i++){
+            ArrayAppend(local.currentData,javaCast("string",arguments.ormData[i]));
+        }
+        
+        // use our converted data here
+        local.matching = createObject("java", "java.util.HashSet").init(local.currentData);
+        local.toRemove = createObject("java", "java.util.HashSet").init(local.currentData);
+        
+        // determine what is matching
+        matching.retainAll(arguments.userData);
+        
+        // what needs to be removed?
+        toRemove.removeAll(local.matching);
+        ret["remove"] = [];
+        ret["remove"].addAll(CreateObject( "java", "java.util.Arrays" ).AsList(toRemove.toArray()));
+        
+        // what needs to be added?
+        toAdd.removeAll(local.matching);
+        ret["add"] = [];
+        ret["add"].addAll(CreateObject( "java", "java.util.Arrays" ).AsList(toAdd.toArray()));
+        
+        // thank you!
         return ret;
     }
 }
