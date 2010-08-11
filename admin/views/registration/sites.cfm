@@ -39,7 +39,7 @@
     </cfswitch>
     <br />
 
-    <h3>Usage Details <img src="usage.png" height="15"></h3>
+    <h3>Usage Details <img src="assets/img/usage.png" height="15"></h3>
     <table>
         <tr>
             <td><label>Qualifier: </label></td>
@@ -78,7 +78,7 @@
 
 <br />
 
-<h3>Associated Sites <img src="site.png" height="15"></h3>
+<h3>Associated Sites <img src="assets/img/site.png" height="15"></h3>
 <form action="<cfoutput>#buildURL('registration.saveSites')#</cfoutput>" method="post">
 <!--- Hold the ID of the current application revision record --->
 <input name="id" type="hidden" value="<cfoutput>#rc.rev.record.getId()#</cfoutput>" />

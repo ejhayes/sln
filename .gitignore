@@ -1,1 +1,3 @@
 *.hbmxml
+assets/registration/labels/*.pdf
+Thumbs.db

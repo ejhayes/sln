@@ -3,7 +3,7 @@
 <h3>Revision Details</h3>
 <cfoutput>Tracking ID <a href="#helper.linkTo('TrackingSystem',rc.rev.record.getCorrespondence().getCode())#" target="_blank">#rc.rev.record.getCorrespondence().getCode()#</a> #rc.rev.record.getCorrespondence().getFirmName()#</cfoutput>
 
-<form action="<cfoutput>#buildURL('registration.saveRevision')#</cfoutput>" method="post">
+<form action="<cfoutput>#buildURL('registration.saveRevision')#</cfoutput>" method="post" enctype="multipart/form-data">
     <!--- Hold the ID of the current application revision record --->
     <input name="id" type="hidden" value="<cfoutput>#rc.rev.record.getId()#</cfoutput>" />
 
@@ -12,8 +12,8 @@
         <td><label>Special Use Subtype: </label></td>   
         <td>
             <select name="registrationSubtype">
-                    <option value=""></option>
-                    <cfoutput query="rc.lookups.registrationSubtypes"><option value="#CODE#" <cfif !isNull(rc.rev.record.getRegistrationSubtype())><cfif rc.rev.record.getRegistrationSubtype().getCode() EQ CODE >selected="selected"</cfif></cfif> >#DESCRIPTION#</option></cfoutput>
+                <option value=""></option>
+                <cfoutput query="rc.lookups.registrationSubtypes"><option value="#CODE#" <cfif !isNull(rc.rev.record.getRegistrationSubtype())><cfif rc.rev.record.getRegistrationSubtype().getCode() EQ CODE >selected="selected"</cfif></cfif> >#DESCRIPTION#</option></cfoutput>
             </select>
         </td>
     </tr>
@@ -26,7 +26,7 @@
         <td><cfoutput><input style="width:500px;" id="Product" class="autocomplete" data-src="Products" data-minLength="6" data-value="<cfif !isNull(rc.rev.record.getProduct())>#rc.rev.record.getProduct().getCode()#</cfif>" value="<cfif !isNull(rc.rev.record.getProduct())>#rc.rev.record.getProduct().getDescription()#</cfif>"></cfoutput></td>
     </tr>
     <tr>
-        <td><label>Label PDF <cfif !isNull(rc.rev.record.getLabel())><cfoutput>(<a href="#rc.rev.record.getLabel()#" target="_blank">view</a>)</cfoutput></cfif>: </label></td>
+        <td><label>Label PDF <cfif !isNull(rc.rev.record.getLabel())><cfoutput>(<a href="#helper.linkTo('Label',rc.rev.record.getLabel())#" target="_blank">view</a>)</cfoutput></cfif>: </label></td>
         <td>
             <input id="applyStamp" name="applyStamp" type="checkbox"><label for="applyStamp">&nbsp;apply electronic stamp</label>&nbsp;
             <input type="file" name="labelFile">

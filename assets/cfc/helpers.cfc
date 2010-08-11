@@ -40,12 +40,14 @@ component {
         else return DateFormat(dt,"m/d/yy");
     }
     
-    function linkTo(string location, string id){
+    function linkTo(string location, string id=""){
         // returns a URL to a DPR point of interest
         
         // Places we can go
         var locations = {
-            "TrackingSystem"="http://registration/track/reports/trackid_action.cfm?RequestTimeout=500&track_id="
+            "TrackingSystem"="http://registration/track/reports/trackid_action.cfm?RequestTimeout=500&track_id=",
+            "PDF"="http://docs.google.com/viewer?url=",
+            "Label"="./assets/registration/labels/"
         };
         
         return locations[arguments.location] & arguments.id;

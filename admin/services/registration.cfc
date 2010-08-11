@@ -162,7 +162,7 @@ component {
         return ret;
     }
     
-    function saveRevision(string id, string registrationSubtype="", string approved="", string product="", string label="", string pests="", string counties=""){
+    function saveRevision(string id, string registrationSubtype="", string approved="", string product="", string labelFile="", string pests="", string counties=""){
         // save the revision
         local.ret = {};
         
@@ -194,10 +194,6 @@ component {
             // pesticide product
             if( arguments.product == "" ) ret.rev.setProduct(JavaCast("null",""));
             else ret.rev.setProduct(EntityLoadByPK("Products",arguments.product));
-
-            // label
-            if( arguments.label == "" ) ret.rev.setLabel(JavaCast("null",""));
-            else ret.rev.setLabel(arguments.label);
             
             // counties
             local.countyActions = processDiff(
@@ -253,6 +249,19 @@ component {
                 );
             }
             
+            // upload the file
+            if( arguments.labelFile != "" ){
+                local.fileObj = new assets.cfc.file();
+                local.helper = new assets.cfc.helpers();
+                local.destination = expandPath(local.helper.linkTo('Label'));
+                local.ret.fileRes = local.fileObj.upload("FORM.labelFile", local.destination & "/" & local.ret.rev.getCorrespondence().getCode() & ".pdf");
+                
+                // label
+                //if( arguments.label == "" ) ret.rev.setLabel(JavaCast("null",""));
+                //else ret.rev.setLabel(arguments.label);
+                ret.rev.setLabel(local.ret.rev.getCorrespondence().getCode() & ".pdf");
+            }
+            
             // save it all up
             EntitySave(ret.rev);
             ormFlush(); // if there is an error, it will be reported asap
@@ -279,16 +288,16 @@ component {
     
         // save site information for the revision
         local.ret = {};
-        
-        // these parameters need to be set if we aren't deleting!
-        if( arguments.mode != "delete" ){
-            local.qualifier = EntityLoadByPK("Qualifiers",arguments.qualifier);
-            local.reEntryIntervalMeasurement = EntityLoadByPK("ReEntryMeasurements",arguments.reEntryIntervalMeasurement);
-            local.preHarvestIntervalMeasurement = EntityLoadByPK("preHarvestMeasurements",arguments.preHarvestIntervalMeasurement);
-        }
-        
+                
         // set it, save it, love it
         try {
+            // these parameters need to be set if we aren't deleting!
+            if( arguments.mode != "delete" ){
+                local.qualifier = EntityLoadByPK("Qualifiers",arguments.qualifier);
+                local.reEntryIntervalMeasurement = EntityLoadByPK("ReEntryMeasurements",arguments.reEntryIntervalMeasurement);
+                local.preHarvestIntervalMeasurement = EntityLoadByPK("preHarvestMeasurements",arguments.preHarvestIntervalMeasurement);
+            }
+        
             switch(arguments.mode){
                 // ADD SITES: Create new entities, apply properties, persist
                 case "add":
