@@ -10,4 +10,9 @@ component {
 		rc.title="Home";
         rc.designId="I-1-0";
 	}
+    
+    function about(){
+        rc.title="About";
+        rc.designId="I-7.0";
+    }
 }

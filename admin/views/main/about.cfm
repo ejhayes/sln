@@ -1,11 +1,12 @@
-This is the about page.
+<cfset rc.notice = {type="notice", message="<i>When contacting IT please provide the following text with your request</i>: <b>APP:</b> #this.config.short_name#, <b>STEWARD:</b> #this.config.steward#, <b>DSN:</b> #this.config.dsn#, <b>ENVIRONMENT:</b> #this.config.environment#, <b>STAGE:</b> #this.config.stage#"} />
 
-<!---
-<select name="pests" multiple="yes" class="multiselect">
-    <cfloop array="#displayFields#" index="field">
-        <cfoutput>
-            <option value="#field[1]#" <cfif ArrayContains(session.fields,"#field[1]#")>selected="selected"</cfif>>#field[2]#</option>
-        </cfoutput>
-    </cfloop>
-</cfselect>
---->
+<p>The Department of Pesticide Regulation (DPR), under the authority of Section 24(c) of FIFRA (Federal Insecticide Fungicide Rodenticide Act), may register an additional use of a federally registered pesticide product, or a new end use product to meet a special local need if certain conditions exist.</p>
+
+<p>This application is designed to allow users to search for all active and inactive special local need registrations issued by DPR.  Users can enter various search criteria (crop/site, EPA registration number, chemical, etc.) to generate a list of matching special local need registrations in addition to their associated labels.</p>
+
+For search-related questions, please contact:<br />
+<cfoutput>
+#this.config.steward#<br />
+Phone: (#Left(this.config.steward_phone, 3)#) #Mid(this.config.steward_phone, 4,3)#-#Right(this.config.steward_phone, 4)#<br />
+E-mail: <a href="mailto:#this.config.steward_email#">#this.config.steward_email#</a><br />
+</cfoutput>
