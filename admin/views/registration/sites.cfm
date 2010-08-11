@@ -83,9 +83,9 @@
 <!--- Hold the ID of the current application revision record --->
 <input name="id" type="hidden" value="<cfoutput>#rc.rev.record.getId()#</cfoutput>" />
 
-<table width="100%">
+<table id="borgin" width="100%" class="tablesorter" data-sort="[[1,0]]" >
     <thead>
-        <th><input id="CheckAllRevisionSites" type="checkbox" class="checkAll" data-target="revisionSites" /></th>
+        <th class="{sorter: false}"><input id="CheckAllRevisionSites" type="checkbox" class="checkAll" data-target="revisionSites" /></th>
         <th>Site</th>
         <th>Qualifier</th>
         <th>Pre-Harvest Interval</th>

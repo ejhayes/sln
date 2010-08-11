@@ -40,10 +40,18 @@
 	<script type="text/javascript" src="assets/js/tmpl/jquery.tmpl.1.1.1.js"></script> 
 	<script type="text/javascript" src="assets/js/blockUI/jquery.blockUI.js"></script> 
     <script type="text/javascript" src="assets/js/ui.multiselect.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.metadata.js"></script>
     </cfoutput>
 	<script type="text/javascript">
 	$(function() {
         $('.multiselect').each(function() { $(this).multiselect({remoteUrl:"index.cfm?action=admin:main.lookup", remoteParams: {src:$(this).attr('data-src')}}); })
+        
+        $('.tablesorter').each(function() { 
+            $(this).tablesorter({ 
+                sortList: eval($(this).attr('data-sort'))
+            });
+        });
         
         $(".autocomplete").each(function() {
 			

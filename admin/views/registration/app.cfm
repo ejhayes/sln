@@ -96,7 +96,10 @@
                         <cfoutput><cfif i.hasProduct()>#Left(i.getProduct().getDescription(),50)#<cfelse>Product Not Specified</cfif></cfoutput>
                     </td>
                     <td><cfoutput>#helper.relativeDate(i.getUpdated())# by #i.getUpdatedBy()#</cfoutput></td> 
-                    <td><a href="<cfoutput>#buildURL("registration.rev&id=" & i.getId())#</cfoutput>">Edit</a></td>
+                    <td>
+                        <a href="<cfoutput>#buildURL("registration.rev&id=" & i.getId())#</cfoutput>">Details</a> | 
+                        <a href="<cfoutput>#buildURL("registration.sites&id=" & i.getId())#</cfoutput>">Sites</a>
+                    </td>
                 </tr>
                 </cfloop>
             </tbody> 
