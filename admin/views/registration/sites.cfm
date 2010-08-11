@@ -114,4 +114,4 @@
 
 <br /><br /><hr>
 <cfoutput><input type="button" value="Back to Revision Details" onclick="javascript:window.location='#buildURL('registration.rev&id=' & rc.rev.record.getId())#'" /></cfoutput>
-<input type="button" value="Close Revision" onclick="javascript:window.location='editApplication.cfm?specialUseNumber=1234'" />
+<cfoutput><input type="button" value="Close Revision" onclick="javascript:window.location='#buildURL('registration.app&id=' & rc.rev.record.getApplication().getId())#'" /></cfoutput>

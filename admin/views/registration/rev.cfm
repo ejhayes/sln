@@ -53,7 +53,7 @@
     </p>
 
     <input type="submit" name="Save" value="Save" />
-    <input type="button" name="Continue" value="Save and Continue"/>
+    <input type="submit" name="Continue" value="Save and Continue"/>
     <input type="button" name="Close" value="Close Revision" onclick="javascript:window.location='<cfoutput>#buildURL('registration.app&id=' & rc.rev.record.getApplication().getId())#</cfoutput>'"/>
     
 </form>

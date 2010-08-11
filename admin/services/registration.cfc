@@ -184,7 +184,7 @@ component {
         // set it, save it, love it
         try {
             // registration subtype
-            if( arguments.registrationSubtype == "" ) ret.rev.setRegtistrationSubtype(JavaCast("null",""));
+            if( arguments.registrationSubtype == "" ) ret.rev.setRegistrationSubtype(JavaCast("null",""));
             else ret.rev.setRegistrationSubtype(EntityLoadByPK("RegistrationSubtypes",arguments.registrationSubtype));
             
             // approval date
@@ -308,7 +308,7 @@ component {
                 // DELETE SITES: Loop through entities, delete
                 case "delete":
                     for( i = 1; i <= ListLen(arguments.revisionSites); i++){
-                        EntityDelete(EntityLoadByPK("RevisionSites", ListGetAt(arguments.sites,i)));
+                        EntityDelete(EntityLoadByPK("RevisionSites", ListGetAt(arguments.revisionSites,i)));
                     }
                     break;
                     

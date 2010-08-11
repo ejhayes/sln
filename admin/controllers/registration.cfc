@@ -106,7 +106,9 @@ component {
 
         // oki doki, to the page!
         rc.id = rc.data.rev.getId();
-        variables.fw.redirect("registration.rev","notice","id");
+        
+        if( StructKeyExists(rc,"continue") ) variables.fw.redirect("registration.sites","notice","id");
+        else variables.fw.redirect("registration.rev","notice","id");
     }
     
     // REGISTRATION APPLICATION REVISION SITE INFORMATION (shortened to "Sites")
