@@ -21,4 +21,13 @@ component schema="SPECUSE" table="AR_APPLICATION_REVS"
     property name="Created" column="CREATED_DATE";
     property name="UpdatedBy" column="UPDATED_USER";
     property name="Updated" column="UPDATED_DATE" fieldtype="timestamp";  
+    
+    // how we retrieve the revision number
+    function getRevisionNumber(){
+        return ormExecuteQuery("select count(*) from Revisions where Application.Id = "
+            & this.getApplication().getId() 
+            & " and Created < '"
+            & this.getCreated() & "'")[1];
+            
+    }
 }

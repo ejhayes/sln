@@ -112,12 +112,7 @@ component {
         
         if( ret.record.getCorrespondence().getCode() == "" ) ret.name = "UNKNOWN";
         // for the record, I think this part is messy!
-        else ret.name = "CA-" & 
-            ret.record.getApplication().getSpecialUseNumber() & 
-            " rev. " & ormExecuteQuery("select count(*) from Revisions where Application.Id = " & 
-            ret.record.getApplication().getId() & 
-            " and Created < '" & 
-            ret.record.getCreated() & "'")[1];
+        else ret.name = "CA-" & ret.record.getApplication().getSpecialUseNumber() & " rev. " & ret.record.getRevisionNumber();
         
         return ret;
     }
