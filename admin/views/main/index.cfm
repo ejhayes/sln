@@ -3,8 +3,8 @@
 <h3>Enter a Special Use Number to edit (or create a <a href="<cfoutput>#buildURL('registration.app')#</cfoutput>">new one</a>)</h3>
 
 <form action="<cfoutput>#buildURL('registration.app')#</cfoutput>" method="post">
-    <input name="specialUseNumber" type="text"></input>
-    <input name="edit" type="submit" value="Edit"></input>
+    <input name="specialUseNumber" type="text" />
+    <input name="edit" type="submit" value="Edit" />
 </form>
 
 <br />

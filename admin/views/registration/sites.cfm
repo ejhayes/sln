@@ -11,14 +11,16 @@
             <h3>Editing Application Details for these sites</h3>
             <table width="100%">
                 <thead>
-                    <th>Site</th>
-                    <th>Qualifier</th>
-                    <th>Pre-Harvest Interval</th>
-                    <th>Re-Entry Interval</th>
+                    <tr>
+                        <th>Site</th>
+                        <th>Qualifier</th>
+                        <th>Pre-Harvest Interval</th>
+                        <th>Re-Entry Interval</th>
+                    </tr>
                 </thead>
                 <tbody>
                 <cfloop array="#rc.rev.record.getSites()#" index="i">
-                    <cfif ListContains(rc.revisionSites,i.getId())>
+                    <cfif ListFind(rc.revisionSites,i.getId()) GT 0 >
                         <tr>
                             <cfoutput>
                                 <td>#i.getSite().getDescription()#</td>
@@ -78,40 +80,44 @@
 
 <br />
 
-<h3>Associated Sites <img src="assets/img/site.png" height="15"></h3>
-<form action="<cfoutput>#buildURL('registration.saveSites')#</cfoutput>" method="post">
-<!--- Hold the ID of the current application revision record --->
-<input name="id" type="hidden" value="<cfoutput>#rc.rev.record.getId()#</cfoutput>" />
+<cfif (ArrayLen(rc.rev.record.getSites()) NEQ ListLen(rc.revisionSites)) AND rc.rev.record.hasSites() >
+    <h3>Associated Sites <img src="assets/img/site.png" height="15"></h3>
+    
+    <form action="<cfoutput>#buildURL('registration.saveSites')#</cfoutput>" method="post">
+        <!--- Hold the ID of the current application revision record --->
+        <input name="id" type="hidden" value="<cfoutput>#rc.rev.record.getId()#</cfoutput>" />
 
-<table id="borgin" width="100%" class="tablesorter" data-sort="[[1,0]]" >
-    <thead>
-        <th class="{sorter: false}"><input id="CheckAllRevisionSites" type="checkbox" class="checkAll" data-target="revisionSites" /></th>
-        <th>Site</th>
-        <th>Qualifier</th>
-        <th>Pre-Harvest Interval</th>
-        <th>Re-Entry Interval</th>
-    </thead>
-    <tbody>
-    <cfloop array="#rc.rev.record.getSites()#" index="i">
-        <cfif !ListContains(rc.revisionSites,i.getId())>
-            <tr>
-                <cfoutput>
-                    <td><input type="checkbox" name="revisionSites" value="#i.getId()#" /></td>
-                    <td>#i.getSite().getDescription()#</td>
-                    <td>#i.getQualifier().getDescription()#</td>
-                    <td>#i.getPreHarvestInterval()# #i.getPreHarvestIntervalMeasurement().getDescription()#</td>
-                    <td>#i.getReEntryInterval()# #i.getReEntryIntervalMeasurement().getDescription()#</td>
-                </cfoutput>
-            </tr>
-        </cfif>
-    </cfloop>
-    </tbody>
-</table>
+        <table width="100%" class="tablesorter" data-sort="[[1,0]]" >
+            <thead>
+                <tr>
+                    <th class="{sorter: false}"><input id="CheckAllRevisionSites" type="checkbox" class="checkAll" data-target="revisionSites" /></th>
+                    <th>Site</th>
+                    <th>Qualifier</th>
+                    <th>Pre-Harvest Interval</th>
+                    <th>Re-Entry Interval</th>
+                </tr>
+            </thead>
+            <tbody>
+                <cfloop array="#rc.rev.record.getSites()#" index="i">
+                    <cfif ListFind(rc.revisionSites,i.getId()) EQ 0 >
+                        <tr>
+                            <cfoutput>
+                                <td><input type="checkbox" name="revisionSites" value="#i.getId()#" /></td>
+                                <td>#i.getSite().getDescription()#</td>
+                                <td>#i.getQualifier().getDescription()#</td>
+                                <td>#i.getPreHarvestInterval()# #i.getPreHarvestIntervalMeasurement().getDescription()#</td>
+                                <td>#i.getReEntryInterval()# #i.getReEntryIntervalMeasurement().getDescription()#</td>
+                            </cfoutput>
+                        </tr>
+                    </cfif>
+                </cfloop>
+            </tbody>
+        </table>
 
-<input type="submit" name="save" value="Edit" />
-<input type="submit" name="save" value="Delete" />
-</form>
-
+        <input type="submit" name="save" value="Edit" />
+        <input type="submit" name="save" value="Delete" />
+    </form>
+</cfif>
 <br /><br /><hr>
 <cfoutput><input type="button" value="Back to Revision Details" onclick="javascript:window.location='#buildURL('registration.rev&id=' & rc.rev.record.getId())#'" /></cfoutput>
 <cfoutput><input type="button" value="Close Revision" onclick="javascript:window.location='#buildURL('registration.app&id=' & rc.rev.record.getApplication().getId())#'" /></cfoutput>

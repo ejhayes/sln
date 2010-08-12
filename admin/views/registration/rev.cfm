@@ -32,25 +32,25 @@
             <input type="file" name="labelFile">
         </td>
     </tr>
-    <table>
-
-    <p>
+    </table>
+    <br />
+    
     <h3>Associated Pests <img src="assets/img/pest.png" height="15"></h3>
     <select name="pests" multiple="yes" class="multiselect" data-src="Pests">
         <cfloop array="#rc.rev.record.getPests()#" index="i">
             <cfoutput><option value="#i.getPest().getCode()#" selected="selected">#i.getPest().getDescription()#</option></cfoutput>
         </cfloop>
     </select>
-    </p>
+    <br />
 
-    <p>
+    
     <h3>Associated Counties <img src="assets/img/counties.png" height="15"></h3>
     <select name="counties" multiple="yes" class="multiselect" data-src="Counties">
         <cfloop array="#rc.rev.record.getCounties()#" index="i">
             <cfoutput><option value="#i.getCounty().getCode()#" selected="selected">#i.getCounty().getDescription()#</option></cfoutput>
         </cfloop>
     </select>
-    </p>
+    <br />
 
     <input type="submit" name="Save" value="Save" />
     <input type="submit" name="Continue" value="Save and Continue"/>

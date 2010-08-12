@@ -39,7 +39,7 @@
             <td><label>Expiration Date: </label></td>
             <td><input class="datepicker" name="expired" type="text" value="<cfoutput>#DateFormat(rc.app.record.getExpired(),'mm/dd/yyyy')#</cfoutput>" /></td>
         </tr>
-    <table>
+    </table>
     <br />
     
     <!--- And the comments regarding the application --->
@@ -77,7 +77,7 @@
 
     <!--- If there are revisions, display information about them --->
     <cfif rc.app.record.hasRevisions() >
-        <p>
+        
         <table width="90%"> 
             <thead> 
                 <tr> 
@@ -104,7 +104,7 @@
                 </cfloop>
             </tbody> 
         </table> 
-        </p><br />
+        <br />
     </cfif>
     
     <!--- Let the user initiate a new revision --->
