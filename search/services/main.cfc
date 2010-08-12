@@ -1,7 +1,6 @@
 component {
 	function init() {
-		// nothing
-        return "hey!";
+		// do nothing
 	}
     
     // LOOKUP FUNCTIONS
@@ -11,5 +10,10 @@ component {
         ret['statuses'] = EntityToQuery(EntityLoad("Statuses"));
         
         return ret;
+    }
+    
+    function search(){
+        // perform the search operation
+        return ormExecuteQuery("from Applications");
     }
 }

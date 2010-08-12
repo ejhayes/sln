@@ -1,3 +1,4 @@
+<form action="<cfoutput>#buildURL('main.search')#</cfoutput>" method="post">
 <table class="padded">
 <thead>
 <tr>
@@ -41,3 +42,4 @@
 
 <h3>Pesticide Type</h3>
 <select name="pesticides" multiple="yes" class="multiselect" data-src="PesticideTypes"></select>
+</form>
