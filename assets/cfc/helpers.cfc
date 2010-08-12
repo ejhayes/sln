@@ -52,4 +52,9 @@ component {
         
         return locations[arguments.location] & arguments.id;
     }
+    
+    function pluralize(numeric quantity,string single,string plural=""){
+        if( arguments.plural == "" ) arguments.plural = arguments.single & "s";
+        return iif(quantity EQ 1,de(arguments.single),de(arguments.plural));
+    }
 }

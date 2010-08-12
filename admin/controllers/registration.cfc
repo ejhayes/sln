@@ -48,6 +48,10 @@ component {
     
         // set the page title
         rc.title = "Edit Application: " & rc.app.name;
+        
+        // set the designId information
+        if( rc.app.name == "NEW" ) rc.designId = "I-2.0";
+        else rc.designId = "I-2.1";
     }
     
     function endSave(any rc){
@@ -83,9 +87,6 @@ component {
     }
     
     function endRev(any rc){
-        //rc.title="Details: SLN CA-56012-1";
-        //rc.designId="I-3-0";
-        
         if( isNull(rc.rev) ){
             rc.notice = {type="error", message="Record " & rc.specialUseNumber & " does not exist"};
             variables.fw.redirect("","notice");
@@ -93,7 +94,7 @@ component {
     
         // set the page title
         rc.title = "Edit Revision: " & rc.rev.name;
-        
+        rc.designId="I-3.0";
     }
     
     function endSaveRevision(any rc){
@@ -128,6 +129,16 @@ component {
     
         // set the page title
         rc.title = "Edit Revision Sites: " & rc.rev.name;
+        
+        // set the designId
+        switch(rc.mode){
+            case "add":
+                rc.designId = "I-9.1";
+                break;
+            case "edit":
+                rc.designId = "I-9.2";
+                break;
+        }
     }
     
     function startSaveSites(any rc){

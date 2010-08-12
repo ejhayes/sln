@@ -16,9 +16,9 @@
 </ul>
 
 <cfif ArrayLen(rc.data.incomplete) GT 0>
-<h3>There are <cfoutput>#ArrayLen(rc.data.incomplete)#</cfoutput> Incomplete Applications</h3>
+<h3>There <cfoutput>#helper.pluralize(ArrayLen(rc.data.incomplete),"is","are")# #ArrayLen(rc.data.incomplete)# Incomplete #helper.pluralize(ArrayLen(rc.data.incomplete),"Application")#</cfoutput></h3>
 <p>
-The following applications do not currently have a special use number associated with them.
+The following <cfoutput>#helper.pluralize(ArrayLen(rc.data.incomplete),"application does","applications do")# not currently have a special use number associated with #helper.pluralize(ArrayLen(rc.data.incomplete),"it","them")#</cfoutput>.
 </p>
 <table width="100%">
     <thead> 

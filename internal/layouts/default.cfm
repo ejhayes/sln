@@ -1,25 +1,16 @@
 <cfscript>
-    if (this.config.stage EQ "DEVELOPMENT") {
-        if (isDefined("rc.designId")){
-            pageHeader = rc.designId;
-        } else {
-            pageHeader = this.config.name;
-        }
-        
-        if (isDefined("rc.title")){
-           pageTitle = this.config.short_name & " - " & rc.title;
-        } else {
-            pageTitle = this.config.name;
-        }
+    // How do we display the name?
+    if (isDefined("rc.title")){
+       pageTitle = this.config.short_name & " - " & rc.title;
+    } else {
+        pageTitle = this.config.short_name;
     }
-    else
-    {
-        if (isDefined("rc.title")){
-           pageTitle = this.config.short_name & " - " & rc.title;
-        } else {
-            pageTitle = this.config.short_name;
-        }
-        pageHeader = pageTitle;
+    pageHeader = pageTitle;
+    
+    // Display debugging information?
+    if (this.config.debug is True && isDefined("rc.designId")){
+        pageHeader = "(" & rc.designId & ") " & pageHeader;
+        pageTitle = "(" & rc.designId & ") " & pageTitle;
     }
 
 </cfscript>
