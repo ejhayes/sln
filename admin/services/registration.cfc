@@ -84,8 +84,7 @@ component {
         // if we get nothing, return nothing
         if( isNull(ret.record) ) return;
         
-        if( ret.record.getSpecialUseNumber() == "" ) ret.name = "UNKNOWN";
-        else ret.name = "CA-" & ret.record.getSpecialUseNumber();
+        ret.name = ret.record.getOfficialName();
         
         return ret;
     }
@@ -110,9 +109,7 @@ component {
         // if we get nothing, return nothing
         if( isNull(ret.record) ) return;
         
-        if( ret.record.getCorrespondence().getCode() == "" ) ret.name = "UNKNOWN";
-        // for the record, I think this part is messy!
-        else ret.name = "CA-" & ret.record.getApplication().getSpecialUseNumber() & " rev. " & ret.record.getRevisionNumber();
+        ret.name = ret.record.getOfficialName();
         
         return ret;
     }

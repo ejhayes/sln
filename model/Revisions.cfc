@@ -30,4 +30,8 @@ component schema="SPECUSE" table="AR_APPLICATION_REVS"
             & this.getCreated() & "'")[1];
             
     }
+    
+    function getOfficialName(){
+        return this.getApplication().getOfficialName() & " rev. " & this.getRevisionNumber();
+    }
 }
