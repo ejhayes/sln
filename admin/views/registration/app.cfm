@@ -9,7 +9,7 @@
     <input name="id" type="hidden" value="<cfoutput>#rc.app.record.getId()#</cfoutput>" />
     
     <!--- Display Primary Application Details --->
-    <table>
+    <table class="padded">
         <tr>
             <td><label>Status: </label></td>
             <td>
