@@ -35,6 +35,7 @@
 	<link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/ui.all.css" />
     <link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css" />
 	<link rel="stylesheet"  href="assets/css/ui.multiselect.css" type="text/css" />
+    <link rel="stylesheet"  href="assets/css/tablesorter.css" type="text/css" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="assets/js/tmpl/jquery.tmpl.1.1.1.js"></script> 
@@ -47,6 +48,7 @@
 	$(function() {
         $('.multiselect').each(function() { $(this).multiselect({remoteUrl:"index.cfm?action=admin:main.lookup", remoteParams: {src:$(this).attr('data-src')}}); })
         
+        $.tablesorter.defaults.widgets = ['zebra']; 
         $('.tablesorter').each(function() { 
             $(this).tablesorter({ 
                 sortList: eval($(this).attr('data-sort'))
@@ -63,9 +65,6 @@
                     var thisId = "#" + thisObj.attr("id");
                     var updateTo = "";
                     if(ui.item!=null) updateTo = ui.item.id;
-                    
-                    //console.debug(thisObj);
-                    //console.debug(thisId);
                     
                     //update the existing value
                     $(thisId + "-value").attr("value",updateTo);
