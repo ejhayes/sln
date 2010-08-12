@@ -9,6 +9,9 @@
 .notice a   { color: #514721; }
 .success a  { color: #264409; }
 
+/* pad the table */
+table.padded td { padding: 3px 3px 3px 0px }
+
 /* Interface Elements */
 input.text { width:125px; }
 select.field { width:135px; }

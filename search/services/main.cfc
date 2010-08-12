@@ -4,7 +4,12 @@ component {
         return "hey!";
 	}
     
-    function index() {
-		//return EntityToQuery(ormExecuteQuery("from UseTypes"));
+    // LOOKUP FUNCTIONS
+    function lookups(){
+        // returns lookups needed by apps
+        ret = {};
+        ret['statuses'] = EntityToQuery(EntityLoad("Statuses"));
+        
+        return ret;
     }
 }
