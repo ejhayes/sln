@@ -37,6 +37,10 @@
     </cfoutput>
 	<script type="text/javascript">
 	$(function() {
+        $('form[data-confirm]').submit(function() {
+            return confirm($(this).attr("data-confirm"));
+        });
+        
         $('.multiselect').each(function() { $(this).multiselect({remoteUrl:"index.cfm?action=admin:main.lookup", remoteParams: {src:$(this).attr('data-src')}}); })
         
         $.tablesorter.defaults.widgets = ['zebra']; 
