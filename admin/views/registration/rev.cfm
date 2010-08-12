@@ -7,7 +7,7 @@
     <!--- Hold the ID of the current application revision record --->
     <input name="id" type="hidden" value="<cfoutput>#rc.rev.record.getId()#</cfoutput>" />
 
-    <table>
+    <table class="padded">
     <tr>
         <td><label>Special Use Subtype: </label></td>   
         <td>
