@@ -26,4 +26,10 @@ component schema="SPECUSE" table="A_APPLICATIONS"
         if( this.getSpecialUseNumber() == "" ) return "UNKNOWN";
         else return "CA-" & this.getSpecialUseNumber();
     }
+    
+    // get the unique products associated with a record
+    function getUniqueProducts(){
+        // the map technique returns a java.util.HashMap object
+        return ormExecuteQuery("select new map(Product.Code as Code, Product.ShortDescription as Description, Product.RegistrationNumber as RegistrationNumber, Id as Id, Label as Label) from Revisions where Application.Id = ? order by Created", [this.getId()]);
+    }
 }
