@@ -10,4 +10,7 @@ component schema="LABEL" table="PRODUCT" readonly="true"
     
     // Pesticide Type Classifications
     property name="Types" fieldtype="many-to-many" cfc="PesticideTypes" linktable="PROD_TYPE_PESTICIDE" fkcolumn="PRODNO" inversejoincolumn="TYPEPEST_CD" readonly="true" orderby="TYPEPEST_CAT";
+    
+    // Pesticide Chemicals
+    property name="Chemicals" fieldtype="many-to-many" cfc="Chemicals" linktable="PROD_CHEM" fkcolumn="PRODNO" inversejoincolumn="CHEM_CODE" readonly="true" orderby="COMNAME";
 }
