@@ -12,7 +12,7 @@ component {
         return ret;
     }
     
-    function search(string sites="", string pests="", string counties="", string chemicals="", string products="", string pesticideTypes=""){
+    function search(string status="", string issuedStart="", string issuedEnd="", string registrationNumber="",string sites="", string pests="", string counties="", string chemicals="", string products="", string pesticideTypes=""){
         // use optimized oracle query to retrieve ids of relevant applications
         searchQuery = new Query();
 
@@ -22,6 +22,28 @@ component {
         // build up our search query
         // this could be done in a loop, but the search parameters may change over time
         // therefore i will build it in a procedural manner
+        
+        // STATUS
+        if( arguments.status != "" ){
+            searchQuery.addParam(name="status",value="#arguments.status#",cfsqltype="VARCHAR"); 
+            ArrayAppend(searchArray, "select distinct ID as A_ID from SPECUSE.A_APPLICATIONS where S_CODE = :status");
+        }
+        
+        // ISSUED DATE (range)
+        if( arguments.issuedStart != "" ){
+            // PROBLEM HERE
+            searchQuery.addParam(name="issuedStart",value="#isNull(arguments.issuedStart)#",cfsqltype="cf_sql_varchar");
+            searchQuery.addParam(name="issuedStart",value="#arguments.issuedStart#",cfsqltype="cf_sql_varchar");
+            searchQuery.addParam(name="issuedEnd",value="#isNull(arguments.issuedEnd)#",cfsqltype="cf_sql_varchar"); 
+            searchQuery.addParam(name="issuedEnd",value="#arguments.issuedEnd#",cfsqltype="cf_sql_varchar"); 
+            
+            ArrayAppend(searchArray, "
+                select ID as A_ID from SPECUSE.A_APPLICATIONS 
+                where
+                    ( :issuedStart IS TRUE OR ISSUE_DATE >= to_date( :issuedStart ,'mm/dd/yyyy') ) AND
+                    ( :issuedEnd IS TRUE OR ISSUE_DATE < to_date( :issuedEnd ,'mm/dd/yyyy')+1 )
+            ");
+        }
         
         // SITES
         if( arguments.sites != "" ){
