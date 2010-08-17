@@ -11,8 +11,10 @@ component {
 
 	function index(any rc) {
         loadSearchCriteria(rc);
-    
-        rc.notice = {type="notice",message="Hovering your mouse over a criteria (registration number, issue date, chemical, etc.) will display additional help information."};
+        
+        if( isNull(rc.notice) ){    
+            rc.notice = {type="notice",message="Hovering your mouse over a criteria (registration number, issue date, chemical, etc.) will display additional help information."};
+        }
     
 		rc.title = "Search Criteria";
         rc.designId = "I-4.0";
@@ -20,8 +22,13 @@ component {
     
     function endSearch(any rc){
         // prepare the search results to display to the user
-        local.helper = new assets.cfc.helpers();
-        rc.title = ArrayLen(rc.data) & helper.pluralize(ArrayLen(rc.data)," Result") & " found";
-        rc.designId = "I-5.0";
+        if( isNull(rc.data) ){
+            rc.notice = {type="error",message="No records found."};
+            variables.fw.redirect("","notice");
+        } else {
+            local.helper = new assets.cfc.helpers();
+            rc.title = ArrayLen(rc.data) & helper.pluralize(ArrayLen(rc.data)," Result") & " found";
+            rc.designId = "I-5.0";
+        }
     }
 }
