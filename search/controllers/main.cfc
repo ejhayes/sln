@@ -22,12 +22,12 @@ component {
     
     function endSearch(any rc){
         // prepare the search results to display to the user
-        if( isNull(rc.data) ){
+        if( ArrayLen(rc.data.results) == 0 ){
             rc.notice = {type="error",message="No records found."};
-            variables.fw.redirect("","notice");
+            variables.fw.redirect("","ALL");
         } else {
             local.helper = new assets.cfc.helpers();
-            rc.title = ArrayLen(rc.data) & helper.pluralize(ArrayLen(rc.data)," Result") & " found";
+            rc.title = ArrayLen(rc.data.results) & helper.pluralize(ArrayLen(rc.data.results)," Result") & " found";
             rc.designId = "I-5.0";
         }
     }

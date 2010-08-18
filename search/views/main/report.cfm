@@ -1,6 +1,6 @@
 Report Page<br /><br />
 
 <cfscript>
-WriteDump(rc.data);
+WriteDump(EntityToQuery(ormExecuteQuery("from Sites where Code in(" & "14022,14023" & ")")));
 </cfscript>
 

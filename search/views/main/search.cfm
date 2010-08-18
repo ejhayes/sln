@@ -2,7 +2,9 @@
 The following criteria were used for your search:
 
 <ul>
-    <li>Smell like catfish</li>
+<cfloop collection=#rc.data.parameters# item="i">
+    <li><cfoutput>#rc.data.parameters[i]#</cfoutput></li>
+</cfloop>
 </ul>
 
 <div class="notice"><img src="assets/img/notice.png" height="15" /> Place a checkbox next to each application you want a full report on.  Once you have made your selection click the "Generate Report" button.</div>
@@ -19,7 +21,7 @@ The following criteria were used for your search:
             </tr>
         </thead>
         <tbody>
-            <cfloop array="#rc.data#" index="i">
+            <cfloop array="#rc.data.results#" index="i">
             <cfoutput>
             <tr>
                 <td><input type="checkbox" name="applications" value="#i.getId()#" /></td>
@@ -41,6 +43,6 @@ The following criteria were used for your search:
             </cfloop>
         </tbody>
     </table>
-    <input type="submit" name="generate" value="Generate Report" />
+    <input type="submit" name="generate" value="Generate Report" />    
     <cfoutput><input type="button" name="newSearch" value="New Search" onclick="javascript:window.location='#buildURL('')#'" /></cfoutput>
 </form>
