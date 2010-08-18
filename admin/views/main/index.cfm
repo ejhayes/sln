@@ -11,7 +11,7 @@
 
 <h3>Statistics at a Glance</h3>
 <ul>
-<li>There are <a href="#"><cfoutput>#rc.data.totalActiveRecords#</cfoutput> active applications</a>.</li>
+<li>There are <a href="<cfoutput>#buildURL('search:main.search&status=A')#</cfoutput>"><cfoutput>#rc.data.totalActiveRecords#</cfoutput> active applications</a>.</li>
 <li>There are <a href="#">2 active applications with inactive products</a>.</li>
 </ul>
 
