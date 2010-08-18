@@ -30,18 +30,18 @@ component {
         }
         
         // ISSUED DATE (range)
-        if( arguments.issuedStart != "" ){
+        if( arguments.issuedStart != "" || arguments.issuedEnd != "" ){
             // PROBLEM HERE
-            searchQuery.addParam(name="issuedStart",value="#isNull(arguments.issuedStart)#",cfsqltype="cf_sql_varchar");
+            searchQuery.addParam(name="issuedStart",value="#arguments.issuedStart#",cfsqltype="cf_sql_varchar",null=(arguments.issuedStart == ""));
             searchQuery.addParam(name="issuedStart",value="#arguments.issuedStart#",cfsqltype="cf_sql_varchar");
-            searchQuery.addParam(name="issuedEnd",value="#isNull(arguments.issuedEnd)#",cfsqltype="cf_sql_varchar"); 
+            searchQuery.addParam(name="issuedEnd",value="#arguments.issuedEnd#",cfsqltype="cf_sql_varchar",null=(arguments.issuedEnd == "")); 
             searchQuery.addParam(name="issuedEnd",value="#arguments.issuedEnd#",cfsqltype="cf_sql_varchar"); 
             
             ArrayAppend(searchArray, "
                 select ID as A_ID from SPECUSE.A_APPLICATIONS 
                 where
-                    ( :issuedStart IS TRUE OR ISSUE_DATE >= to_date( :issuedStart ,'mm/dd/yyyy') ) AND
-                    ( :issuedEnd IS TRUE OR ISSUE_DATE < to_date( :issuedEnd ,'mm/dd/yyyy')+1 )
+                    ( :issuedStart IS NULL OR ISSUE_DATE >= to_date( :issuedStart ,'mm/dd/yyyy') ) AND
+                    ( :issuedEnd IS NULL OR ISSUE_DATE < to_date( :issuedEnd ,'mm/dd/yyyy')+1 )
             ");
         }
         
