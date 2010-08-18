@@ -25,17 +25,17 @@ component {
         
         // STATUS
         if( arguments.status != "" ){
-            searchQuery.addParam(name="status",value="#arguments.status#",cfsqltype="VARCHAR"); 
+            searchQuery.addParam(name="status",value="#arguments.status#",cfsqltype="cf_sql_varchar"); 
             ArrayAppend(searchArray, "select distinct ID as A_ID from SPECUSE.A_APPLICATIONS where S_CODE = :status");
         }
         
         // ISSUED DATE (range)
         if( arguments.issuedStart != "" || arguments.issuedEnd != "" ){
             // PROBLEM HERE
-            searchQuery.addParam(name="issuedStart",value="#arguments.issuedStart#",cfsqltype="cf_sql_varchar",null=(arguments.issuedStart == ""));
-            searchQuery.addParam(name="issuedStart",value="#arguments.issuedStart#",cfsqltype="cf_sql_varchar");
-            searchQuery.addParam(name="issuedEnd",value="#arguments.issuedEnd#",cfsqltype="cf_sql_varchar",null=(arguments.issuedEnd == "")); 
-            searchQuery.addParam(name="issuedEnd",value="#arguments.issuedEnd#",cfsqltype="cf_sql_varchar"); 
+            searchQuery.addParam(name="issuedStart",value="#arguments.issuedStart#",cfsqltype="cf_sql_cf_sql_varchar",null=(arguments.issuedStart == ""));
+            searchQuery.addParam(name="issuedStart",value="#arguments.issuedStart#",cfsqltype="cf_sql_cf_sql_varchar");
+            searchQuery.addParam(name="issuedEnd",value="#arguments.issuedEnd#",cfsqltype="cf_sql_cf_sql_varchar",null=(arguments.issuedEnd == "")); 
+            searchQuery.addParam(name="issuedEnd",value="#arguments.issuedEnd#",cfsqltype="cf_sql_cf_sql_varchar"); 
             
             ArrayAppend(searchArray, "
                 select ID as A_ID from SPECUSE.A_APPLICATIONS 
@@ -45,39 +45,45 @@ component {
             ");
         }
         
+        // REGISTRATION NUMBER
+        if( arguments.registrationNumber != "" ){
+            searchQuery.addParam(name="registrationNumber",value="#arguments.registrationNumber#",cfsqltype="cf_sql_varchar"); 
+            ArrayAppend(searchArray, "select distinct A_ID from SPECUSE.AR_APPLICATION_REVS where PRODNO IN (SELECT PRODNO FROM label.product where SHOW_REGNO LIKE '%' || :registrationNumber || '%' )");
+        }
+        
         // SITES
         if( arguments.sites != "" ){
-            searchQuery.addParam(name="sites",value="#arguments.sites#",list="true",cfsqltype="VARCHAR"); 
+            searchQuery.addParam(name="sites",value="#arguments.sites#",list="true",cfsqltype="cf_sql_varchar"); 
             ArrayAppend(searchArray, "select distinct A_ID from SPECUSE.AR_APPLICATION_REVS where ID IN(select AR_ID from SPECUSE.ARS_APPLICATION_REV_SITES ARS where SITE_CODE in ( :sites ))");
         }
         
         // PESTS
         if( arguments.pests != "" ){
-            searchQuery.addParam(name="pests",value=arguments.pests,list="true",cfsqltype="VARCHAR"); 
+            searchQuery.addParam(name="pests",value=arguments.pests,list="true",cfsqltype="cf_sql_varchar"); 
             ArrayAppend(searchArray, "select distinct A_ID from SPECUSE.AR_APPLICATION_REVS where ID IN(select AR_ID from SPECUSE.ARP_APPLICATION_REV_PESTS ARP where P_CODE in ( :pests ))");
         }
         
         // COUNTIES
         if( arguments.counties != "" ){
-            searchQuery.addParam(name="counties",value=arguments.counties,list="true",cfsqltype="VARCHAR"); 
+            searchQuery.addParam(name="counties",value=arguments.counties,list="true",cfsqltype="cf_sql_varchar"); 
             ArrayAppend(searchArray, "select distinct A_ID from SPECUSE.AR_APPLICATION_REVS where ID IN(select AR_ID from SPECUSE.ARC_APPLICATION_REV_COUNTIES where C_CODE in ( :counties ))");
         }
         
         // CHEMICALS
         if( arguments.chemicals != "" ){
-            searchQuery.addParam(name="chemicals",value=arguments.chemicals,list="true",cfsqltype="VARCHAR"); 
+            searchQuery.addParam(name="chemicals",value=arguments.chemicals,list="true",cfsqltype="cf_sql_varchar"); 
             ArrayAppend(searchArray, "select  distinct A_ID from SPECUSE.AR_APPLICATION_REVS where PRODNO in (select distinct prodno from label.prod_chem where chem_code in ( :chemicals ))");
         }
         
         // PRODUCTS
         if( arguments.products != "" ){
-            searchQuery.addParam(name="products",value=arguments.products,list="true",cfsqltype="VARCHAR"); 
+            searchQuery.addParam(name="products",value=arguments.products,list="true",cfsqltype="cf_sql_varchar"); 
             ArrayAppend(searchArray, "select distinct A_ID from SPECUSE.AR_APPLICATION_REVS where PRODNO in ( :products )");
         }
         
         // PESTICIDE TYPES
         if( arguments.pesticideTypes != "" ){
-            searchQuery.addParam(name="pesticideTypes",value=arguments.pesticideTypes,list="true",cfsqltype="VARCHAR"); 
+            searchQuery.addParam(name="pesticideTypes",value=arguments.pesticideTypes,list="true",cfsqltype="cf_sql_varchar"); 
             ArrayAppend(searchArray, "select distinct A_ID from SPECUSE.AR_APPLICATION_REVS where PRODNO in (select distinct prodno from label.prod_type_pesticide where TYPEPEST_CD in ( :pesticideTypes ))");
         }
 
