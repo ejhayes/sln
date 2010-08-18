@@ -47,7 +47,9 @@ component {
         var locations = {
             "TrackingSystem"="http://registration/track/reports/trackid_action.cfm?RequestTimeout=500&track_id=",
             "PDF"="http://docs.google.com/viewer?url=",
-            "Label"="./assets/registration/labels/"
+            "Label"="./assets/registration/labels/",
+            "Chemical"="http://apps.cdpr.ca.gov/cgi-bin/mon/bycode.pl?p_chemcode=",
+            "Product"="http://registration/label/cgi-bin/nl/pir.pl?p_prodno="
         };
         
         return locations[arguments.location] & arguments.id;

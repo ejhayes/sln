@@ -31,4 +31,16 @@ component {
             rc.designId = "I-5.0";
         }
     }
+    
+    function endReport(any rc){
+        // prepare the report page
+        if( isNull(rc.data) ){
+            rc.notice = {type="error",message="No records found."};
+            variables.fw.redirect("main.search","ALL");
+        } else {
+            local.helper = new assets.cfc.helpers();
+            rc.title = "Full Information " & helper.pluralize(ArrayLen(rc.data),"Report");
+            rc.designId = "I-6.0";
+        }
+    }
 }

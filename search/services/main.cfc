@@ -118,4 +118,10 @@ component {
         
         return ret;
     }
+    
+    function report(applications=""){
+        if( applications != "" ){
+            return ormExecuteQuery("from Applications where Id in(" & arguments.applications & ")");
+        }
+    }
 }
