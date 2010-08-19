@@ -1,23 +1,32 @@
 <cfset helper = new assets.cfc.helpers() />
 
 <cfloop array="#rc.data#" index="i">
-    <h2><cfoutput>#i.getOfficialName()# (#DateFormat(i.getIssued(),"m/d/yyyy")# - #DateFormat(i.getExpired(),"m/d/yyyy")#), #i.getStatus().getDescription()#</cfoutput></h2>
+    <h2>
+        <cfoutput>
+            <a href="#buildURL('admin:registration.app&id=' & i.getId())#">#i.getOfficialName()#</a> 
+            (#DateFormat(i.getIssued(),"m/d/yyyy")# - #DateFormat(i.getExpired(),"m/d/yyyy")#), #i.getStatus().getDescription()#
+        </cfoutput>
+    </h2>
     
+    <cfif i.getInternalComments() NEQ "" >
     <div class="notice">
     <h3>Internal Comments</h3>
     <p><cfoutput>#i.getInternalComments()#</cfoutput></p>
     </div>
+    </cfif>
     
+    <cfif i.getPublicComments() NEQ "" >
     <h3>External Comments</h3>
     <p><cfoutput>#i.getPublicComments()#</cfoutput></p>
+    </cfif>
     
     <cfif i.hasRevisions()>
         <cfloop array="#i.getRevisions()#" index="i">
             <table width="100%" border="1"> 
-                <thead>
-                    <th colspan="2"><h4><cfoutput><a href="#buildURL('admin:registration.rev&id=' & i.getId())#">Revision #i.getRevisionNumber()#</a><cfif !isNull(i.getLabel())> (<a href="#helper.linkTo('Label',i.getLabel())#">view label</a>)</cfif></cfoutput></h4></th>
-                </thead>
                 <tbody>
+                    <tr>
+                        <td colspan="2"><h4><cfoutput><a href="#buildURL('admin:registration.rev&id=' & i.getId())#">Revision #i.getRevisionNumber()#</a><cfif !isNull(i.getLabel())> (<a href="#helper.linkTo('Label',i.getLabel())#">view label</a>)</cfif></cfoutput></h4></td>
+                    </tr>
                     <tr>
                         <td width="130px"><h5>Tracking ID</h5></td>
                         <td><cfoutput><a href="#helper.LinkTo('TrackingSystem',i.getCorrespondence().getCode())#" target="_blank">#i.getCorrespondence().getCode()#</a></cfoutput></td>
