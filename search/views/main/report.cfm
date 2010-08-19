@@ -3,8 +3,10 @@
 <cfloop array="#rc.data#" index="i">
     <h2><cfoutput>#i.getOfficialName()# (#DateFormat(i.getIssued(),"m/d/yyyy")# - #DateFormat(i.getExpired(),"m/d/yyyy")#), #i.getStatus().getDescription()#</cfoutput></h2>
     
+    <div class="notice">
     <h3>Internal Comments</h3>
     <p><cfoutput>#i.getInternalComments()#</cfoutput></p>
+    </div>
     
     <h3>External Comments</h3>
     <p><cfoutput>#i.getPublicComments()#</cfoutput></p>
@@ -31,23 +33,39 @@
                     <tr>
                         <td><h5>Product Details</h5></td>
                         <td>
-                            <cfoutput>
-                            <h4 style="color:red">CALIFORNIA RESTRICTED</h4>
-                            <a href="#helper.linkTo('Product',i.getProduct().getCode())#">#i.getProduct().getDescription()#</a>, <span style="color:red">INACTIVE</span>, <strong>CAUTION</strong><br /><br />
-                            <strong>Ingredient(s):</strong><br />
-                            <cfif i.getProduct().hasChemicals()>
-                                <cfloop array="#i.getProduct().getChemicals()#" index="product">
-                                    #product.getPercent()#% <a href="#helper.linkTo('Chemical',product.getChemical().getCode())#" target="_blank">#product.getChemical().getDescription()#</a><br />
-                                </cfloop>
+                            <cfif i.hasProduct() >
+                                <cfoutput>
+                                <cfif i.getProduct().hasRestrictedStatuses() >
+                                    <cfset restrictedStatuses=EntityToQuery(i.getProduct().getRestrictedStatuses()) />
+                                    <strong>Special Status: </strong>
+                                    <span style="color:red">#ValueList(restrictedStatuses.DESCRIPTION,", ")#</span><br />
+                                </cfif>
+                                
+                                <cfif i.getProduct().hasWarning() >
+                                    <strong>Signal Word: </strong>
+                                    <span style="color:red">#i.getProduct().getWarning().getDescription()#</span><br />
+                                </cfif>
+                                
+                                <br />
+                                <a href="#helper.linkTo('Product',i.getProduct().getCode())#">#i.getProduct().getDescription()#</a>, 
+                                <strong>#i.getProduct().getStatus().getDescription()#</strong><br /><br />
+                                
+                                <cfif i.getProduct().hasChemicals()>
+                                    <strong>Ingredient(s):</strong><br />
+                                    <cfloop array="#i.getProduct().getChemicals()#" index="product">
+                                        #product.getPercent()#% <a href="#helper.linkTo('Chemical',product.getChemical().getCode())#" target="_blank">#product.getChemical().getDescription()#</a><br />
+                                    </cfloop>
+                                    <br />
+                                </cfif>
+                                
+                                <cfif i.getProduct().hasTypes()>
+                                    <strong>Pesticide Type:</strong><br />
+                                    <cfloop array="#i.getProduct().getTypes()#" index="pesticide">
+                                        #pesticide.getDescription()#<br />
+                                    </cfloop>
+                                </cfif>
+                                </cfoutput>
                             </cfif>
-                            
-                            <br /><strong>Pesticide Type:</strong><br />
-                            <cfif i.getProduct().hasTypes()>
-                                <cfloop array="#i.getProduct().getTypes()#" index="pesticide">
-                                    #pesticide.getDescription()#<br />
-                                </cfloop>
-                            </cfif>
-                            </cfoutput>
                         </td>
                     </tr>
                     <tr>
