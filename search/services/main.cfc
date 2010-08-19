@@ -112,7 +112,7 @@ component {
             // perform the search operation
             local.res = searchQuery.execute().getResult();
             if( ValueList(local.res.A_ID) != "" ){
-                local.ret.results = ormExecuteQuery("from Applications where Id in(" & ValueList(local.res.A_ID) & ")");
+                local.ret.results = report(ValueList(local.res.A_ID));
             }
         }
         
