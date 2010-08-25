@@ -32,15 +32,15 @@ component extends="assets.cfc.framework" {
     // if necessary, reset the application
     public function setupRequest() {
 		if(structKeyExists(url, "init")) {
-			setupApplication();
             // remove the generated xml files since they don't remove themselves
             hibernateFiles = directoryList(ExpandPath(this.ormsettings.cfclocation),false,"path","*.hbmxml");
             for(i=1;i LTE arrayLen(hibernateFiles); i++){
                 FileDelete(hibernateFiles[i]);
             }
             
-            // now reload the orm
-			ormReload();
+            // now reload the orm and app
+            ormReload();
+            setupApplication();
 		}
 	}
 }
