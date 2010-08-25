@@ -1,8 +1,8 @@
 /**
  * @persistent
  */
-component schema="label" table="QUALIFY" readonly="true"
+component schema="MASTER" table="QUALIFY" readonly="true"
 {
-    property name="Code" column="QUALIFY_CD";
+    property name="Code" column="QUALIFY_CD" fieldtype="id";
     property name="Description" column="QUALIFY_DSC";
 }

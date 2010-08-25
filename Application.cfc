@@ -13,7 +13,7 @@ component extends="assets.cfc.framework" {
         dialect="Oracle10g",
 		cfclocation="./model/" & LCase(this.config.environment),
 		eventhandling="true",
-		eventhandler="model.eventHandler",
+		eventhandler="model.EventHandler",
 		logsql="false",
         savemapping="true"
 	};
