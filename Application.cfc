@@ -21,7 +21,7 @@ component extends="assets.cfc.framework" {
     // Setup the application
 	variables.framework = {
         usingSubsystems = true,
-        defaultSubsystem = 'admin',
+        defaultSubsystem = (LCase(this.config.environment) == 'internal' ? 'admin' : 'search'), // set default mode!
         defaultItem = 'index',
         siteWideLayoutSubsystem = this.config.environment,
 		reloadApplicationOnEveryRequest = this.config.debug,
@@ -32,7 +32,7 @@ component extends="assets.cfc.framework" {
     // if necessary, reset the application
     public function setupRequest() {
 		if(structKeyExists(url, "init")) {
-            // remove the generated xml files since they don't remove themselves
+            // remove the generated hbxml files since they don't remove themselves
             hibernateFiles = directoryList(ExpandPath(this.ormsettings.cfclocation),false,"path","*.hbmxml");
             for(i=1;i LTE arrayLen(hibernateFiles); i++){
                 FileDelete(hibernateFiles[i]);
