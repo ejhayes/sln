@@ -1,6 +1,10 @@
 // Provides helper functions that can be used to make writing views less tedious and error prone
 // and thus more readable (hopefully)
 component {
+    function init(struct config=structNew()){
+        this.config = arguments.config;
+    }
+
     function relativeDate(required date dt){
         /*
          * Friendly Date Parse:
@@ -43,14 +47,23 @@ component {
     function linkTo(string location, string id=""){
         // returns a URL to a DPR point of interest
         
-        // Places we can go
-        var locations = {
-            "TrackingSystem"="http://registration/track/reports/trackid_action.cfm?RequestTimeout=500&track_id=",
-            "PDF"="http://docs.google.com/viewer?url=",
-            "Label"="./assets/registration/labels/",
-            "Chemical"="http://apps.cdpr.ca.gov/cgi-bin/mon/bycode.pl?p_chemcode=",
-            "Product"="http://registration/label/cgi-bin/nl/pir.pl?p_prodno="
-        };
+        // INTERNAL places we can go
+        if( StructKeyExists(this.config,"environment") && LCase(this.config.environment) == 'internal'){
+            local.locations = {
+                "TrackingSystem"="http://registration/track/reports/trackid_action.cfm?RequestTimeout=500&track_id=",
+                "Label"="./assets/registration/labels/",
+                "Chemical"="http://apps.cdpr.ca.gov/cgi-bin/mon/bycode.pl?p_chemcode=",
+                "Product"="http://registration/label/cgi-bin/nl/pir.pl?p_prodno="
+            };
+        } else {
+            // EXTERNAL Places we can go
+            local.locations = {
+                "TrackingSystem"="http://registration/track/reports/trackid_action.cfm?RequestTimeout=500&track_id=",
+                "Label"="http://docs.google.com/viewer?url=http://www.cdpr.ca.gov/docs/label/pdf/sln/",
+                "Chemical"="http://apps.cdpr.ca.gov/cgi-bin/mon/bycode.pl?p_chemcode=",
+                "Product"="http://registration/label/cgi-bin/nl/pir.pl?p_prodno="
+            };
+        }
         
         return locations[arguments.location] & arguments.id;
     }

@@ -2,6 +2,9 @@ component extends="assets.cfc.framework" {
 	// load environment configuration settings
 	this.config = new assets.cfc.Config(ExpandPath("./config.ini")).getSettings();
     
+    // and set our mode of operation
+    this.isInternal = (LCase(this.config.environment) == 'internal');
+    
     // set the application information
     this.sessionManagement = true;
     this.name = this.config.short_name;
@@ -21,9 +24,9 @@ component extends="assets.cfc.framework" {
     // Setup the application
 	variables.framework = {
         usingSubsystems = true,
-        defaultSubsystem = (LCase(this.config.environment) == 'internal' ? 'admin' : 'search'), // set default mode!
+        defaultSubsystem = (this.isInternal ? 'admin' : 'search'), // set default mode!
         defaultItem = 'index',
-        siteWideLayoutSubsystem = this.config.environment,
+        siteWideLayoutSubsystem = LCase(this.config.environment),
 		reloadApplicationOnEveryRequest = this.config.debug,
         maxNumContextsPreserved=2,
         preserveKeyURLKey='p'
