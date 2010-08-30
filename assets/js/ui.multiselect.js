@@ -93,21 +93,28 @@ $.widget("ui.multiselect", {
 		// callbacks
 		dataParser: defaultDataParser,
 		nodeComparator: defaultNodeComparator,
-		nodeInserted: null
+		nodeInserted: null,
+        hidden: true
 	},
 	_create: function() {
-		this.element.hide();
+		//this.element.hide();
 		this.busy = false;  // busy state
-		this.container = $('<div class="ui-multiselect ui-helper-clearfix ui-widget"></div>').insertAfter(this.element);
+		this.container = $('<div class="ui-multiselect ui-helper-clearfix ui-widget"></div>');
 		this.selectedContainer = $('<div class="ui-widget-content list-container selected"></div>').appendTo(this.container);
 		this.availableContainer = $('<div class="ui-widget-content list-container available"></div>').appendTo(this.container);
 		this.selectedActions = $('<div class="actions ui-widget-header ui-helper-clearfix"><span class="count">'+$.tmpl($.ui.multiselect.locale.itemsCount,{count:0})+'</span><a href="#" class="remove-all">'+$.tmpl($.ui.multiselect.locale.removeAll)+'</a></div>').appendTo(this.selectedContainer);
 		this.availableActions = $('<div class="actions ui-widget-header ui-helper-clearfix"><span class="busy">'+$.tmpl($.ui.multiselect.locale.busy)+'</span><input type="text" class="search ui-widget-content ui-corner-all"/><a href="#" class="add-all">'+$.tmpl($.ui.multiselect.locale.addAll)+'</a></div>').appendTo(this.availableContainer);
 		this.selectedList = $('<ul class="list selected"><li class="ui-helper-hidden-accessible"></li></ul>').bind('selectstart', function(){return false;}).appendTo(this.selectedContainer);
 		this.availableList = $('<ul class="list available"><li class="ui-helper-hidden-accessible"></li></ul>').bind('selectstart', function(){return false;}).appendTo(this.availableContainer);
-		
+        
+        // now add it
+        this.container.insertAfter(this.element);
+        
+        // and show it
+        if( !this.options.hidden ) this.container.show();
+            
 		var that = this;
-
+        
 		// initialize data cache
 		this.availableList.data('multiselect.cache', {});
 		this.selectedList.data('multiselect.cache', {});
@@ -116,7 +123,7 @@ $.widget("ui.multiselect", {
 			this.options.show = 'show';
 			this.options.hide = 'hide';
 		}
-
+        
 		// sortable / droppable	/ draggable
 		var dragOptions = {
 			selected: {
@@ -148,7 +155,7 @@ $.widget("ui.multiselect", {
 		// fix list height to match <option> depending on their individual header's heights
 		this.selectedList.height(Math.max(this.element.height()-this.selectedActions.height(),1));
 		this.availableList.height(Math.max(this.element.height()-this.availableActions.height(),1));
-
+        
 		// init lists
 		this._populateLists(this.element.find('option'));
 	},
@@ -157,6 +164,11 @@ $.widget("ui.multiselect", {
     *  Public
     **************************************/
 
+    toggle: function() {
+        this.container.slideToggle();
+        this.availableActions.find('input').width(Math.max(this.availableActions.width() - this.availableActions.find('a.add-all').width() - 30, 20));
+    },
+    
 	destroy: function() {
 		this.container.remove();
 		this.element.show();

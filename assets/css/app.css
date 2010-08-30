@@ -12,6 +12,12 @@
 /* pad the table */
 table.padded td { padding: 3px 3px 3px 0px }
 
+.multiselect {
+    width: 660px;
+    height: 200px;
+    display: None;
+}
+
 /* Interface Elements */
 input.text { width:125px; }
 select.field { width:135px; }

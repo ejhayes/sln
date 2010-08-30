@@ -44,6 +44,7 @@
 	.multiselect {
 		width: 660px;
 		height: 200px;
+        display: None;
 	}
 	
 	#switcher {

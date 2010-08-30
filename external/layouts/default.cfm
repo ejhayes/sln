@@ -23,11 +23,17 @@
     <script type="text/javascript" src="assets/js/jquery.metadata.js"></script>
 	<script type="text/javascript">
 	$(function() {
+        $('.collapse').hide();
+    
+        $('.collapseTrigger').click(function(){
+            $(this).next('.collapse').slideToggle();
+        });
+    
         $('form[data-confirm]').submit(function() {
             return confirm($(this).attr("data-confirm"));
         });
         
-        $('.multiselect').each(function() { $(this).multiselect({remoteUrl:"index.cfm?action=admin:main.lookup", remoteParams: {src:$(this).attr('data-src')}}); })
+        $('.multiselect').each(function() { $(this).multiselect({show: 'slideDown', hide: 'slideUp', remoteUrl:"index.cfm?action=admin:main.lookup", remoteParams: {src:$(this).attr('data-src')}}); })
         
         $.tablesorter.defaults.widgets = ['zebra']; 
         $('.tablesorter').each(function() { 

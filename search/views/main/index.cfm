@@ -1,13 +1,11 @@
 <form action="<cfoutput>#buildURL('main.search')#</cfoutput>" method="post">
     <table class="padded">
-        <thead>
-            <tr>
-                <th>Status</th>
-                <th colspan="2">Issued Between</th>
-                <th>Registration Number</th>
-            </tr>
-        </thead>
         <tbody>
+            <tr>
+                <th>Status:</th>
+                <th colspan="2">Issued between:</th>
+                <th>Registration Number:</th>
+            </tr>
             <tr>
                 <td>
                     <select name="status">
@@ -22,23 +20,36 @@
         </tbody>
     </table>
 
-    <h3>Sites</h3>
-    <select name="sites" multiple="yes" class="multiselect" data-src="Sites"></select>
+    <h3 class="collapseTrigger">Sites</h3>
+    
+        <select id="bog" name="sites" multiple="yes" class="multiselect" data-src="Sites"></select>
+    
 
-    <h3>Pests</h3>
-    <select name="pests" multiple="yes" class="multiselect" data-src="Pests"></select>
+    
+    <h3 class="collapseTrigger">Pests</h3>
+    <div class="collapse">
+        <select name="pests" multiple="yes" class="multiselect" data-src="Pests"></select>
+    </div>
+    
+    <h3 class="collapseTrigger">County</h3>
+    <div class="collapse">
+        <select name="Counties" multiple="yes" class="multiselect" data-src="Counties"></select>
+    </div>
+    
+    <h3 class="collapseTrigger">Chemical Ingredients</h3>
+    <div class="collapse">
+        <select name="chemicals" multiple="yes" class="multiselect" data-src="Chemicals"></select>
+    </div>
 
-    <h3>County</h3>
-    <select name="Counties" multiple="yes" class="multiselect" data-src="Counties"></select>
+    <h3 class="collapseTrigger">Brand Names</h3>
+    <div class="collapse">
+        <select name="products" multiple="yes" class="multiselect" data-src="Products"></select>
+    </div>
 
-    <h3>Chemical Ingredients</h3>
-    <select name="chemicals" multiple="yes" class="multiselect" data-src="Chemicals"></select>
-
-    <h3>Brand Names</h3>
-    <select name="products" multiple="yes" class="multiselect" data-src="Products"></select>
-
-    <h3>Pesticide Type</h3>
-    <select name="pesticides" multiple="yes" class="multiselect" data-src="PesticideTypes"></select>
+    <h3 class="collapseTrigger">Pesticide Type</h3>
+    <div class="collapse">
+        <select name="pesticides" multiple="yes" class="multiselect" data-src="PesticideTypes"></select>
+    </div>
     <br />
     
     <input type="submit" name="generate" value="Generate Report" />
