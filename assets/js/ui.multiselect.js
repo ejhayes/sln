@@ -94,7 +94,7 @@ $.widget("ui.multiselect", {
 		dataParser: defaultDataParser,
 		nodeComparator: defaultNodeComparator,
 		nodeInserted: null,
-        hidden: true
+        hidden: false
 	},
 	_create: function() {
 		//this.element.hide();
@@ -164,9 +164,12 @@ $.widget("ui.multiselect", {
     *  Public
     **************************************/
 
-    toggle: function() {
+    slideToggle: function() {
         this.container.slideToggle();
+        
+        // since we don't know this yet
         this.availableActions.find('input').width(Math.max(this.availableActions.width() - this.availableActions.find('a.add-all').width() - 30, 20));
+        
     },
     
 	destroy: function() {

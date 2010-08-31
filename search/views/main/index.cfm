@@ -20,36 +20,26 @@
         </tbody>
     </table>
 
-    <h3 class="collapseTrigger">Sites</h3>
+    <h3 class="toggleMultiselect">Sites</h3>
+    <select name="sites" multiple="yes" class="multiselect" data-src="Sites" data-collapse="true"></select>
     
-        <select id="bog" name="sites" multiple="yes" class="multiselect" data-src="Sites"></select>
+    <h3 class="toggleMultiselect">Pests</h3>
+    <select name="pests" multiple="yes" class="multiselect" data-src="Pests" data-collapse="true"></select>
     
+    <h3 class="toggleMultiselect">County</h3>
+    <select name="Counties" multiple="yes" class="multiselect" data-src="Counties" data-collapse="true"></select>
 
     
-    <h3 class="collapseTrigger">Pests</h3>
-    <div class="collapse">
-        <select name="pests" multiple="yes" class="multiselect" data-src="Pests"></select>
-    </div>
-    
-    <h3 class="collapseTrigger">County</h3>
-    <div class="collapse">
-        <select name="Counties" multiple="yes" class="multiselect" data-src="Counties"></select>
-    </div>
-    
-    <h3 class="collapseTrigger">Chemical Ingredients</h3>
-    <div class="collapse">
-        <select name="chemicals" multiple="yes" class="multiselect" data-src="Chemicals"></select>
-    </div>
+    <h3 class="toggleMultiselect">Chemical Ingredients</h3>
+    <select name="chemicals" multiple="yes" class="multiselect" data-src="Chemicals" data-collapse="true"></select>
 
-    <h3 class="collapseTrigger">Brand Names</h3>
-    <div class="collapse">
-        <select name="products" multiple="yes" class="multiselect" data-src="Products"></select>
-    </div>
 
-    <h3 class="collapseTrigger">Pesticide Type</h3>
-    <div class="collapse">
-        <select name="pesticides" multiple="yes" class="multiselect" data-src="PesticideTypes"></select>
-    </div>
+    <h3 class="toggleMultiselect">Brand Names</h3>
+    <select name="products" multiple="yes" class="multiselect" data-src="Products" data-collapse="true"></select>
+
+
+    <h3 class="toggleMultiselect">Pesticide Type</h3>
+    <select name="pesticides" multiple="yes" class="multiselect" data-src="PesticideTypes" data-collapse="true"></select>
     <br />
     
     <input type="submit" name="generate" value="Generate Report" />

@@ -37,11 +37,15 @@
     </cfoutput>
 	<script type="text/javascript">
 	$(function() {
+        $('.toggleMultiselect').click(function(){
+            $(this).next().multiselect('slideToggle');
+        });
+    
         $('form[data-confirm]').submit(function() {
             return confirm($(this).attr("data-confirm"));
         });
         
-        $('.multiselect').each(function() { $(this).multiselect({remoteUrl:"index.cfm?action=admin:main.lookup", remoteParams: {src:$(this).attr('data-src')}}); })
+        $('.multiselect').each(function() { $(this).multiselect({hidden: $(this).attr('data-collapse') ? $(this).attr('data-collapse'): false, remoteUrl:"index.cfm?action=admin:main.lookup", remoteParams: {src:$(this).attr('data-src')}}); })
         
         $.tablesorter.defaults.widgets = ['zebra']; 
         $('.tablesorter').each(function() { 
