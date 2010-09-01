@@ -38,7 +38,7 @@
 	<script type="text/javascript">
 	$(function() {
         $('.toggleMultiselect').click(function(){
-            $(this).next().multiselect('slideToggle');
+            $(this).toggleClass("active").next(".multiselect").multiselect('slideToggle');
         });
     
         $('form[data-confirm]').submit(function() {

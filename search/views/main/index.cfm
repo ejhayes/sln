@@ -24,7 +24,7 @@
     <select name="sites" multiple="yes" class="multiselect" data-src="Sites" data-collapse="true"></select>
     
     <h3 class="toggleMultiselect">Pests</h3>
-    <select name="pests" multiple="yes" class="multiselect" data-src="Pests" data-collapse="true"></select>
+    <select name="pests" multiple="yes" class="multiselect container" data-src="Pests" data-collapse="true"></select>
     
     <h3 class="toggleMultiselect">County</h3>
     <select name="Counties" multiple="yes" class="multiselect" data-src="Counties" data-collapse="true"></select>

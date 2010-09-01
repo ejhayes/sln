@@ -1,3 +1,8 @@
+/* keep the scrollbar there at all times */
+html {
+	overflow-Y: scroll;
+}
+
 /* Message Boxes */
 .error,
 .notice, 
@@ -28,3 +33,18 @@ table thead th { font-weight:700; border-bottom:1px solid #ccc; }
 table thead th.field { width:150px; }
 
 div#footer { text-align:center; }
+
+/* rounded corners */
+h3.toggleMultiselect {
+	-webkit-border-radius: 10px;
+	-khtml-border-radius: 10px;	
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+
+    background: url(../img/up.png) no-repeat #C6C2C9;
+    padding: 0 0 0 50px;
+	margin: 5px 0 5px 0;
+    height:33px;
+}
+
+h3.toggleMultiselect.active { background: url(../img/down.png) no-repeat #C6C2C9; }
