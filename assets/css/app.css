@@ -5,10 +5,13 @@ html {
 
 /* Message Boxes */
 .error,
-.notice, 
+.notice,
+.error,
+.criteria, 
 .success    { padding: .8em; margin-bottom: 1em; border: 2px solid #ddd; }
 .error      { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; }
 .notice     { background: #FFF6BF; color: #514721; border-color: #FFD324; }
+.criteria     { background: #C6C2C9; color: #000; border-color: #43403D; }
 .success    { background: #E6EFC2; color: #264409; border-color: #C6D880; }
 .error a    { color: #8a1f11; }
 .notice a   { color: #514721; }
@@ -35,6 +38,7 @@ table thead th.field { width:150px; }
 div#footer { text-align:center; }
 
 /* rounded corners */
+
 h3.toggleMultiselect {
 	-webkit-border-radius: 10px;
 	-khtml-border-radius: 10px;	

@@ -44,5 +44,5 @@ The following criteria were used for your search:
         </tbody>
     </table>
     <input type="submit" name="generate" value="Generate Report" />    
-    <cfoutput><input type="button" name="newSearch" value="New Search" onclick="javascript:window.location='#buildURL('')#'" /></cfoutput>
+    <cfoutput><input type="button" name="newSearch" value="Start Over" onclick="javascript:window.location='#buildURL('')#'" /></cfoutput>
 </form>

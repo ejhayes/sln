@@ -13,7 +13,7 @@ component {
         loadSearchCriteria(rc);
         
         if( isNull(rc.notice) ){    
-            rc.notice = {type="notice",message="Hovering your mouse over a criteria (registration number, issue date, chemical, etc.) will display additional help information."};
+            rc.notice = {type="notice",message="You can search SLN application data based on as many (or few) criteria as you'd like.  When you are finished, click the 'Search' button."};
         }
     
 		rc.title = "Search Criteria";
