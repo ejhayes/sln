@@ -97,6 +97,7 @@ $.widget("ui.multiselect", {
         hidden: false
 	},
 	_create: function() {
+        if( !this.options.hidden){
 		//this.element.hide();
 		this.busy = false;  // busy state
 		this.container = $('<div class="ui-multiselect ui-helper-clearfix ui-widget"></div>');
@@ -111,7 +112,7 @@ $.widget("ui.multiselect", {
         this.container.insertAfter(this.element);
         
         // and show it
-        if( !this.options.hidden ) this.container.show();
+        //if( !this.options.hidden ) this.container.show();
             
 		var that = this;
         
@@ -158,6 +159,7 @@ $.widget("ui.multiselect", {
         
 		// init lists
 		this._populateLists(this.element.find('option'));
+        } // end create
 	},
 
 	/**************************************
@@ -165,10 +167,13 @@ $.widget("ui.multiselect", {
     **************************************/
 
     slideToggle: function() {
-        this.container.slideToggle();
-        
-        // since we don't know this yet
-        this.availableActions.find('input').width(Math.max(this.availableActions.width() - this.availableActions.find('a.add-all').width() - 30, 20));
+        if( this.options.hidden ){
+            this.options.hidden = !this.options.hidden; // this should no longer be hidden
+            this._create(); // now create it
+        }
+        else{
+            this.container.slideToggle(); // otherwise just toggle it
+        }
         
     },
     
