@@ -52,3 +52,21 @@ h3.toggleMultiselect {
 }
 
 h3.toggleMultiselect.active { background: url(../img/down.png) no-repeat #C6C2C9; }
+
+/* navigation breadcrumbs */
+#breadcrumbs {
+    background-color:#ECECE7;
+    padding:5px 5px 5px 10px;
+    margin: 0 0 1em 0;
+}
+
+#breadcrumbs li {
+    display: inline;
+}
+
+#breadcrumbs li:before { 
+    content: url(/images/ca_department/bullet_blue.gif); 
+    padding-right:5px; 
+}
+
+#breadcrumbs li:first-child:before { content: ""; }
