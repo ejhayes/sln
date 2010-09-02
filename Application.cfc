@@ -24,7 +24,7 @@ component extends="assets.cfc.framework" {
     // Setup the application
 	variables.framework = {
         usingSubsystems = true,
-        defaultSubsystem = (this.isInternal ? 'admin' : 'search'), // set default mode!
+        defaultSubsystem = (this.isInternal ? 'admin' : 'search'), // set default subsystem!
         defaultItem = 'index',
         siteWideLayoutSubsystem = LCase(this.config.environment),
 		reloadApplicationOnEveryRequest = this.config.debug,
@@ -49,5 +49,8 @@ component extends="assets.cfc.framework" {
         if( this.isInternal and isNull(this.user) ){
             this.user = createObject('component','common_cfc.ldap_security.ldap').getUser(reReplaceNoCase(cgi.auth_user,'DPRNTDOM\\',''));
         }
+        
+        // since not everything has access to this variable
+        request.context.isInternal = this.isInternal;
 	}
 }

@@ -12,11 +12,13 @@ component {
         return ret;
     }
     
-    function search(string status="", string issuedStart="", string issuedEnd="", string registrationNumber="",string sites="", string pests="", string counties="", string chemicals="", string products="", string pesticideTypes=""){
+    function search(boolean isInternal, string status="", string issuedStart="", string issuedEnd="", string registrationNumber="",string sites="", string pests="", string counties="", string chemicals="", string products="", string pesticideTypes=""){
         var ret = {}; // the return object
         
         local.ret.results = [];
         local.ret.parameters = {};
+        
+        local.labelSchema = (arguments.isInternal ? "LABEL" : "MASTER"); // which schema?
         
         // iterate and build our search
         searchQuery = new Query();
@@ -59,7 +61,7 @@ component {
         if( arguments.registrationNumber != "" ){
             local.ret.parameters.registrationNumber = "Registration number like " & arguments.registrationNumber;
             searchQuery.addParam(name="registrationNumber",value="#arguments.registrationNumber#",cfsqltype="cf_sql_varchar"); 
-            ArrayAppend(searchArray, "select distinct A_ID from SPECUSE.AR_APPLICATION_REVS where PRODNO IN (SELECT PRODNO FROM label.product where SHOW_REGNO LIKE '%' || :registrationNumber || '%' )");
+            ArrayAppend(searchArray, "select distinct A_ID from SPECUSE.AR_APPLICATION_REVS where PRODNO IN (SELECT PRODNO FROM #local.labelSchema#.product where SHOW_REGNO LIKE '%' || :registrationNumber || '%' )");
         }
         
         // SITES
@@ -87,7 +89,7 @@ component {
         if( arguments.chemicals != "" ){
             local.ret.parameters.chemicals = "Contains any of these chemicals: " & ArrayToList(ormExecuteQuery("select Description from Chemicals where Code in(" & arguments.chemicals & ")"),", ");
             searchQuery.addParam(name="chemicals",value=arguments.chemicals,list="true",cfsqltype="cf_sql_varchar"); 
-            ArrayAppend(searchArray, "select  distinct A_ID from SPECUSE.AR_APPLICATION_REVS where PRODNO in (select distinct prodno from label.prod_chem where chem_code in ( :chemicals ))");
+            ArrayAppend(searchArray, "select  distinct A_ID from SPECUSE.AR_APPLICATION_REVS where PRODNO in (select distinct prodno from #local.labelSchema#.prod_chem where chem_code in ( :chemicals ))");
         }
         
         // PRODUCTS
@@ -101,7 +103,7 @@ component {
         if( arguments.pesticideTypes != "" ){
             local.ret.parameters.pesticideTypes = "Contains any products classified as: " & ArrayToList(ormExecuteQuery("select Description from PesticideTypes where Code in(" & arguments.pesticideTypes & ")"),", ");
             searchQuery.addParam(name="pesticideTypes",value=arguments.pesticideTypes,list="true",cfsqltype="cf_sql_varchar"); 
-            ArrayAppend(searchArray, "select distinct A_ID from SPECUSE.AR_APPLICATION_REVS where PRODNO in (select distinct prodno from label.prod_type_pesticide where TYPEPEST_CD in ( :pesticideTypes ))");
+            ArrayAppend(searchArray, "select distinct A_ID from SPECUSE.AR_APPLICATION_REVS where PRODNO in (select distinct prodno from #local.labelSchema#.prod_type_pesticide where TYPEPEST_CD in ( :pesticideTypes ))");
         }
 
         // just incase somebody doesn't search for anything
