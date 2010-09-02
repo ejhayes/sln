@@ -22,9 +22,11 @@
 <cfsavecontent variable="pageBody">
 <cfoutput>
 <ul id="breadcrumbs">
-    <li><cfif getSectionAndItem() EQ "main.index"><strong>Start</strong><cfelse><a href="#buildURL('')#">Start</a></cfif></li>
-    <li><cfif getSectionAndItem() EQ "main.search"><strong>Results</strong><cfelse><a href="#buildURL('main.search')#">Results</a></cfif></li>
-    <li><cfif getSectionAndItem() EQ "main.report"><strong>Report</strong><cfelse><a href="#buildURL('main.report')#">Report</a></cfif></li>
+    <cfloop array="#[1]#" index="i">
+    <li><a href="#buildURL('')#">Start</a></li><cfif getSectionAndItem() EQ "main.index"><cfbreak></cfif>
+    <li><strong>Results</strong></li><cfif getSectionAndItem() EQ "main.search"><cfbreak></cfif>
+    <li><strong>Report</strong></li><cfif getSectionAndItem() EQ "main.report"><cfbreak></cfif>
+    </cfloop>
 </ul>
 </cfoutput>
 <cfif StructKeyExists(rc,"notice")>
