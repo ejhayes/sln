@@ -27,16 +27,26 @@ The following criteria were used for your search:
                 <td><input type="checkbox" name="applications" value="#i.getId()#" /></td>
                 <td>
                     <cfloop array="#i.getUniqueProducts()#" index="j">
-                        <a href="#buildURL('admin:registration.rev&id=' & j['Id'])#">#Left(j['Description'],40)#</a>
+                        <cfif this.isInternal>
+                            <a href="#buildURL('admin:registration.rev&id=' & j['Id'])#">#Left(j['Description'],40)#</a>
+                        <cfelse>
+                            #Left(j['Description'],40)#
+                        </cfif>
                         <cfif StructKeyExists(j,"Label") >
-                            &nbsp;<a href="#helper.linkTo('Label',j['Label'])#" style="color:green"><strong>VIEW LABEL</strong></a> <img src="./assets/img/document.png" height="11" />
+                            &nbsp;<a target="_blank" href="#helper.linkTo('Label',j['Label'])#" style="color:green"><strong>VIEW LABEL</strong></a> <img src="./assets/img/document.png" height="11" />
                         </cfif>
                         
                     <br /></cfloop>
                     
                 </td>
                 <td>#i.getStatus().getDescription()#</td>
-                <td><a href="#buildURL('admin:registration.app&id=' & i.getId())#">#i.getOfficialName()#</a></td>
+                <td>
+                    <cfif this.isInternal >
+                        <a href="#buildURL('admin:registration.app&id=' & i.getId())#">#i.getOfficialName()#</a>
+                    <cfelse>
+                        #i.getOfficialName()#
+                    </cfif>
+                </td>
                 <td>#DateFormat(i.getExpired(),"m/d/yyyy")#</td>
             </tr>
             </cfoutput>
