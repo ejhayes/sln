@@ -11,8 +11,12 @@ component {
     
     function index() {
 		var ret = {};
-        ret.incomplete = ormExecuteQuery('from Applications where specuse_no is null order by updated_date desc');
+        ret.incomplete = ormExecuteQuery("from Applications where specuse_no is null order by updated_date desc");
+        ret.recent = ormExecuteQuery("from Applications order by updated_date desc",false,{maxResults=5});
+        ret.totalPendingRecords = ormExecuteQuery("select count(*) from Applications where s_code = 'P'")[1];
         ret.totalActiveRecords = ormExecuteQuery("select count(*) from Applications where s_code = 'A'")[1];
+        ret.totalInactiveRecords = ormExecuteQuery("select count(*) from Applications where s_code = 'I'")[1];
+        ret.totalDeniedRecords = ormExecuteQuery("select count(*) from Applications where s_code = 'D'")[1];
         return ret;
     }
     
