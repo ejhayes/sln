@@ -1,4 +1,4 @@
-<cfset helper = new assets.cfc.helpers() />
+<cfset helper = new assets.cfc.helpers(this.config) />
 The following criteria were used for your search:
 
 <ul>

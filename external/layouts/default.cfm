@@ -24,10 +24,10 @@
 <cfoutput>
 <ul id="breadcrumbs">
     <cfloop array="#[1]#" index="i">
-    <li><a href="#buildURL('admin:main.about')#">Start</a></li>
-    <li><a href="#buildURL('')#">Search</a></li><cfif getSectionAndItem() EQ "main.index"><cfbreak></cfif>
-    <li><strong>Results</strong></li><cfif getSectionAndItem() EQ "main.search"><cfbreak></cfif>
-    <li><strong>Report</strong></li><cfif getSectionAndItem() EQ "main.report"><cfbreak></cfif>
+        <li><a href="#buildURL('admin:main.about')#">Start</a></li>
+        <li><a href="#buildURL('')#">Search</a></li><cfif getSectionAndItem() EQ "main.index"><cfbreak></cfif>
+        <li><strong>Results</strong></li><cfif getSectionAndItem() EQ "main.search"><cfbreak></cfif>
+        <li><strong>Report</strong></li><cfif getSectionAndItem() EQ "main.report"><cfbreak></cfif>
     </cfloop>
 </ul>
 </cfoutput>
