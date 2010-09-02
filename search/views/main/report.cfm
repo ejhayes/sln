@@ -1,7 +1,7 @@
 <cfset helper = new assets.cfc.helpers() />
 
 <cfloop array="#rc.data#" index="i">
-    <h2>
+    <h1>
         <cfoutput>
             <cfif this.isInternal >
                 <a href="#buildURL('admin:registration.app&id=' & i.getId())#">#i.getOfficialName()#</a>
@@ -10,7 +10,7 @@
             </cfif>
             (#DateFormat(i.getIssued(),"m/d/yyyy")# - #DateFormat(i.getExpired(),"m/d/yyyy")#), #i.getStatus().getDescription()#
         </cfoutput>
-    </h2>
+    </h1>
     
     <cfif this.isInternal AND i.getInternalComments() NEQ "" >
     <div class="notice">
@@ -119,7 +119,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><h5><cfoutput><a href="#buildURL('admin:registration.sites&id=' & i.getId())#">Sites</a></cfoutput></h5></td>
+                        <td><h5><cfoutput>
+                            <cfif this.isInternal>
+                                <a href="#buildURL('admin:registration.sites&id=' & i.getId())#">Sites</a>
+                            <cfelse>
+                                Sites
+                            </cfif>
+                        </cfoutput></h5></td>
                         <td>
                             <cfif i.hasSites()>
                                 <cfloop array="#i.getSites()#" index="site">
@@ -137,5 +143,5 @@
             <br>
         </cfloop>
     </cfif>
-    
+    <hr>
 </cfloop>
