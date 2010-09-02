@@ -37,7 +37,7 @@
                                     Revision #i.getRevisionNumber()#
                                 </cfif>
 
-                                &nbsp;(<a href="#helper.linkTo('Label',i.getLabel())#">view label</a>)
+                                &nbsp;(<a target="_blank" href="#helper.linkTo('Label',i.getLabel())#">view label</a>)
                             </cfoutput></h4>
                         </td>
                     </tr>
@@ -128,7 +128,7 @@
                         </cfoutput></h5></td>
                         <td>
                             <cfif i.hasSites()>
-                                <cfloop array="#i.getSites()#" index="site">
+                                <cfloop array="#ormExecuteQuery('from RevisionSites where Revision.Id=? order by Site.Description',[i.getId()])#" index="site">
                                     <cfoutput>
                                         #site.getSite().getDescription()#,
                                         PHI: #site.getPreHarvestInterval()# #site.getPreHarvestIntervalMeasurement().getDescription()#,
