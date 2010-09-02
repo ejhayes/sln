@@ -18,6 +18,14 @@
 	<script type="text/javascript" src="assets/js/app.js"></script>
 </cfsavecontent>
 
+<cfsavecontent variable="pageBody">
+<cfif StructKeyExists(rc,"notice")>
+    <div class="<cfoutput>#rc.notice.type#</cfoutput>"><image src="<cfoutput>assets/img/#rc.notice.type#.png</cfoutput>" height="15" />&nbsp;<cfoutput>#rc.notice.message#</cfoutput></div>
+</cfif>
+
+<cfoutput>#body#</cfoutput>
+</cfsavecontent>
+
 <cfscript>
 param name="rc.title" default="California Department of Pesticide Regulation";
 param name="rc.head" default="";
@@ -34,6 +42,6 @@ WriteOutput(
         template:rc.template,
         title:rc.title,
         head: rc.head & head,
-        page:body)
+        page:pageBody)
 );
 </cfscript>

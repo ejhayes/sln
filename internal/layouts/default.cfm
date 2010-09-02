@@ -36,7 +36,6 @@
     <script type="text/javascript" src="assets/js/jquery.metadata.js"></script>
     <script type="text/javascript" src="assets/js/app.js"></script>
     </cfoutput>
-	<script type="text/javascript" src="assets/js/app.js"></script>
 </head>
 <body>
 <div id="wrapper">
