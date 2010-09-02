@@ -19,12 +19,13 @@
 </cfsavecontent>
 
 <cfsavecontent variable="pageBody">
-
+<cfoutput>
 <ul id="breadcrumbs">
-    <li><a href="">Start</a></li>
-    <li><a href="">Results</a></li>
-    <li><a href="">Report</a></li>
+    <li><cfif getSectionAndItem() EQ "main.index"><strong>Start</strong><cfelse><a href="#buildURL('')#">Start</a></cfif></li>
+    <li><cfif getSectionAndItem() EQ "main.search"><strong>Results</strong><cfelse><a href="#buildURL('main.search')#">Results</a></cfif></li>
+    <li><cfif getSectionAndItem() EQ "main.report"><strong>Report</strong><cfelse><a href="#buildURL('main.report')#">Report</a></cfif></li>
 </ul>
+</cfoutput>
 <cfif StructKeyExists(rc,"notice")>
     <div class="<cfoutput>#rc.notice.type#</cfoutput>"><image src="<cfoutput>assets/img/#rc.notice.type#.png</cfoutput>" height="15" />&nbsp;<cfoutput>#rc.notice.message#</cfoutput></div>
 </cfif>
