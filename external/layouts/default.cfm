@@ -19,6 +19,12 @@
 </cfsavecontent>
 
 <cfsavecontent variable="pageBody">
+
+<ul id="breadcrumbs">
+    <li><a href="">Start</a></li>
+    <li><a href="">Results</a></li>
+    <li><a href="">Report</a></li>
+</ul>
 <cfif StructKeyExists(rc,"notice")>
     <div class="<cfoutput>#rc.notice.type#</cfoutput>"><image src="<cfoutput>assets/img/#rc.notice.type#.png</cfoutput>" height="15" />&nbsp;<cfoutput>#rc.notice.message#</cfoutput></div>
 </cfif>

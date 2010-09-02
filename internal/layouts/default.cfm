@@ -42,7 +42,7 @@
     <div id="header">
         <cfoutput>
 		<h1>#pageTitle#</h1>
-        <p>Logged in as Eric Hayes (EHayes)</p>
+        <p>Logged in as #this.user.getproperty('cn')# (#this.user.getproperty('sAMAccountName')#)</p>
 		<p><a href="#buildURL('admin:')#">Home</a> | <a href="#buildURL('search:')#">Search</a> | <a href="#buildURL('admin:main.about')#">About</a></p>
         </cfoutput>
 	</div>
