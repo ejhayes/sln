@@ -45,5 +45,9 @@ component extends="assets.cfc.framework" {
             ormReload();
             setupApplication();
 		}
+        
+        if( this.isInternal and isNull(this.user) ){
+            this.user = createObject('component','common_cfc.ldap_security.ldap').getUser(reReplaceNoCase(cgi.auth_user,'DPRNTDOM\\',''));
+        }
 	}
 }
