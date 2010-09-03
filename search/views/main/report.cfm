@@ -74,7 +74,7 @@
                                 </cfif>
                                 
                                 <br />
-                                <a href="#helper.linkTo('Product',i.getProduct().getCode())#">#i.getProduct().getDescription()#</a>, 
+                                <a target ="_blank" href="#helper.linkTo('Product',i.getProduct().getCode())#">#i.getProduct().getDescription()#</a>, 
                                 <strong>#i.getProduct().getStatus().getDescription()#</strong><br /><br />
                                 
                                 <cfif i.getProduct().hasChemicals()>
