@@ -1,4 +1,4 @@
-<cfset helper = new assets.cfc.helpers() />
+<cfset helper = new assets.cfc.helpers(this.config) />
 
 <h3>Revision Details</h3>
 <cfoutput>Tracking ID <a href="#helper.linkTo('TrackingSystem',rc.rev.record.getCorrespondence().getCode())#" target="_blank">#rc.rev.record.getCorrespondence().getCode()#</a> #rc.rev.record.getCorrespondence().getFirmName()#</cfoutput>
