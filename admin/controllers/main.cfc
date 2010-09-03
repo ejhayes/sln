@@ -11,7 +11,7 @@ component {
 	}
     
     function about(){
-        rc.title="About";
+        rc.title="Overview";
         rc.designId="I-7.0";
     }
 }

@@ -20,19 +20,28 @@
 </cfsavecontent>
 
 <cfsavecontent variable="pageBody">
-<cfif getSectionAndItem() NEQ "main.about">
 <cfoutput>
 <h1>#rc.title# - #this.config.name#</h1>
-<ul id="breadcrumbs">
-    <cfloop array="#[1]#" index="i">
-        <li><a href="#buildURL('admin:main.about')#">Start</a></li>
-        <li><a href="#buildURL('')#">Search</a></li><cfif getSectionAndItem() EQ "main.index"><cfbreak></cfif>
-        <li><strong>Results</strong></li><cfif getSectionAndItem() EQ "main.search"><cfbreak></cfif>
-        <li><strong>Report</strong></li><cfif getSectionAndItem() EQ "main.report"><cfbreak></cfif>
-    </cfloop>
-</ul>
+<cfswitch expression="#getSectionAndItem()#">
+    <cfcase value="main.search">
+        <ul id="breadcrumbs">
+            <li><a href="#buildURL('search:')#">Start</a></li>
+            <li>Search Results</li>
+        </ul>
+    </cfcase>
+    <cfcase value="main.report">
+        <ul id="breadcrumbs">
+            <li><a href="#buildURL('search:')#">Start</a></li>
+            <li>Search Results</li>
+            <li>Full Report</li>
+        </ul>
+    </cfcase>
+    <cfcase value="main.index">
+        <p><a href="#buildURL('admin:main.about')#">Back to the overview page</a></p>
+    </cfcase>
+</cfswitch>
 </cfoutput>
-</cfif>
+
 <cfif StructKeyExists(rc,"notice")>
     <div class="<cfoutput>#rc.notice.type#</cfoutput>"><image src="<cfoutput>assets/img/#rc.notice.type#.png</cfoutput>" height="15" />&nbsp;<cfoutput>#rc.notice.message#</cfoutput></div>
 </cfif>

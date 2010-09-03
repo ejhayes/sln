@@ -1,18 +1,18 @@
 <cfset helper = new assets.cfc.helpers() />
 
 <cfset rc.notice = {type="notice", message="Click the back button on your browser to generate another report from your query results."} />    
-
+<div class="report">
 <cfloop array="#rc.data#" index="i">
-    <h1>
+    <div class="application">
         <cfoutput>
             <cfif this.isInternal >
-                <a href="#buildURL('admin:registration.app&id=' & i.getId())#">#i.getOfficialName()#</a>
+                <a href="#buildURL('admin:registration.app&id=' & i.getId())#">#i.getRegistrationType().getDescription()# #i.getOfficialName()#</a>
             <cfelse>
-                #i.getOfficialName()#
+                #i.getRegistrationType().getDescription()# #i.getOfficialName()#
             </cfif>
-            (#DateFormat(i.getIssued(),"m/d/yyyy")# - #DateFormat(i.getExpired(),"m/d/yyyy")#), #i.getStatus().getDescription()#
+            (issued #DateFormat(i.getIssued(),"m/d/yyyy")#, expires #DateFormat(i.getExpired(),"m/d/yyyy")#), #i.getStatus().getDescription()#
         </cfoutput>
-    </h1>
+    </div>
     
     <cfif this.isInternal AND i.getInternalComments() NEQ "" >
     <div class="notice">
@@ -28,23 +28,20 @@
     
     <cfif i.hasRevisions()>
         <cfloop array="#i.getRevisions()#" index="i">
+            <div class="revision"><cfoutput>
+                <cfif this.isInternal >
+                    <a href="#buildURL('admin:registration.rev&id=' & i.getId())#">Revision #i.getRevisionNumber()#</a>
+                <cfelse>
+                    Revision #i.getRevisionNumber()#
+                </cfif>
+
+                <br><img src="assets/img/pdf.png" /> <a target="_blank" href="#helper.linkTo('Label',i.getLabel())#">View Label</a>
+            </cfoutput></div>
+        
             <table width="100%" border="1"> 
                 <tbody>
                     <tr>
-                        <td colspan="2">
-                            <h4><cfoutput>
-                                <cfif this.isInternal >
-                                    <a href="#buildURL('admin:registration.rev&id=' & i.getId())#">Revision #i.getRevisionNumber()#</a>
-                                <cfelse>
-                                    Revision #i.getRevisionNumber()#
-                                </cfif>
-
-                                &nbsp;(<a target="_blank" href="#helper.linkTo('Label',i.getLabel())#">view label</a>)
-                            </cfoutput></h4>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="130px"><h5>Tracking ID</h5></td>
+                        <td width="130px">Tracking ID</td>
                         <td><cfoutput>
                             <cfif this.isInternal >
                                 <a href="#helper.LinkTo('TrackingSystem',i.getCorrespondence().getCode())#" target="_blank">#i.getCorrespondence().getCode()#</a>
@@ -55,15 +52,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <td width="130px"><h5>Approved</h5></td>
+                        <td width="130px">Approved</td>
                         <td><cfoutput>#DateFormat(i.getApproved(),"m/d/yyyy")#</cfoutput></td>
                     </tr>
                     <tr>
-                        <td><h5>Subtype</h5></td>
+                        <td>Subtype</td>
                         <td><cfif !isNull(i.getRegistrationSubtype())><cfoutput>#i.getRegistrationSubtype().getDescription()#</cfoutput></cfif></td>
                     </tr>
                     <tr>
-                        <td><h5>Product Details</h5></td>
+                        <td>Product Details</td>
                         <td>
                             <cfif i.hasProduct() >
                                 <cfoutput>
@@ -101,7 +98,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><h5>Pests</h5></td>
+                        <td>Pests</td>
                         <td>
                             <cfif i.hasPests()>
                                 <cfloop array="#i.getPests()#" index="pest">
@@ -111,7 +108,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><h5>Counties</h5></td>
+                        <td>Counties</td>
                         <td>
                             <cfif i.hasCounties()>
                                 <cfloop array="#i.getCounties()#" index="county">
@@ -121,13 +118,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><h5><cfoutput>
+                        <td><cfoutput>
                             <cfif this.isInternal>
                                 <a href="#buildURL('admin:registration.sites&id=' & i.getId())#">Sites</a>
                             <cfelse>
                                 Sites
                             </cfif>
-                        </cfoutput></h5></td>
+                        </cfoutput></td>
                         <td>
                             <cfif i.hasSites()>
                                 <cfloop array="#ormExecuteQuery('from RevisionSites where Revision.Id=? order by Site.Description',[i.getId()])#" index="site">
@@ -147,3 +144,4 @@
     </cfif>
     <hr>
 </cfloop>
+</div>
