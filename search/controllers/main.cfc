@@ -13,7 +13,7 @@ component {
         loadSearchCriteria(rc);
         
         if( isNull(rc.notice) ){    
-            rc.notice = {type="notice",message="You can search SLN application data based on as many (or few) criteria as you'd like.  When you are finished, click the 'Search' button."};
+            rc.notice = {type="notice",message="Choose one or more criteria.  When you are finished, click the 'Search' button."};
         }
     
 		rc.title = "Search Criteria";

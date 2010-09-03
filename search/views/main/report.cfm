@@ -1,5 +1,7 @@
 <cfset helper = new assets.cfc.helpers() />
 
+<cfset rc.notice = {type="notice", message="Click the back button on your browser to generate another report from your query results."} />    
+
 <cfloop array="#rc.data#" index="i">
     <h1>
         <cfoutput>

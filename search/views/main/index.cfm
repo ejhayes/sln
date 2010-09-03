@@ -1,5 +1,5 @@
 <form action="<cfoutput>#buildURL('main.search')#</cfoutput>" method="post">
-    <h3>Search by application status, issued date, or EPA registration number...</h3>
+    
     <div class="criteria">
     <table class="padded">
         <tbody>
@@ -22,26 +22,26 @@
         </tbody>
     </table>
     </div>
-    <h3>Also, look for SLN applications that...</h3>
-    <h3 class="toggleMultiselect"><em>are applicable to these sites/crops (garlic, potato, radish, etc.)</em></h3>
+    <h3>Other criteria you can search by:</h3>
+    <h3 class="toggleMultiselect"><em>Site/Crop</em></h3>
     <select name="sites" multiple="yes" class="multiselect" data-src="Sites" data-collapse="true"></select>
     
-    <h3 class="toggleMultiselect"><em>target these pests (blue mold, flying insects, fleas, etc.)</em></h3>
+    <h3 class="toggleMultiselect"><em>Pest</em></h3>
     <select name="pests" multiple="yes" class="multiselect container" data-src="Pests" data-collapse="true"></select>
     
-    <h3 class="toggleMultiselect"><em>are valid in these counties (sacramento, alpine, butte, etc.)</em></h3>
+    <h3 class="toggleMultiselect"><em>County</em></h3>
     <select name="Counties" multiple="yes" class="multiselect" data-src="Counties" data-collapse="true"></select>
 
     
-    <h3 class="toggleMultiselect"><em>contain pesticides with any of these chemicals (cetyl alcohol, arsenic acid, etc.)</em></h3>
+    <h3 class="toggleMultiselect"><em>Chemical</em></h3>
     <select name="chemicals" multiple="yes" class="multiselect" data-src="Chemicals" data-collapse="true"></select>
 
 
-    <h3 class="toggleMultiselect"><em>are for any of these pesticide products (ar-101, aquabrome tablets, etc.)</em></h3>
+    <h3 class="toggleMultiselect"><em>Brand Name</em></h3>
     <select name="products" multiple="yes" class="multiselect" data-src="Products" data-collapse="true"></select>
 
 
-    <h3 class="toggleMultiselect"><em>are for any of these types of pesticides (adjuvant, defoliant, miticide, etc.)</em></h3>
+    <h3 class="toggleMultiselect"><em>Pesticide Type</em></h3>
     <select name="pesticides" multiple="yes" class="multiselect" data-src="PesticideTypes" data-collapse="true"></select>
     <br />
     

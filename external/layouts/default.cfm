@@ -22,6 +22,7 @@
 <cfsavecontent variable="pageBody">
 <cfif getSectionAndItem() NEQ "main.about">
 <cfoutput>
+<h1>#rc.title# - #this.config.name#</h1>
 <ul id="breadcrumbs">
     <cfloop array="#[1]#" index="i">
         <li><a href="#buildURL('admin:main.about')#">Start</a></li>
