@@ -16,7 +16,7 @@ html {
 .criteria     { background: #C6C2C9; color: #000; border-color: #43403D; }
 .success    { background: #E6EFC2; color: #264409; border-color: #C6D880; }
 .application      { background: #E8D895; color: #604830; border-color: #604830; font-size:14pt; font-weight: bold; }
-.revision      { background: #A5D3EE; color: #0D4462; border-color: #0D4462; font-size:12pt; }
+.revision      { background: #A5D3EE; color: #0D4462; border-color: #0D4462; font-size:12pt; font-weight: bold; }
 .error a    { color: #8a1f11; }
 .notice a   { color: #514721; }
 .success a  { color: #264409; }

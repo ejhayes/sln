@@ -39,7 +39,7 @@
             <table width="100%" border="1"> 
                 <tbody>
                     <tr>
-                        <td width="130px">Tracking ID</td>
+                        <td width="130px"><strong>Tracking ID</strong></td>
                         <td><cfoutput>
                             <cfif this.isInternal >
                                 <a href="#helper.LinkTo('TrackingSystem',i.getCorrespondence().getCode())#" target="_blank">#i.getCorrespondence().getCode()#</a>
@@ -50,15 +50,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <td width="130px">Approved</td>
+                        <td width="130px"><strong>Approved</strong></td>
                         <td><cfoutput>#DateFormat(i.getApproved(),"m/d/yyyy")#</cfoutput></td>
                     </tr>
                     <tr>
-                        <td>Subtype</td>
+                        <td><strong>Subtype</strong></td>
                         <td><cfif !isNull(i.getRegistrationSubtype())><cfoutput>#i.getRegistrationSubtype().getDescription()#</cfoutput></cfif></td>
                     </tr>
                     <tr>
-                        <td>Product Details</td>
+                        <td><strong>Product Details</strong></td>
                         <td>
                             <cfif i.hasProduct() >
                                 <cfoutput>
@@ -96,7 +96,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Pests</td>
+                        <td><strong>Pests</strong></td>
                         <td>
                             <cfif i.hasPests()>
                                 <cfloop array="#i.getPests()#" index="pest">
@@ -106,7 +106,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Counties</td>
+                        <td><strong>Counties</strong></td>
                         <td>
                             <cfif i.hasCounties()>
                                 <cfloop array="#i.getCounties()#" index="county">
@@ -118,9 +118,9 @@
                     <tr>
                         <td><cfoutput>
                             <cfif this.isInternal>
-                                <a href="#buildURL('admin:registration.sites&id=' & i.getId())#">Sites</a>
+                                <a href="#buildURL('admin:registration.sites&id=' & i.getId())#"><strong>Sites</strong></a>
                             <cfelse>
-                                Sites
+                                <strong>Sites</strong>
                             </cfif>
                         </cfoutput></td>
                         <td>
