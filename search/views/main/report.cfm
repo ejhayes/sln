@@ -15,10 +15,8 @@
     </div>
     
     <cfif this.isInternal AND i.getInternalComments() NEQ "" >
-    <div class="notice">
-    <h3>Internal Comments</h3>
-    <p><cfoutput>#i.getInternalComments()#</cfoutput></p>
-    </div>
+        <h3>Internal Comments</h3>
+        <p><cfoutput>#i.getInternalComments()#</cfoutput></p>
     </cfif>
     
     <cfif i.getPublicComments() NEQ "" >
