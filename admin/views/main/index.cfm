@@ -23,9 +23,6 @@
 <!--- Recently Updated Applications --->
 <cfif ArrayLen(rc.data.recent) GT 0>
 <h3>Recent Activity</h3>
-<p>
-The following <cfoutput>#helper.pluralize(ArrayLen(rc.data.recent),"application does","applications do")# not currently have a special use number associated with #helper.pluralize(ArrayLen(rc.data.recent),"it","them")#</cfoutput>.
-</p>
 <table width="100%">
     <thead> 
         <tr> 
@@ -35,7 +32,6 @@ The following <cfoutput>#helper.pluralize(ArrayLen(rc.data.recent),"application 
             <th>Issue Date</th> 
             <th>Expiration Date</th> 
             <th>Revisions</th>
-            <th>Actions</th> 
         </tr> 
     </thead> 
     <tbody>
@@ -43,12 +39,11 @@ The following <cfoutput>#helper.pluralize(ArrayLen(rc.data.recent),"application 
         <cfoutput>
         <tr> 
             <td>#helper.relativeDate(i.getUpdated())# by #REReplaceNoCase(i.getUpdatedBy(),"DPRNTDOM\\","")#</td> 
-            <td>#i.getOfficialName()#</td> 
+            <td><a href="#buildURL(action='registration.app&id=' & i.getId())#">#i.getOfficialName()#</a></td> 
             <td>#i.getStatus().getDescription()#</td> 
             <td>#DateFormat(i.getIssued(),"m/d/yy")#</td> 
             <td>#DateFormat(i.getExpired(),"m/d/yy")#</td> 
             <td>#ArrayLen(i.getRevisions())#</td>
-            <td><a href="<cfoutput>#buildURL(action='registration.app&id=' & i.getId())#</cfoutput>">Open</a></td>
         </tr> 
         </cfoutput>
         </cfloop>
