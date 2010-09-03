@@ -1,4 +1,4 @@
-<cfset helper = new assets.cfc.helpers() />
+<cfset helper = new assets.cfc.helpers(this.config) />
 
 <cfset rc.notice = {type="notice", message="Click the back button on your browser to generate another report from your query results."} />    
 <div class="report">
