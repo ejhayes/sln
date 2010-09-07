@@ -144,6 +144,8 @@
             <br>
         </cfloop>
         </div>
+    <cfelse>
+        <em>This application does not currently contain any revisions.</em>
     </cfif>
     <hr>
 </cfloop>
