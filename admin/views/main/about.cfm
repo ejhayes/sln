@@ -1,5 +1,6 @@
 <cfif this.isInternal>
     <cfset rc.notice = {type="notice", message="<i>When contacting IT please provide the following text with your request</i>: <b>APP:</b> #this.config.short_name#, <b>STEWARD:</b> #this.config.steward#, <b>DSN:</b> #this.config.dsn#, <b>ENVIRONMENT:</b> #this.config.environment#, <b>STAGE:</b> #this.config.stage#"} />    
+    <cfset rc.title = this.config.name & " Query" />
 </cfif>
 
 <p>The Department of Pesticide Regulation (DPR), under the authority of Section 24(c) of FIFRA (Federal Insecticide Fungicide Rodenticide Act), may register an additional use of a federally registered pesticide product, or a new end use product to meet a special local need if certain conditions exist.</p>
