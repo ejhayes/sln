@@ -33,7 +33,9 @@
                     Revision #i.getRevisionNumber()#
                 </cfif>
 
-                <br><img src="assets/img/pdf.png" /> <a target="_blank" href="#helper.linkTo('Label',i.getLabel())#">View Label</a>
+                <cfif !isNull(i.getLabel()) >
+                    <br><img src="assets/img/pdf.png" /> <a target="_blank" href="#helper.linkTo('Label',i.getLabel())#">View Label</a>
+                </cfif>
             </cfoutput></div>
         
             <table width="100%" border="1"> 
