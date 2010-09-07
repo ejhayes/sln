@@ -55,16 +55,20 @@ component {
         var ret = {};
         
         try {
+            local.correspondence = EntityLoadByPK("Correspondences",arguments.correspondenceCode);
+
+            if( isNull(local.correspondence.getCorrespondenceType()) || !Find("24", local.correspondence.getCorrespondenceType().getCode() ) ) 
+                throw "Invalid tracking id";
+        
             if( deepCopy == "" ) {
                 // create a new revision with no basis
                 ret.rev = EntityNew("Revisions");
         
                 // setup the correspondence and parent application on the new revision object
-                ret.rev.setCorrespondence(EntityLoadByPK("Correspondences",arguments.correspondenceCode));
+                ret.rev.setCorrespondence(local.correspondence);
                 ret.rev.setApplication(EntityLoadByPK("Applications",arguments.application));
             } else {
                 // TODO: use saveRevision() function instead of the code below
-                
                 // create a new revision based on the most recent revision
                 // copy the following: revisionSites, revisionCounties, revisionPests, subtype, product
                 
@@ -73,7 +77,7 @@ component {
                 
                 // set revision details
                 ret.rev = EntityNew("Revisions");
-                ret.rev.setCorrespondence(EntityLoadByPK("Correspondences",arguments.correspondenceCode));
+                ret.rev.setCorrespondence(local.correspondence);
                 ret.rev.setApplication(local.rev.getApplication());
                 ret.rev.setRegistrationSubtype(local.rev.getRegistrationSubtype());
                 ret.rev.setProduct(local.rev.getProduct());
@@ -84,10 +88,6 @@ component {
                 
                 // we should now have an id that we can use
                 // for the relation properties
-                
-                // and perform the deep copy stuff
-                //ret.rev.setSites(local.rev.getSites());
-                //ret.rev.setCounties(local.rev.getCounties());
                 
                 // deep copy the pests
                 local.pests = local.rev.getPests();
@@ -130,6 +130,10 @@ component {
             ormFlush(); // if there is an error, it will be reported asap
         }
         catch(java.lang.Exception e){
+            // incase hibernate throws any errors at us
+            ret.error = {message=e};
+        }
+        catch(Any e){
             // incase hibernate throws any errors at us
             ret.error = {message=e};
         }
