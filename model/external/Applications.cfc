@@ -31,4 +31,11 @@ component schema="SPECUSE" table="A_APPLICATIONS"
         // the map technique returns a java.util.HashMap object
         return ormExecuteQuery("select new map(Product.Code as Code, Product.ShortDescription as Description, Product.RegistrationNumber as RegistrationNumber, Id as Id, Label as Label) from Revisions where Application.Id = ? order by Created", [this.getId()]);
     }
+    
+    // get the most current revision of the record
+    function getCurrentRevision(){
+        if( arrayLen(this.getRevisions()) > 0)
+            return EntityLoadByPK("Revisions", ormExecuteQuery("select max(Id) from Revisions where Application.Id=" & this.getId())[1]);
+        else return null;
+    }
 }
