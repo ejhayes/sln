@@ -20,26 +20,28 @@
     </cfif>
     
     <cfif i.getPublicComments() NEQ "" >
-    <h3>External Comments</h3>
+    <h3><cfif this.isInternal>External </cfif>Comments</h3>
     <p><cfoutput>#i.getPublicComments()#</cfoutput></p>
     </cfif>
     
     <cfif i.hasRevisions()>
+        <div style="padding-left:10px">
         <cfloop array="#i.getRevisions()#" index="i">
-            <div class="revision"><cfoutput>
-                <cfif this.isInternal >
-                    <a href="#buildURL('admin:registration.rev&id=' & i.getId())#">Revision #i.getRevisionNumber()#</a>
-                <cfelse>
-                    Revision #i.getRevisionNumber()#
-                </cfif>
-
-                <cfif !isNull(i.getLabel()) >
-                    <br><img src="assets/img/pdf.png" /> <a target="_blank" href="#helper.linkTo('Label',i.getLabel())#">View Label</a>
-                </cfif>
-            </cfoutput></div>
-        
             <table width="100%" border="1"> 
                 <tbody>
+                    <tr><td colspan="2" class="revision"><strong>
+                    <cfoutput>
+                    <cfif this.isInternal >
+                        <a href="#buildURL('admin:registration.rev&id=' & i.getId())#">Revision #i.getRevisionNumber()#</a>
+                    <cfelse>
+                        Revision #i.getRevisionNumber()#
+                    </cfif>
+
+                    <cfif !isNull(i.getLabel()) >
+                        ,&nbsp;<img src="assets/img/pdf.png" /> <a target="_blank" href="#helper.linkTo('Label',i.getLabel())#">View Label</a>
+                    </cfif>
+                    </cfoutput>
+                    </strong></td></tr>
                     <tr>
                         <td width="130px"><strong>Tracking ID</strong></td>
                         <td><cfoutput>
@@ -141,6 +143,7 @@
             </table>
             <br>
         </cfloop>
+        </div>
     </cfif>
     <hr>
 </cfloop>

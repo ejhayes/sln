@@ -22,6 +22,11 @@ component {
     
     function endSearch(any rc){
         // prepare the search results to display to the user
+        if( StructKeyExists(rc.data,"error") ){
+            rc.notice = {type="error",message=rc.data.error };
+            variables.fw.redirect("","NOTICE");
+        }
+        
         if( ArrayLen(rc.data.results) == 0 ){
             rc.notice = {type="error",message="No records found."};
             variables.fw.redirect("","ALL");

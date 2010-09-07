@@ -1,3 +1,11 @@
+<cfscript>
+    if( getSectionAndItem() == "main.about" ){
+        rc.title = "#this.config.name# Query";
+    } else {
+        rc.title = "#rc.title# - #this.config.name#";
+    }
+</cfscript>
+
 <!--- Application specific header code --->
 <cfsavecontent variable="head">
     <link rel="stylesheet"  href="assets/css/app.css" type="text/css" />
@@ -21,7 +29,8 @@
 
 <cfsavecontent variable="pageBody">
 <cfoutput>
-<h1>#rc.title# - #this.config.name#</h1>
+<h1>#rc.title#</h1>
+
 <cfswitch expression="#getSectionAndItem()#">
     <cfcase value="main.search">
         <ul id="breadcrumbs">

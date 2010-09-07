@@ -116,6 +116,8 @@ component {
             if( ValueList(local.res.A_ID) != "" ){
                 local.ret.results = report(ValueList(local.res.A_ID));
             }
+        } else {
+            ret.error = "You must select at least 1 criteria.";
         }
         
         return ret;

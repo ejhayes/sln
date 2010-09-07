@@ -7,16 +7,14 @@ html {
 .error,
 .notice,
 .error,
-.application,
 .criteria, 
-.revision,
 .success    { padding: .8em; margin-bottom: 1em; border: 2px solid #ddd; }
 .error      { background: #FBE3E4; color: #8a1f11; border-color: #FBC2C4; }
 .notice     { background: #FFF6BF; color: #514721; border-color: #FFD324; }
 .criteria     { background: #C6C2C9; color: #000; border-color: #43403D; }
 .success    { background: #E6EFC2; color: #264409; border-color: #C6D880; }
-.application      { background: #E8D895; color: #604830; border-color: #604830; font-size:14pt; font-weight: bold; }
-.revision      { background: #A5D3EE; color: #0D4462; border-color: #0D4462; font-size:12pt; font-weight: bold; }
+.application      { font-size:14pt; font-weight: bold; padding-bottom:8px; }
+.revision      { background: #F0F0F6; color: #0D4462; border-color: #0D4462; font-size:12pt; font-weight: bold; }
 .error a    { color: #8a1f11; }
 .notice a   { color: #514721; }
 .success a  { color: #264409; }
