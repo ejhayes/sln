@@ -319,7 +319,7 @@ component {
             if( arguments.labelFile != "" ){
                 local.fileObj = new assets.cfc.file();
                 local.helper = new assets.cfc.helpers();
-                local.destination = expandPath(local.helper.linkTo('Label'));
+                local.destination = local.helper.linkTo('LabelUpload');
                 local.ret.fileRes = local.fileObj.upload("FORM.labelFile", local.destination & "/" & local.ret.rev.getCorrespondence().getCode() & ".pdf");
                 
                 // label

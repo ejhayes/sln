@@ -48,10 +48,11 @@ component {
         // returns a URL to a DPR point of interest
         
         // INTERNAL places we can go
-        if( StructKeyExists(this.config,"environment") && LCase(this.config.environment) == 'internal'){
+        if( request.context.isInternal ){
             local.locations = {
                 "TrackingSystem"="http://registration/track/reports/trackid_action.cfm?RequestTimeout=500&track_id=",
                 "Label"="./assets/registration/labels/",
+                "LabelUpload"="./assets/registration/labels/",
                 "Chemical"="http://apps.cdpr.ca.gov/cgi-bin/mon/bycode.pl?p_chemcode=",
                 "Product"="http://registration/label/cgi-bin/nl/pir.pl?p_prodno="
             };
