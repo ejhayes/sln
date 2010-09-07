@@ -50,16 +50,80 @@ component {
         return ret;
     }
     
-    function addRevision(string correspondenceCode="", string application=""){
+    function addRevision(string correspondenceCode="", string application="", deepCopy=""){
         // create a new revision for the current application
         var ret = {};
         
         try {
-            ret.rev = EntityNew("Revisions");
+            if( deepCopy == "" ) {
+                // create a new revision with no basis
+                ret.rev = EntityNew("Revisions");
         
-            // setup the correspondence and parent application on the new revision object
-            ret.rev.setCorrespondence(EntityLoadByPK("Correspondences",arguments.correspondenceCode));
-            ret.rev.setApplication(EntityLoadByPK("Applications",arguments.application));
+                // setup the correspondence and parent application on the new revision object
+                ret.rev.setCorrespondence(EntityLoadByPK("Correspondences",arguments.correspondenceCode));
+                ret.rev.setApplication(EntityLoadByPK("Applications",arguments.application));
+            } else {
+                // TODO: use saveRevision() function instead of the code below
+                
+                // create a new revision based on the most recent revision
+                // copy the following: revisionSites, revisionCounties, revisionPests, subtype, product
+                
+                // what is the most recent revision?
+                local.rev = EntityLoadByPK("Applications",arguments.application).getCurrentRevision();
+                
+                // set revision details
+                ret.rev = EntityNew("Revisions");
+                ret.rev.setCorrespondence(EntityLoadByPK("Correspondences",arguments.correspondenceCode));
+                ret.rev.setApplication(local.rev.getApplication());
+                ret.rev.setRegistrationSubtype(local.rev.getRegistrationSubtype());
+                ret.rev.setProduct(local.rev.getProduct());
+                
+                // save the revision so we can get a revision id
+                EntitySave(ret.rev);
+                ormFlush(); // report an error if it occurs asap!
+                
+                // we should now have an id that we can use
+                // for the relation properties
+                
+                // and perform the deep copy stuff
+                //ret.rev.setSites(local.rev.getSites());
+                //ret.rev.setCounties(local.rev.getCounties());
+                
+                // deep copy the pests
+                local.pests = local.rev.getPests();
+                for( i = 1; i <= arrayLen(local.pests); i++){
+                    // create a stub object
+                    local.pest = EntityNew("RevisionPests");
+                    local.pest.setRevision(ret.rev);
+                    local.pest.setPest(local.pests[i].getPest());
+                    EntitySave(local.pest);
+                }
+                
+                // deep copy the counties
+                local.counties = local.rev.getCounties();
+                for( i = 1; i <= arrayLen(local.counties); i++){
+                    // create a stub object
+                    local.county = EntityNew("RevisionCounties");
+                    local.county.setRevision(ret.rev);
+                    local.county.setCounty(local.counties[i].getCounty());
+                    EntitySave(local.county);
+                }
+                
+                // deep copy the sites
+                local.sites = local.rev.getSites();
+                for( i = 1; i <= arrayLen(local.sites); i++){
+                    // create a stub object
+                    local.site = EntityNew("RevisionSites");
+                    local.site.setRevision(ret.rev);
+                    local.site.setSite(local.sites[i].getSite());
+                    local.site.setQualifier(local.sites[i].getQualifier());
+                    local.site.setReEntryInterval(local.sites[i].getReEntryInterval());
+                    local.site.setReEntryIntervalMeasurement(local.sites[i].getReEntryIntervalMeasurement());
+                    local.site.setPreHarvestInterval(local.sites[i].getPreHarvestInterval());
+                    local.site.setPreHarvestIntervalMeasurement(local.sites[i].getPreHarvestIntervalMeasurement());
+                    EntitySave(local.site);
+                }
+            }
             
             // save the revision
             EntitySave(ret.rev);
