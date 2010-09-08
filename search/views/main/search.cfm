@@ -7,7 +7,10 @@ The following criteria were used for your search:
 </cfloop>
 </ul>
 
-<div class="notice"><img src="assets/img/notice.png" height="15" /> Check one or more special use registrations below for a full information report.  When you are finished, click the 'Generate Report' button.  You can sort any column by clicking on its respective header.</div>
+<div class="notice"><img src="assets/img/notice.png" height="15" style="float:left" /><div style="padding-left:25px;">
+    Check one or more special use registrations below for a full information report.
+    When you are finished, click the 'Generate Report' button.  You can sort any column by clicking on the column header.</div>
+</div>
 
 <form action="<cfoutput>#buildURL('main.report')#</cfoutput>" method="post">
     <table width="100%" class="tablesorter" data-sort="[[1,0]]">

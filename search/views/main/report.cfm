@@ -25,7 +25,7 @@
     </cfif>
     
     <cfif i.hasRevisions()>
-        <div style="padding-left:10px">
+        <div style="padding-left:15px">
         <cfloop array="#i.getRevisions()#" index="i">
             <table width="100%" border="1"> 
                 <tbody>
@@ -147,6 +147,6 @@
     <cfelse>
         <em>This application does not currently contain any revisions.</em>
     </cfif>
-    <hr>
+    <hr style="margin:25px 0px 25px 0px;">
 </cfloop>
 </div>

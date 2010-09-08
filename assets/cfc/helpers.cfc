@@ -59,10 +59,9 @@ component {
         } else {
             // EXTERNAL Places we can go
             local.locations = {
-                "TrackingSystem"="http://registration/track/reports/trackid_action.cfm?RequestTimeout=500&track_id=",
                 "Label"="http://docs.google.com/viewer?url=http://www.cdpr.ca.gov/docs/label/pdf/sln/",
                 "Chemical"="http://apps.cdpr.ca.gov/cgi-bin/mon/bycode.pl?p_chemcode=",
-                "Product"="http://registration/label/cgi-bin/nl/pir.pl?p_prodno="
+                "Product"="http://apps.cdpr.ca.gov/cgi-bin/label/label.pl?typ=pir&prodno="
             };
         }
         
