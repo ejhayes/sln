@@ -59,7 +59,7 @@ component {
         } else {
             // EXTERNAL Places we can go
             local.locations = {
-                "Label"="http://docs.google.com/viewer?url=http://www.cdpr.ca.gov/docs/label/pdf/sln/",
+                "Label"="http://www.cdpr.ca.gov/docs/label/pdf/sln/",
                 "Chemical"="http://apps.cdpr.ca.gov/cgi-bin/mon/bycode.pl?p_chemcode=",
                 "Product"="http://apps.cdpr.ca.gov/cgi-bin/label/label.pl?typ=pir&prodno="
             };
