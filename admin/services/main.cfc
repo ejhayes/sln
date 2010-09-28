@@ -30,7 +30,7 @@ component {
         try {
             // prepare the return query stuff
             if( q == "" ) return EntityToQuery(ormExecuteQuery("from #arguments.src#", false, {maxresults=20}));
-            return EntityToQuery(ormExecuteQuery("from #arguments.src# where upper(Description) like '%" & arguments.q & "%'", false, {maxresults=20}));
+            return EntityToQuery(ormExecuteQuery("from #arguments.src# where upper(Description) like '%" & arguments.q & "%'", false, {maxresults=200}));
         } catch(java.lang.Exception e){
             return ""; // an error should just be nothing yo
         }
