@@ -50,7 +50,10 @@ component {
         rc.title = "Edit Application: " & rc.app.name;
         
         // set the designId information
-        if( rc.app.name == "NEW" ) rc.designId = "I-2.0";
+        if( rc.app.name == "NEW" ){
+            rc.designId = "I-2.0";
+            rc.title = rc.app.name;
+        }
         else rc.designId = "I-2.1";
     }
     
@@ -99,7 +102,8 @@ component {
         }
     
         // set the page title
-        rc.title = "Edit Revision: " & rc.rev.name;
+        if( rc.rev.record.getRevisionNumber() == 0 ) rc.title = rc.rev.name;
+        else rc.title = "Edit Revision: " & rc.rev.name;
         rc.designId="I-3.0";
     }
     

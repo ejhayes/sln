@@ -1,7 +1,7 @@
 <cfset helper = new assets.cfc.helpers(this.config) />
 
 <h3>Revision Details</h3>
-<cfoutput>Tracking ID <a href="#helper.linkTo('TrackingSystem',rc.rev.record.getCorrespondence().getCode())#" target="_blank">#rc.rev.record.getCorrespondence().getCode()#</a> #rc.rev.record.getCorrespondence().getFirmName()#</cfoutput>
+<cfoutput>Tracking ID <a href="#helper.linkTo('TrackingSystem',rc.rev.record.getCorrespondence().getCode())#" target="_blank">#rc.rev.record.getCorrespondence().getCode()#</a> #rc.rev.record.getCorrespondence().getProductName()#</cfoutput>
 
 <form action="<cfoutput>#buildURL('registration.saveRevision')#</cfoutput>" method="post" enctype="multipart/form-data">
     <!--- Hold the ID of the current application revision record --->

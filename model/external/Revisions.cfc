@@ -32,6 +32,10 @@ component schema="SPECUSE" table="AR_APPLICATION_REVS"
     }
     
     function getOfficialName(){
-        return this.getApplication().getOfficialName() & " rev. " & this.getRevisionNumber();
+        var officialName = this.getApplication().getOfficialName();
+        
+        // initial revisions don't need to display rev. 0!
+        if( this.getRevisionNumber() == 0 ) return officialName;
+        else return officialName & " rev. " & this.getRevisionNumber();
     }
 }
