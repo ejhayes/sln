@@ -847,14 +847,10 @@ $.widget("ui.multiselect", {
 				$(this).removeClass('ui-state-active').data('multiselect.hasFocus', false);
 			})
 			.bind('keydown.multiselect keypress.multiselect', function(e) {
-				if (timer) clearTimeout(timer);
 				switch (e.which) {
 					case 13:   // enter
 						_searchNow(true);
 						return false;
-
-					default:
-						timer = setTimeout(function() { _searchNow(); }, Math.max(that.options.searchDelay,1));
 				}
 			})
 			.show();

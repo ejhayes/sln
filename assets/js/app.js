@@ -7,7 +7,7 @@ $(function() {
         return confirm($(this).attr("data-confirm"));
     });
     
-    $('.multiselect').each(function() { $(this).multiselect({searchDelay: 700, hidden: $(this).attr('data-collapse') ? $(this).attr('data-collapse'): false, remoteUrl:"index.cfm?action=admin:main.lookup", remoteParams: {src:$(this).attr('data-src')}}); })
+    $('.multiselect').each(function() { $(this).multiselect({hidden: $(this).attr('data-collapse') ? $(this).attr('data-collapse'): false, remoteUrl:"index.cfm?action=admin:main.lookup", remoteParams: {src:$(this).attr('data-src')}}); })
     
     $.tablesorter.defaults.widgets = ['zebra']; 
     $('.tablesorter').each(function() { 

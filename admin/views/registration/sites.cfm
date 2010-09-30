@@ -121,3 +121,4 @@
 <br /><br /><hr>
 <cfoutput><input type="button" value="Back to Revision Details" onclick="javascript:window.location='#buildURL('registration.rev&id=' & rc.rev.record.getId())#'" /></cfoutput>
 <cfoutput><input type="button" value="Close Revision" onclick="javascript:window.location='#buildURL('registration.app&id=' & rc.rev.record.getApplication().getId())#'" /></cfoutput>
+<cfoutput><input type="button" value="Start a new application" onclick="javascript:window.location='#buildURL('registration.app')#'" /></cfoutput>
