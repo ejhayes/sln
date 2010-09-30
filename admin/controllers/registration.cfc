@@ -55,16 +55,22 @@ component {
     }
     
     function endSave(any rc){
-        // was there an error?
-        if( !isNull(rc.data.error) ){
-            rc.notice = {type="error", message=rc.data.error.message};
+        // did we create a revision too?
+        if( StructKeyExists(rc.data,"rev") ){
+            // we did, so defer to the controller that already exists for revisions
+            endAddRevision(rc);
         } else {
-            rc.notice = {type="success", message="Record saved"};
+            // only the application was created, so handle normally!
+            // was there an error?
+            if( !isNull(rc.data.error) ){
+                rc.notice = {type="error", message=rc.data.error.message};
+            } else {
+                rc.notice = {type="success", message="Record saved"};
+            }
+            rc.id = rc.data.app.getId();
+            variables.fw.redirect("registration.app","notice","id");
         }
-
-        // oki doki, to the page!
-        rc.id = rc.data.app.getId();
-        variables.fw.redirect("registration.app","notice","id");
+        
     }
     
     // REGISTRATION APPLICATION REVISIONS

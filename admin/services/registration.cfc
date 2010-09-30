@@ -183,7 +183,7 @@ component {
     }
     
     // SAVE FUNCTIONS
-    function save(string id, string status, string specialUseNumber, string registrationType, string issued, string expired, string internalComments, string publicComments){
+    function save(string id, string status, string specialUseNumber, string registrationType, string issued, string expired, string internalComments, string publicComments, string correspondenceCode=""){
         // save the app
         local.ret = {};
         local.registrationType = EntityLoadByPK("RegistrationTypes",arguments.registrationType);
@@ -218,8 +218,33 @@ component {
             
             EntitySave(ret.app);
             ormFlush(); // if there is an error, it will be reported asap
+            
+            /*
+            SHORTCUT QUICK ADD INITIAL REVISION (per John Inouye, 9/29/2010 DEV NOTES):
+            Since a tracking id can be provided, we can easily perform this step
+            here.  Additional details about the reasoning is located with the
+            registration.app view.
+            */
+            
+            if( arguments.correspondenceCode != "" ){
+                // call the add revision function
+                local.retTemp = local.ret;
+                ret = addRevision(arguments.correspondenceCode, ret.app.getId());
+                if( StructKeyExists(ret,"error") ){
+                    local.retTemp.error = local.ret.error; // grab the error
+                    local.ret = local.retTemp; // reset out return structure
+                    throw ret.error.message; // now throw an error and return normally as if we only created an app
+                } else {
+                    return ret; // return as if we created a revision
+                }
+            }
         }
         catch(java.lang.Exception e) {
+            // my name is grace and i'm ful
+            // incase hibernate has any issues persisting to the db do nothing
+            ret.error = {message=e};
+        }
+        catch(any e) {
             // my name is grace and i'm ful
             // incase hibernate has any issues persisting to the db do nothing
             ret.error = {message=e};

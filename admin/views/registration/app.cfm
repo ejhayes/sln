@@ -39,6 +39,18 @@
             <td><label>Expiration Date: </label></td>
             <td><input class="datepicker" name="expired" type="text" value="<cfoutput>#DateFormat(rc.app.record.getExpired(),'mm/dd/yyyy')#</cfoutput>" /></td>
         </tr>
+        <!--- 
+        NEW APPLICATIONS WITH A TRACKING ID ALREADY ESTABLISHED (SHORTCUT per John Inouye, 9/29/2010 DEV NOTES)
+        If this is a new application, we will allow the registration scientist to be able to enter a tracking id here instead.
+        When the application is created, then we can go ahead and create the first revision to it.  Assuming this is all successful
+        we can dive right into the revision details screen.
+        --->
+        <cfif rc.app.record.getId() EQ "">
+        <tr>
+            <td><label>Tracking ID: </label></td>
+            <td><input name="correspondenceCode" type="text" /></td>
+        </tr>
+        </cfif>
     </table>
     <br />
     
