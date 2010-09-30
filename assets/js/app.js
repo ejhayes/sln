@@ -40,7 +40,10 @@ $(function() {
             .insertAfter(this);
     });
     
-    $(".datepicker").datepicker();
+    $(".datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true
+    });
     
     $(".checkAll").click(function() {
         $("input[name=" + $(this).attr('data-target') + "]").attr('checked', $(this).is(':checked'))
