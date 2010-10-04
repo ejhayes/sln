@@ -702,12 +702,12 @@ $.widget("ui.multiselect", {
 		if (selected) {
 			item.children('span').addClass('ui-helper-hidden').removeClass('ui-icon');
 			item.find('a.action span').addClass('ui-icon-minus').removeClass('ui-icon-plus');
-			this._registerRemoveEvents(item.find('a.action'));
+			this._registerRemoveEvents(item);
 			
 		} else {
 			item.children('span').addClass('ui-helper-hidden').removeClass('ui-icon');
 			item.find('a.action span').addClass('ui-icon-plus').removeClass('ui-icon-minus');
-			this._registerAddEvents(item.find('a.action'));
+			this._registerAddEvents(item);
 		}
 		
 		this._registerHoverEvents(item);
@@ -746,7 +746,7 @@ $.widget("ui.multiselect", {
 		elements.unbind('click.multiselect').bind('click.multiselect', function() {
 			// ignore if busy...
 			if (!this.busy) {
-				that._setSelected($(this).parent(), true);
+				that._setSelected($(this), true);
 			}
 			return false;
 		});
@@ -772,7 +772,7 @@ $.widget("ui.multiselect", {
 		elements.unbind('click.multiselect').bind('click.multiselect', function() {
 			// ignore if busy...
 			if (!that.busy) {
-				that._setSelected($(this).parent(), false);
+				that._setSelected($(this), false);
 			}
 			return false;
 		});
