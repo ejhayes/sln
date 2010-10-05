@@ -22,7 +22,8 @@ component schema="SPECUSE" table="A_APPLICATIONS"
 
     // pad with zeros
     function getSpecialUseNumber(){
-        return repeatString("0", 6 - len(variables.SpecialUseNumber)) & variables.SpecialUseNumber;
+        if(StructKeyExists(variables,"SpecialUseNumber")) return repeatString("0", 6 - len(variables.SpecialUseNumber)) & variables.SpecialUseNumber;
+        else return JavaCast("null","");
     }
     
     // get the official name of the record
