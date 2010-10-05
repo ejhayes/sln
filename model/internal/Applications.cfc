@@ -20,7 +20,12 @@ component schema="SPECUSE" table="A_APPLICATIONS"
     property name="Created" column="CREATED_DATE";
     property name="UpdatedBy" column="UPDATED_USER";
     property name="Updated" column="UPDATED_DATE" fieldtype="timestamp";
-
+    
+    // pad with zeros
+    function getSpecialUseNumber(){
+        return repeatString("0", 6 - len(variables.SpecialUseNumber)) & variables.SpecialUseNumber;
+    }
+    
     // get the official name of the record
     function getOfficialName(){
         if( this.getSpecialUseNumber() == "" ) return "UNKNOWN";
