@@ -48,7 +48,7 @@
         <cfif rc.app.record.getId() EQ "">
         <tr>
             <td><label>Tracking ID: </label></td>
-            <td><input name="correspondenceCode" type="text" /></td>
+            <td><input name="correspondenceCode" type="text" />&nbsp;<span style="color:red">(next available is <cfoutput>#rc.app.record.getNextDummyCode()#</cfoutput>)</span></td>
         </tr>
         </cfif>
     </table>
@@ -121,7 +121,7 @@
     
     <!--- Let the user initiate a new revision --->
     <form action="<cfoutput>#buildURL('registration.addRevision&application=' & rc.app.record.getId() )#</cfoutput>" method="post" data-confirm="Are you sure you want to add a revision from this tracking id?">
-        <label><strong>Create a new revision from Tracking ID</strong>: </label><input name="correspondenceCode" type="text" />
+        <label><strong>Create a new revision from Tracking ID</strong> <span style="color:red">(next available is <cfoutput>#rc.app.record.getNextDummyCode()#</cfoutput>)</span>: </label><input name="correspondenceCode" type="text" />
         <input type="submit" name="submit" value="Add Revision" />
         <!--- NO need to add a deep copy action if we have no revisions --->
         <cfif arrayLen(rc.app.record.getRevisions()) GT 0>
