@@ -20,6 +20,15 @@ component schema="SPECUSE" table="A_APPLICATIONS"
     property name="UpdatedBy" column="UPDATED_USER";
     property name="Updated" column="UPDATED_DATE" fieldtype="timestamp";
 
+    // when creating the application we had to create some dummy records
+    // in the tracking system.  this function will make it easier to determine
+    // what the next available tracking id is
+    function getNextDummyCode(){
+        var ret = ormExecuteQuery("select max(Correspondence)+1 from Revisions where Correspondence < ?", [15000])[1];
+        if( isNull(ret) ) return 14000;
+        else return ret;
+    }
+    
     // pad with zeros
     function getSpecialUseNumber(){
         if(StructKeyExists(variables,"SpecialUseNumber")) return repeatString("0", 6 - len(variables.SpecialUseNumber)) & variables.SpecialUseNumber;
