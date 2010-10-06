@@ -809,7 +809,7 @@ $.widget("ui.multiselect", {
 					try {
 						$.ajax({
 							url: that.options.remoteUrl,
-							data: $.extend(params, {q:escape(value)}),
+							data: $.extend(params, {q:value}),
 							success: function(data) { 
 								that.addOptions(data);
 								that._setBusy(false); 
