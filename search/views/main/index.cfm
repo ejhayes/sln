@@ -42,7 +42,7 @@
 
 
     <h3 class="toggleMultiselect"><em>Pesticide Type</em></h3>
-    <select name="pesticides" multiple="yes" class="multiselect" data-src="PesticideTypes" data-collapse="true"></select>
+    <select name="pesticideTypes" multiple="yes" class="multiselect" data-src="PesticideTypes" data-collapse="true"></select>
     <br />
     
     <input type="submit" name="generate" value="Search" />
