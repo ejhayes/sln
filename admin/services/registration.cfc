@@ -224,6 +224,9 @@ component {
             Since a tracking id can be provided, we can easily perform this step
             here.  Additional details about the reasoning is located with the
             registration.app view.
+            
+            10/6/2010 - The first revision of a record should make the issue date the same
+            as the approval date.  Implemented this feature.
             */
             
             if( arguments.correspondenceCode != "" ){
@@ -235,7 +238,9 @@ component {
                     local.ret = local.retTemp; // reset out return structure
                     throw ret.error.message; // now throw an error and return normally as if we only created an app
                 } else {
-                    return ret; // return as if we created a revision
+                    // 10/6/2010 - The first revision of a record should make the issue date the same
+                    // as the approval date.  Implemented this feature.
+                    saveRevision(id=ret.rev.getId(), approved=arguments.issued); // set the approved date to align with issued date
                 }
             }
         }
@@ -275,84 +280,92 @@ component {
         // set it, save it, love it
         try {
             // registration subtype
-            if( arguments.registrationSubtype == "" ) ret.rev.setRegistrationSubtype(JavaCast("null",""));
-            else ret.rev.setRegistrationSubtype(EntityLoadByPK("RegistrationSubtypes",arguments.registrationSubtype));
-            
+            if( !isNull(arguments.registrationSubtype) ){
+                if( arguments.registrationSubtype == "" ) ret.rev.setRegistrationSubtype(JavaCast("null",""));
+                else ret.rev.setRegistrationSubtype(EntityLoadByPK("RegistrationSubtypes",arguments.registrationSubtype));
+            }
             // approval date
-            if( arguments.approved == "" ) ret.rev.setApproved(JavaCast("null",""));
-            else ret.rev.setApproved(arguments.approved);
+            if( !isNull(arguments.approved) ){
+                if( arguments.approved == "" ) ret.rev.setApproved(JavaCast("null",""));
+                else ret.rev.setApproved(arguments.approved);
+            }
             
             // pesticide product
-            if( arguments.product == "" ) ret.rev.setProduct(JavaCast("null",""));
-            else ret.rev.setProduct(EntityLoadByPK("Products",arguments.product));
+            if( !isNull(arguments.product) ){
+                if( arguments.product == "" ) ret.rev.setProduct(JavaCast("null",""));
+                else ret.rev.setProduct(EntityLoadByPK("Products",arguments.product));
+            }
             
             // counties
-            local.countyActions = processDiff(
-                ormExecuteQuery("select County.Code from RevisionCounties where Revision.Id=?",[arguments.id]), 
-                ListToArray(arguments.counties)
-            ); // which counties need to be added or removed?
-            
-            // add each county and link to the rev
-            for( i=1; i<= ArrayLen(local.countyActions.add); i++ ){
-                local.revisionCounty = EntityNew("RevisionCounties");
-                local.revisionCounty.setRevision(ret.rev);
-                local.revisionCounty.setCounty(EntityLoadByPK("Counties",local.countyActions.add[i]));
-                EntitySave(local.revisionCounty);
-            }
-            
-            // remove each county and unlink from the rev
-            for( i=1; i<= ArrayLen(local.countyActions.remove); i++ ){
-                EntityDelete(
-                    EntityLoad("RevisionCounties",
-                        {
-                            Revision=ret.rev,
-                            County=EntityLoadByPK("Counties",local.countyActions.remove[i])
-                        },
-                        true
-                    )
-                );
-            }
-            
-            // pests
-            local.pestActions = processDiff(
-                ormExecuteQuery("select Pest.Code from RevisionPests where Revision.Id=?",[arguments.id]), 
-                ListToArray(arguments.pests)
-            ); // which pests need to be added or removed?
-            
-            // add each pest and link to the rev
-            for( i=1; i<= ArrayLen(local.pestActions.add); i++ ){
-                local.revisionPest = EntityNew("RevisionPests");
-                local.revisionPest.setRevision(ret.rev);
-                local.revisionPest.setPest(EntityLoadByPK("Pests",local.pestActions.add[i]));
-                EntitySave(local.revisionPest);
-            }
-            
-            // remove each pest and unlink from the rev
-            for( i=1; i<= ArrayLen(local.pestActions.remove); i++ ){
-                EntityDelete(
-                    EntityLoad("RevisionPests",
-                        {
-                            Revision=ret.rev,
-                            Pest=EntityLoadByPK("Pests",local.pestActions.remove[i])
-                        },
-                        true
-                    )
-                );
-            }
-            
-            // upload the file
-            if( arguments.labelFile != "" ){
-                local.fileObj = new assets.cfc.file();
-                local.helper = new assets.cfc.helpers();
-                local.destination = ExpandPath(local.helper.linkTo('LabelUpload'));
-                local.ret.fileRes = local.fileObj.upload("FORM.labelFile", local.destination & "/" & local.ret.rev.getCorrespondence().getCode() & ".pdf");
+            if( !isNull(arguments.counties) ){
+                local.countyActions = processDiff(
+                    ormExecuteQuery("select County.Code from RevisionCounties where Revision.Id=?",[arguments.id]), 
+                    ListToArray(arguments.counties)
+                ); // which counties need to be added or removed?
                 
-                // label
-                //if( arguments.label == "" ) ret.rev.setLabel(JavaCast("null",""));
-                //else ret.rev.setLabel(arguments.label);
-                ret.rev.setLabel(local.ret.rev.getCorrespondence().getCode() & ".pdf");
+                // add each county and link to the rev
+                for( i=1; i<= ArrayLen(local.countyActions.add); i++ ){
+                    local.revisionCounty = EntityNew("RevisionCounties");
+                    local.revisionCounty.setRevision(ret.rev);
+                    local.revisionCounty.setCounty(EntityLoadByPK("Counties",local.countyActions.add[i]));
+                    EntitySave(local.revisionCounty);
+                }
+                
+                // remove each county and unlink from the rev
+                for( i=1; i<= ArrayLen(local.countyActions.remove); i++ ){
+                    EntityDelete(
+                        EntityLoad("RevisionCounties",
+                            {
+                                Revision=ret.rev,
+                                County=EntityLoadByPK("Counties",local.countyActions.remove[i])
+                            },
+                            true
+                        )
+                    );
+                }
             }
-            
+            // pests
+            if( !isNull(arguments.pests) ){
+                local.pestActions = processDiff(
+                    ormExecuteQuery("select Pest.Code from RevisionPests where Revision.Id=?",[arguments.id]), 
+                    ListToArray(arguments.pests)
+                ); // which pests need to be added or removed?
+                
+                // add each pest and link to the rev
+                for( i=1; i<= ArrayLen(local.pestActions.add); i++ ){
+                    local.revisionPest = EntityNew("RevisionPests");
+                    local.revisionPest.setRevision(ret.rev);
+                    local.revisionPest.setPest(EntityLoadByPK("Pests",local.pestActions.add[i]));
+                    EntitySave(local.revisionPest);
+                }
+                
+                // remove each pest and unlink from the rev
+                for( i=1; i<= ArrayLen(local.pestActions.remove); i++ ){
+                    EntityDelete(
+                        EntityLoad("RevisionPests",
+                            {
+                                Revision=ret.rev,
+                                Pest=EntityLoadByPK("Pests",local.pestActions.remove[i])
+                            },
+                            true
+                        )
+                    );
+                }
+            }
+            // upload the file
+            if( !isNull(arguments.labelFile) ){
+                if( arguments.labelFile != "" ){
+                    local.fileObj = new assets.cfc.file();
+                    local.helper = new assets.cfc.helpers();
+                    local.destination = ExpandPath(local.helper.linkTo('LabelUpload'));
+                    local.ret.fileRes = local.fileObj.upload("FORM.labelFile", local.destination & "/" & local.ret.rev.getCorrespondence().getCode() & ".pdf");
+                    
+                    // label
+                    //if( arguments.label == "" ) ret.rev.setLabel(JavaCast("null",""));
+                    //else ret.rev.setLabel(arguments.label);
+                    ret.rev.setLabel(local.ret.rev.getCorrespondence().getCode() & ".pdf");
+                }
+            }
             // save it all up
             EntitySave(ret.rev);
             ormFlush(); // if there is an error, it will be reported asap
