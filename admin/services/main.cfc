@@ -29,8 +29,8 @@ component {
         // hibernate may give us any number of issues and we should be graceful
         try {
             // prepare the return query stuff
-            if( q == "" ) return EntityToQuery(ormExecuteQuery("from #arguments.src#", false, {maxresults=60}));
-            return EntityToQuery(ormExecuteQuery("from #arguments.src# where upper(Description) like '%" & arguments.q & "%'", false, {maxresults=200}));
+            if( q == "" ) return EntityToQuery(ormExecuteQuery("from #arguments.src# order by Description", false, {maxresults=60}));
+            return EntityToQuery(ormExecuteQuery("from #arguments.src# where upper(Description) like '%" & arguments.q & "%' order by Description", false, {maxresults=250}));
         } catch(java.lang.Exception e){
             return ""; // an error should just be nothing yo
         }
