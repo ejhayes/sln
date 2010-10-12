@@ -101,7 +101,7 @@ component {
         
         // PESTICIDE TYPES
         if( arguments.pesticideTypes != "" ){
-            local.ret.parameters.pesticideTypes = "Contains any products classified as: " & ArrayToList(ormExecuteQuery("select Description from PesticideTypes where Code in(" & arguments.pesticideTypes & ")"),", ");
+            local.ret.parameters.pesticideTypes = "Contains any products classified as: " & ArrayToList(ormExecuteQuery("select Description from PesticideTypes where Code in(" & ListQualify(arguments.pesticideTypes,"'") & ")"),", ");
             searchQuery.addParam(name="pesticideTypes",value=arguments.pesticideTypes,list="true",cfsqltype="cf_sql_varchar"); 
             ArrayAppend(searchArray, "select distinct A_ID from SPECUSE.AR_APPLICATION_REVS where PRODNO in (select distinct prodno from #local.labelSchema#.prod_type_pesticide where TYPEPEST_CD in ( :pesticideTypes ))");
         }
@@ -113,6 +113,7 @@ component {
             
             // perform the search operation
             local.res = searchQuery.execute().getResult();
+            
             if( ValueList(local.res.A_ID) != "" ){
                 local.ret.results = report(ValueList(local.res.A_ID));
             }

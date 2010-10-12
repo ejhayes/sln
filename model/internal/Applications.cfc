@@ -13,7 +13,7 @@ component schema="SPECUSE" table="A_APPLICATIONS"
     property name="PublicComments" column="COMMENTS_PUBLIC";
     
     // Application Revisions
-    property name="Revisions" fkcolumn="A_ID" cfc="Revisions" type="array" fieldtype="one-to-many" orderby="CREATED_DATE asc";
+    property name="Revisions" fkcolumn="A_ID" cfc="Revisions" type="array" fieldtype="one-to-many" orderby="CREATED_DATE desc";
     
     // Auditing fields
     property name="CreatedBy" column="CREATED_USER";
