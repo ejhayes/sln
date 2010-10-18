@@ -46,8 +46,8 @@ component extends="assets.cfc.framework" {
             setupApplication();
 		}
         
-        if( this.isInternal and isNull(this.user) ){
-            this.user = createObject('component','common_cfc.ldap_security.ldap').getUser(reReplaceNoCase(cgi.auth_user,'DPRNTDOM\\',''));
+        if( this.isInternal and isNull(request.context.user) ){
+            request.context.user = createObject('component','common_cfc.ldap_security.ldap').getUser(reReplaceNoCase(cgi.auth_user,'DPRNTDOM\\',''));
         }
         
         // since not everything has access to this variable

@@ -107,6 +107,11 @@ component {
         rc.designId="I-3.0";
     }
     
+    function startSaveRevision(any rc){
+        rc.approvee = rc.user.getproperty('cn');
+        rc.username = rc.user.getproperty('sAMAccountName');
+    }
+    
     function endSaveRevision(any rc){
         // was there an error?
         if( !isNull(rc.data.error) ){

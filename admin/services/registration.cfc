@@ -258,7 +258,7 @@ component {
         return ret;
     }
     
-    function saveRevision(string id, string registrationSubtype="", string approved="", string product="", string labelFile="", string pests="", string counties=""){
+    function saveRevision(string id, string approvee, string username, string registrationSubtype="", string approved="", applyStamp="", string product="", string labelFile="", string pests="", string counties=""){
         // save the revision
         local.ret = {};
         
@@ -355,11 +355,27 @@ component {
             // upload the file
             if( !isNull(arguments.labelFile) ){
                 if( arguments.labelFile != "" ){
-                    local.fileObj = new assets.cfc.file();
                     local.helper = new assets.cfc.helpers();
-                    local.destination = ExpandPath(local.helper.linkTo('LabelUpload'));
-                    local.ret.fileRes = local.fileObj.upload("FORM.labelFile", local.destination & "/" & local.ret.rev.getCorrespondence().getCode() & ".pdf");
+                    local.destination = ExpandPath(local.helper.linkTo('LabelUpload')) & "/" & local.ret.rev.getCorrespondence().getCode() & ".pdf";
+                    local.fileObj = new assets.cfc.file();
+                    local.ret.fileRes = local.fileObj.upload("FORM.labelFile", local.destination);
                     
+                    // do we apply an electronic stamp?
+                    if( arguments.applyStamp != "" ){
+                        stampPDF(
+                            approvalStamp(
+                                "Labeling Acceptable", 
+                                "Pesticide Registration",
+                                DateFormat(local.ret.rev.getApproved(),"m/d/yyyy"),
+                                arguments.approvee,
+                                local.ret.rev.getProduct().getRegistrationNumber()
+                            ),
+                            local.destination,
+                            arguments.approvee,
+                            arguments.username,
+                            local.ret.rev.getOfficialName()
+                        );
+                    }
                     // label
                     //if( arguments.label == "" ) ret.rev.setLabel(JavaCast("null",""));
                     //else ret.rev.setLabel(arguments.label);
@@ -484,5 +500,93 @@ component {
         
         // thank you!
         return ret;
+    }
+    
+    function approvalStamp(string header, string approvalDivision, string approvalDate, string approvalName, string registrationNumber, numeric border=5, sizeFactor=1, string dpr_logo=ExpandPath("assets/img/dpr.gif"), string state_seal="california.jpg"){
+        var width = round(180 * arguments.sizeFactor);
+        var height = round(116 * arguments.sizeFactor);
+        var currentHeight = round(24 * arguments.sizeFactor);
+        var textSize = round(14 * arguments.sizeFactor);
+        var lineSpacing = round(3  * arguments.sizeFactor);
+        var dprLogo = ImageRead(arguments.dpr_logo);
+        //var stateSeal = ImageRead(arguments.state_seal);
+        var dpr_blue ="00247e";
+        var dpr_green = "028536";
+        var imgUtil = new assets.cfc.imageUtils();
+        var stamp=ImageNew("",width, height,"","white");
+        var imageAttributes = {
+            size = JavaCast("string",textSize),
+            font = "Arial",
+            style = "bold",
+            lineHeight = JavaCast("string", textSize + lineSpacing),
+            textAlign = "center"
+        };
+        
+        // Resize image if needed
+        ImageResize(dprLogo,36 * arguments.sizeFactor,JavaCast("null",""));
+        //ImageResize(stateSeal,36 * arguments.sizeFactor,JavaCast("null",""));
+        
+        // Add a border and make everything antialiased!
+        ImageAddBorder(stamp,arguments.border,dpr_blue);
+        ImageSetAntialiasing(stamp, "on");
+        
+        // Add the dpr logo to the bottom right
+        ImagePaste(stamp, dprLogo,  width - round(dprLogo.width), height - round(dprLogo.height));
+        
+        // Add the california seal to the bottom left
+        //ImagePaste(stamp, stateSeal, 10, height - round(stateSeal.height));
+        
+        // Set the headers
+        ImageSetDrawingColor(stamp,dpr_blue);
+        imgUtil.DrawTextArea(stamp, UCase(arguments.header), 0, currentHeight, width + (arguments.border*2), imageAttributes);
+        currentHeight += imageAttributes['lineHeight'];
+        
+        // Add the DPR information
+        textSize = textSize - lineSpacing - 1;
+        imageAttributes['size'] = JavaCast("string",textSize);
+        imageAttributes['lineHeight'] = JavaCast("string", textSize + lineSpacing);
+        
+        imgUtil.DrawTextArea(stamp, "State of California", 0, currentHeight, width + (arguments.border*2), imageAttributes);
+        currentHeight += imageAttributes['lineHeight'];
+        
+        imgUtil.DrawTextArea(stamp, "Department of Pesticide Regulation", 0, currentHeight, width + (arguments.border * 2), imageAttributes);
+        currentHeight += imageAttributes['lineHeight'];
+        
+        imgUtil.DrawTextArea(stamp, arguments.approvalDivision, 0, currentHeight, width + (arguments.border*2), imageAttributes);
+        currentHeight += imageAttributes['lineHeight'];
+        
+        // And additional label information
+        ImageSetDrawingColor(stamp,dpr_green);
+        
+        imgUtil.DrawTextArea(stamp, arguments.approvalDate, 0, currentHeight, width + (arguments.border*2), imageAttributes);
+        currentHeight += imageAttributes['lineHeight'];
+        
+        imgUtil.DrawTextArea(stamp, arguments.approvalName, 0, currentHeight, width + (arguments.border*2), imageAttributes);
+        currentHeight += imageAttributes['lineHeight'];
+        
+        imgUtil.DrawTextArea(stamp, arguments.registrationNumber, 0, currentHeight, width + (arguments.border*2), imageAttributes);
+        currentHeight += imageAttributes['lineHeight'];
+        
+        // return our spiffy image object
+        return stamp;
+    }
+
+    function stampPDF(any stamp,string pdfLocation, string approvee, string username, string officialName, numeric margin=7){
+        // applies a stamp to a pdf, encrypts it, then overwrites it
+        var pdfService = new pdf();
+        var opts = {
+            author="Department of Pesticide Regulation",
+            keywords="Special Local Need Registration, 24(c), 24, SLN, " & arguments.officialName,
+            language="English",
+            title="Special Local Need Registration Label " & arguments.officialName,
+            subject="Approved by " & arguments.approvee & ", " & arguments.username & "@cdpr.ca.gov"
+        };
+        var pass = "XnEkFLTW7";
+        
+        // set attributes
+        pdfService.setSource(arguments.pdfLocation);
+        pdfService.setPdfInfo(info=opts,password=pass);
+        pdfService.protect(permissions="AllowPrinting,AllowScreenReaders,AllowSecure",encrypt="AES_128",newOwnerPassword=pass,password=pass);
+        pdfService.addWatermark(image=arguments.stamp,pages=1,position="7,660",foreground="true",showonprint="true",password=pass,destination=arguments.pdfLocation,overwrite="true");
     }
 }
