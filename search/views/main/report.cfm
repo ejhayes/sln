@@ -10,7 +10,7 @@
             <cfelse>
                 #i.getRegistrationType().getDescription()# #i.getOfficialName()#
             </cfif>
-            (issued #DateFormat(i.getIssued(),"m/d/yyyy")#, expires #DateFormat(i.getExpired(),"m/d/yyyy")#), #i.getStatus().getDescription()#
+            (issued #DateFormat(i.getIssued(),"m/d/yyyy")#<cfif !isNull(i.getExpired())>, expires #DateFormat(i.getExpired(),"m/d/yyyy")#</cfif>), #i.getStatus().getDescription()#
         </cfoutput>
     </div>
     
