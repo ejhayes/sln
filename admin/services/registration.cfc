@@ -30,6 +30,7 @@ component {
         ret = {};
         ret['preHarvestMeasurements'] = EntityToQuery(EntityLoad("PreHarvestMeasurements"));
         ret['reEntryMeasurements'] = EntityToQuery(EntityLoad("ReEntryMeasurements"));
+        ret['qualifiers'] = EntityToQuery(EntityLoad("Qualifiers"));
         
         return ret;
     }
