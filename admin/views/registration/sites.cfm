@@ -45,7 +45,11 @@
     <table>
         <tr>
             <td><label>Qualifier: </label></td>
-            <td><input style="width:200px;" id="Qualifier" class="autocomplete" data-src="Qualifiers" data-minLength="3" data-value="" value=""></td>
+            <td>
+                <select name="Qualifier">
+                    <cfoutput query="rc.lookups.qualifiers"><option value="#CODE#">#DESCRIPTION#</option></cfoutput>
+                </select>
+            </td>
         </tr>
         <tr>
             <td><label>Pre-Harvest Interval: </label></td>
