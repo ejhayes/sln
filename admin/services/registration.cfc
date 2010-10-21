@@ -15,7 +15,6 @@ component {
         ret = {};
         ret['statuses'] = EntityToQuery(EntityLoad("Statuses"));
         ret['registrationTypes'] = EntityToQuery(EntityLoad("RegistrationTypes"));
-        
         return ret;
     }
     
@@ -23,7 +22,6 @@ component {
         // returns lookups needed by application revisions
         ret = {};
         ret['registrationSubtypes'] = EntityToQuery(EntityLoad("RegistrationSubtypes"));
-        
         return ret;
     }
     
