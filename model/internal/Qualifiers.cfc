@@ -1,8 +1,8 @@
 /**
  * @persistent
  */
-component schema="label" table="QUALIFY" readonly="true"
+component schema="SPECUSE" table="Q_QUALIFY" readonly="true"
 {
-    property name="Code" column="QUALIFY_CD";
-    property name="Description" column="QUALIFY_DSC";
+    property name="Code" column="CODE";
+    property name="Description" column="DESCRIPTION";
 }
