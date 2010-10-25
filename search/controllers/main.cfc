@@ -39,9 +39,9 @@ component {
     
     function endReport(any rc){
         // prepare the report page
-        if( isNull(rc.data) ){
+        if( isNull(rc.data) || arrayLen(rc.data) == 0 ){
             rc.notice = {type="error",message="No records found."};
-            variables.fw.redirect("main.search","ALL");
+            variables.fw.redirect("main.index","ALL");
         } else {
             local.helper = new assets.cfc.helpers();
             rc.title = "Full Information " & helper.pluralize(ArrayLen(rc.data),"Report");

@@ -48,3 +48,12 @@
     <input type="submit" name="generate" value="Search" />
     <cfoutput><input type="button" name="newSearch" value="Start Over" onclick="javascript:window.location='#buildURL('')#'" /></cfoutput>
 </form>
+<br />
+<h3>Or you can open a specific SLN:</h3>
+<div class="criteria">
+    
+    <form action="<cfoutput>#buildURL('main.report')#</cfoutput>" method="post">
+        CA-<input name="specialUseNumber" type="text" />
+        <input name="open" type="submit" value="Open" />
+    </form>
+</div>
