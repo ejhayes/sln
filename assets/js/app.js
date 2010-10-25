@@ -27,6 +27,19 @@ $(function() {
             }
         });
         
+        if ($.browser.mozilla) {
+            $(this).keypress(checkForEnter);
+        } else {
+            $(this).keydown(checkForEnter);
+        }
+
+        function checkForEnter(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                    return false;
+            }
+        }
+        
         $(this).blur(function(){
             // if we end up selecting nothing, make sure to clear out our value!
             if( this.value=="" ){
