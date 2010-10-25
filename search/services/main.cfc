@@ -124,9 +124,12 @@ component {
         return ret;
     }
     
-    function report(applications=""){
+    function report(applications="",specialUseNumber=""){
         if( applications != "" ){
             return ormExecuteQuery("from Applications where Id in(" & arguments.applications & ")");
+        }
+        else if( arguments.specialUseNumber != "" && isNumeric(arguments.specialUseNumber) ){
+            return ormExecuteQuery("from Applications where SpecialUseNumber = " & arguments.specialUseNumber);
         }
     }
 }
