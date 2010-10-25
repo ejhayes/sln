@@ -129,7 +129,7 @@ component {
             return ormExecuteQuery("from Applications where Id in(" & arguments.applications & ")");
         }
         else if( arguments.specialUseNumber != "" && isNumeric(arguments.specialUseNumber) ){
-            return ormExecuteQuery("from Applications where SpecialUseNumber = " & arguments.specialUseNumber);
+            return ormExecuteQuery("from Applications where SpecialUseNumber = " & int(arguments.specialUseNumber));
         }
     }
 }
