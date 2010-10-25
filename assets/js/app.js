@@ -21,14 +21,30 @@ $(function() {
         $(this).autocomplete({
             source: "index.cfm?action=admin:main.autocomplete&src=" + $(this).attr("data-src"),
             minLength: $(this).attr("data-minLength"),
-            change: function(event, ui){
-                var thisObj = $(this);
-                var thisId = "#" + thisObj.attr("id");
-                var updateTo = "";
-                if(ui.item!=null) updateTo = ui.item.id;
-                
-                //update the existing value
-                $(thisId + "-value").attr("value",updateTo);
+            focus: function(event, ui){
+                // replace whatever value is in there
+                $("#" + this.id + "-value").attr("value",ui.item.id);
+            }
+        });
+        
+        // prevent trying to refresh the page with an autocomplete textbox
+        if ($.browser.mozilla) {
+            $(this).keypress(checkForEnter);
+        } else {
+            $(this).keydown(checkForEnter);
+        }
+
+        function checkForEnter(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                    return false;
+            }
+        }
+        
+        // if we end up selecting nothing, make sure to clear out our value!
+        $(this).blur(function(){
+            if( this.value=="" ){
+                $("#" + this.id + "-value").attr("value","");
             }
         });
         
