@@ -18,7 +18,7 @@
         </td>
     </tr>
     <tr>
-        <td><label>Approval Date: </label></td>
+        <td><label>Approval Date (m/d/yyyy): </label></td>
         <td><cfoutput><input name="approved" type="text" class="datepicker" value="#DateFormat(rc.rev.record.getApproved(),'mm/dd/yyyy')#" /></cfoutput></td>
     </tr>
     <tr>
