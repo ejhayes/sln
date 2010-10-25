@@ -32,11 +32,11 @@
             </td>
         </tr>
         <tr>
-            <td><label>Issue Date: </label></td>
+            <td><label>Issue Date (m/d/yyyy): </label></td>
             <td><input class="datepicker" name="issued" type="text" value="<cfoutput>#DateFormat(rc.app.record.getIssued(),'mm/dd/yyyy')#</cfoutput>" /></td>
         </tr>
         <tr>
-            <td><label>Expiration Date: </label></td>
+            <td><label>Expiration Date (m/d/yyyy): </label></td>
             <td><input class="datepicker" name="expired" type="text" value="<cfoutput>#DateFormat(rc.app.record.getExpired(),'mm/dd/yyyy')#</cfoutput>" /></td>
         </tr>
         <!--- 

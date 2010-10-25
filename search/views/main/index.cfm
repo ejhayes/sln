@@ -5,7 +5,7 @@
         <tbody>
             <tr>
                 <th><strong>Status:</strong></th>
-                <th colspan="2"><strong>Issued between:</strong></th>
+                <th colspan="2"><strong>Issued between (m/d/yyyy):</strong></th>
                 <th><strong>Registration Number:</strong></th>
             </tr>
             <tr>
