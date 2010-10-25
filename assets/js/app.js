@@ -27,6 +27,7 @@ $(function() {
             }
         });
         
+        // prevent trying to refresh the page with an autocomplete textbox
         if ($.browser.mozilla) {
             $(this).keypress(checkForEnter);
         } else {
@@ -40,8 +41,8 @@ $(function() {
             }
         }
         
+        // if we end up selecting nothing, make sure to clear out our value!
         $(this).blur(function(){
-            // if we end up selecting nothing, make sure to clear out our value!
             if( this.value=="" ){
                 $("#" + this.id + "-value").attr("value","");
             }
