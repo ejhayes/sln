@@ -29,6 +29,7 @@ The following criteria were used for your search:
             <tr>
                 <td><input type="checkbox" name="applications" value="#i.getId()#" /></td>
                 <td>
+                    <cfset isFirstLoop = true />
                     <cfloop array="#i.getUniqueProducts()#" index="j">
                         <cfif this.isInternal>
                             <a href="#buildURL('admin:registration.rev&id=' & j['Id'])#">#Left(j['Description'],40)#</a>
@@ -38,7 +39,10 @@ The following criteria were used for your search:
                         <cfif StructKeyExists(j,"Label") >
                             &nbsp;<a target="_blank" href="#helper.linkTo('Label',j['Label'])#" style="color:green"><strong>VIEW LABEL</strong></a> <img src="./assets/img/document.png" height="11" />
                         </cfif>
-                        
+                        <cfif isFirstLoop >
+                            <span style="color:orange"><strong>&larr; CURRENT</strong></span>
+                            <cfset isFirstLoop = false />
+                        </cfif>
                     <br /></cfloop>
                     
                 </td>
