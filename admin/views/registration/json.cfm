@@ -1,0 +1,1 @@
+<cfset request.layout="no" /><cfcontent reset="yes" type="text/plain" /><cfif isDefined("rc.data")><cfoutput>#LCase(SerializeJSON(rc.data))#</cfoutput></cfif>

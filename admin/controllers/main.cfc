@@ -5,6 +5,10 @@
 	Provides view specific functionality for the admin area.
 */
 component {
+    function init(any fw){
+        variables.fw = fw;
+    }
+
 	function index() {
 		rc.title="Home";
         rc.designId="I-1.0";
