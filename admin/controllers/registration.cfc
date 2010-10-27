@@ -9,6 +9,12 @@ component {
         variables.fw = fw;
     }
     
+    // OTHER WAYS TO RENDER PAGES (e.g. json)
+    private function jsonView(){
+        // we will be calling a service that will return the results in our json screen
+        variables.fw.setView("registration.json");
+    }
+    
     // LOADING FUNCTIONS
     private function loadApp(any rc){ // provides us with lookups, app persistent model, and official application name
         // load app dependencies
@@ -178,5 +184,10 @@ component {
         // oki doki, to the page!
         rc.id = rc.id;
         variables.fw.redirect("registration.sites","notice","id");
+    }
+    
+    // SOME REMOTE FUNCTIONS WE WANT TO EXPOSE
+    function removeLabel(any rc){
+        jsonView();
     }
 }

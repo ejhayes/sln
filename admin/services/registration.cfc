@@ -9,6 +9,33 @@ component {
         // do nothing
 	}
     
+    // REMOVE EXISTING LABEL FILE
+    function removeLabel(numeric revisionId=""){ 
+        local.rev = EntityLoadByPK("Revisions",arguments.revisionId);
+        local.ret = {"success" = true};
+
+        // remove the file if it exists
+        if( !isNull(rev) && !isNull(rev.getLabel()) ){
+            local.helper = new assets.cfc.helpers();
+            try {
+                // delete the file
+                FileDelete(ExpandPath(helper.linkTo('LabelUpload')) & rev.getLabel());
+                
+                // and unlink from the entity
+                rev.setLabel(JavaCast("null",""));
+                EntitySave(rev);
+                ormFlush();
+            } 
+            catch(java.lang.Exception e){
+                // report any errors that may occur
+                ret["success"] = false;
+                ret["error"] = e["message"];
+            }
+        }
+
+        return ret;
+    }
+    
     // LOOKUP FUNCTIONS
     function lookups(){
         // returns lookups needed by apps
