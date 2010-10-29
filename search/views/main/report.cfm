@@ -40,6 +40,10 @@
                     <cfif !isNull(i.getLabel()) >
                         ,&nbsp;<img src="assets/img/pdf.png" /> <a target="_blank" href="#helper.linkTo('Label',i.getLabel())#">View Label</a>
                     </cfif>
+                    
+                    <cfif !isNull(i.getDescription()) >
+                        &nbsp;<strong><em>(#i.getDescription()#)</em></strong>
+                    </cfif>
                     </cfoutput>
                     </strong></td></tr>
                     <tr>
