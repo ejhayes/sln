@@ -284,7 +284,7 @@ component {
         return ret;
     }
     
-    function saveRevision(string id, string approvee, string username, string registrationSubtype="", string approved="", applyStamp="", string product="", string labelFile="", string pests="", string counties=""){
+    function saveRevision(string id, string approvee, string username, string description="", string registrationSubtype="", string approved="", applyStamp="", string product="", string labelFile="", string pests="", string counties=""){
         // save the revision
         local.ret = {};
         
@@ -305,6 +305,12 @@ component {
         
         // set it, save it, love it
         try {
+            // revision description
+            if( !isNull(arguments.description) ){
+                if( arguments.description == "" ) ret.rev.setDescription(JavaCast("null",""));
+                else ret.rev.setDescription(arguments.description);
+            }
+            
             // registration subtype
             if( !isNull(arguments.registrationSubtype) ){
                 if( arguments.registrationSubtype == "" ) ret.rev.setRegistrationSubtype(JavaCast("null",""));
