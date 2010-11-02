@@ -30,9 +30,13 @@ component {
         
         // STATUS
         if( arguments.status != "" ){
-            local.ret.parameters.status = "Record status is: " & EntityLoadByPK("Statuses",arguments.status).getDescription();
-            searchQuery.addParam(name="status",value="#arguments.status#",cfsqltype="cf_sql_varchar"); 
-            ArrayAppend(searchArray, "select distinct ID as A_ID from SPECUSE.A_APPLICATIONS where S_CODE = :status");
+            //local.ret.parameters.status = "Record status is: " & EntityLoadByPK("Statuses",arguments.status).getDescription();
+            //searchQuery.addParam(name="status",value="#arguments.status#",cfsqltype="cf_sql_varchar"); 
+            //ArrayAppend(searchArray, "select distinct ID as A_ID from SPECUSE.A_APPLICATIONS where S_CODE = :status");
+            
+            local.ret.parameters.status = "Application status is: " & ArrayToList(ormExecuteQuery("select Description from Statuses where Code in(" & ListQualify(arguments.status,"'") & ")"),", ");
+            searchQuery.addParam(name="statuses",value="#arguments.status#",list="true",cfsqltype="cf_sql_varchar"); 
+            ArrayAppend(searchArray, "select distinct ID as A_ID from SPECUSE.A_APPLICATIONS where S_CODE IN( :statuses )");
         }
         
         // ISSUED DATE (range)
@@ -80,7 +84,7 @@ component {
         
         // COUNTIES
         if( arguments.counties != "" ){
-            local.ret.parameters.counties = "Contains any of these counties: " & ArrayToList(ormExecuteQuery("select Description from Counties where Code in(" & arguments.counties & ")"),", ");
+            local.ret.parameters.counties = "Contains any of these counties: " & ArrayToList(ormExecuteQuery("select Description from Counties where Code in(" & ListQualify(arguments.counties,"'") & ")"),", ");
             searchQuery.addParam(name="counties",value=arguments.counties,list="true",cfsqltype="cf_sql_varchar"); 
             ArrayAppend(searchArray, "select distinct A_ID from SPECUSE.AR_APPLICATION_REVS where ID IN(select AR_ID from SPECUSE.ARC_APPLICATION_REV_COUNTIES where C_CODE in ( :counties ))");
         }
