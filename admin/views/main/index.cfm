@@ -12,6 +12,7 @@
 <ul>
 <cfoutput>
 <li>There are 
+    <a href="#buildURL('search:main.search&status=A&status=I')#">#rc.data.totalRecords# total #helper.pluralize(rc.data.totalRecords,"application")#</a>, 
     <a href="#buildURL('search:main.search&status=P')#">#rc.data.totalPendingRecords# pending #helper.pluralize(rc.data.totalPendingRecords,"application")#</a>, 
     <a href="#buildURL('search:main.search&status=A')#">#rc.data.totalActiveRecords# active #helper.pluralize(rc.data.totalActiveRecords,"application")#</a>, 
     <a href="#buildURL('search:main.search&status=I')#">#rc.data.totalInactiveRecords# inactive #helper.pluralize(rc.data.totalInactiveRecords,"application")#</a>, and

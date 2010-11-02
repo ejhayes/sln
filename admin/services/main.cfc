@@ -17,6 +17,7 @@ component {
         ret.totalActiveRecords = ormExecuteQuery("select count(*) from Applications where s_code = 'A'")[1];
         ret.totalInactiveRecords = ormExecuteQuery("select count(*) from Applications where s_code = 'I'")[1];
         ret.totalDeniedRecords = ormExecuteQuery("select count(*) from Applications where s_code = 'D'")[1];
+        ret.totalRecords = ret.totalInactiveRecords + ret.totalActiveRecords;
         return ret;
     }
     

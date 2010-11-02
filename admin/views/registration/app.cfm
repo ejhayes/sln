@@ -59,11 +59,9 @@
         <tbody>
             <tr>
                 <td><h3>Internal Comments</h3></td>
-                <td><h3>Public Comments</h3></td>
             </tr>
             <tr>
                 <td><textarea name="internalComments" style="width:98%;height:150px"><cfoutput>#rc.app.record.getInternalComments()#</cfoutput></textarea></td>
-                <td><textarea name="publicComments" style="width:98%;height:150px"><cfoutput>#rc.app.record.getPublicComments()#</cfoutput></textarea></td>
             </tr>
         </tbody>
     </table>
