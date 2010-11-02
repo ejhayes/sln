@@ -209,7 +209,7 @@ component {
     }
     
     // SAVE FUNCTIONS
-    function save(string id, string status, string specialUseNumber, string registrationType, string issued, string expired, string internalComments, string publicComments, string correspondenceCode=""){
+    function save(string id, string status, string specialUseNumber, string registrationType, string issued, string expired, string internalComments, string correspondenceCode=""){
         // save the app
         local.ret = {};
         local.registrationType = EntityLoadByPK("RegistrationTypes",arguments.registrationType);
@@ -237,10 +237,6 @@ component {
             //internal comments
             if( arguments.internalComments == "" ) ret.app.setInternalComments(JavaCast("null",""));
             else ret.app.setInternalComments(arguments.internalComments);
-            
-            //public comments
-            if( arguments.publicComments == "" ) ret.app.setPublicComments(JavaCast("null",""));
-            else ret.app.setPublicComments(arguments.publicComments);
             
             EntitySave(ret.app);
             ormFlush(); // if there is an error, it will be reported asap
