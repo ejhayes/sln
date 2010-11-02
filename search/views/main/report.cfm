@@ -19,11 +19,6 @@
         <p><cfoutput>#i.getInternalComments()#</cfoutput></p>
     </cfif>
     
-    <cfif i.getPublicComments() NEQ "" >
-    <h3><cfif this.isInternal>External </cfif>Comments</h3>
-    <p><cfoutput>#i.getPublicComments()#</cfoutput></p>
-    </cfif>
-    
     <cfif i.hasRevisions()>
         <div style="padding-left:15px">
         <cfloop array="#i.getRevisions()#" index="i">

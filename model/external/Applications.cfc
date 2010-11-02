@@ -9,7 +9,6 @@ component schema="SPECUSE" table="A_APPLICATIONS"
     property name="Status" fkcolumn="S_CODE" cfc="Statuses" fieldtype="one-to-one";
     property name="Issued" column="ISSUE_DATE" ormtype="date";
     property name="Expired" column="EXPIRE_DATE" ormtype="date";
-    property name="PublicComments" column="COMMENTS_PUBLIC";
     
     // Application Revisions
     property name="Revisions" fkcolumn="A_ID" cfc="Revisions" type="array" fieldtype="one-to-many" orderby="CREATED_DATE desc";

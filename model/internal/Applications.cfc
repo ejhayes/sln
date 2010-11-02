@@ -10,7 +10,6 @@ component schema="SPECUSE" table="A_APPLICATIONS"
     property name="Issued" column="ISSUE_DATE" ormtype="date";
     property name="Expired" column="EXPIRE_DATE" ormtype="date";
     property name="InternalComments" column="COMMENTS_INTERNAL";
-    property name="PublicComments" column="COMMENTS_PUBLIC";
     
     // Application Revisions
     property name="Revisions" fkcolumn="A_ID" cfc="Revisions" type="array" fieldtype="one-to-many" orderby="CREATED_DATE desc";
