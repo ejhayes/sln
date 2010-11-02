@@ -41,7 +41,7 @@ component {
         // returns lookups needed by apps
         ret = {};
         ret['statuses'] = EntityToQuery(EntityLoad("Statuses"));
-        ret['registrationTypes'] = EntityToQuery(EntityLoad("RegistrationTypes"));
+        ret['registrationTypes'] = EntityToQuery(EntityLoad("RegistrationTypes",{Description="SLN"}));
         return ret;
     }
     
