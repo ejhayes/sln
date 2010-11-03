@@ -131,8 +131,8 @@
                                 <cfloop array="#ormExecuteQuery('from RevisionSites where Revision.Id=? order by Site.Description',[i.getId()])#" index="site">
                                     <cfoutput>
                                         #site.getSite().getDescription()#,
-                                        PHI: #site.getPreHarvestInterval()# #site.getPreHarvestIntervalMeasurement().getDescription()#,
-                                        RE: #site.getReEntryInterval()# #site.getReEntryIntervalMeasurement().getDescription()#
+                                        <span style="color:green">PHI:</span> <cfif isNull(site.getPreHarvestInterval())><em>not specified</em><cfelse>#site.getPreHarvestInterval()# #site.getPreHarvestIntervalMeasurement().getDescription()#</cfif>,
+                                        <span style="color:green">RE:</span> <cfif isNull(site.getReEntryInterval())><em>not specified</em><cfelse>#site.getReEntryInterval()# #site.getReEntryIntervalMeasurement().getDescription()#</cfif>
                                     </cfoutput><br />
                                 </cfloop>
                             </cfif>
