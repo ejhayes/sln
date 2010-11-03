@@ -109,7 +109,7 @@ component {
     
         // set the page title
         if( rc.rev.record.getRevisionNumber() == 0 ) rc.title = rc.rev.name;
-        else rc.title = "Edit Revision: " & rc.rev.name;
+        else rc.title = "Details: " & rc.rev.name;
         rc.designId="I-3.0";
     }
     
@@ -149,7 +149,7 @@ component {
         param name="rc.revisionSites" default="";
     
         // set the page title
-        rc.title = "Edit Revision Sites: " & rc.rev.name;
+        rc.title = "Sites: " & rc.rev.name;
         
         // set the designId
         switch(rc.mode){
