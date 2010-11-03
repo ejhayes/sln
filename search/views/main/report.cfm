@@ -27,9 +27,9 @@
                     <tr><td colspan="2" class="revision"><strong>
                     <cfoutput>
                     <cfif this.isInternal >
-                        <a href="#buildURL('admin:registration.rev&id=' & i.getId())#">Revision #i.getRevisionNumber()#</a>
+                        <a href="#buildURL('admin:registration.rev&id=' & i.getId())#">#i.getRevisionName()#</a>
                     <cfelse>
-                        Revision #i.getRevisionNumber()#
+                        Revision #i.getRevisionName()#
                     </cfif>
 
                     <cfif !isNull(i.getLabel()) >
