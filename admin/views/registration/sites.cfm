@@ -85,9 +85,11 @@
 <br />
 
 <cfif (ArrayLen(rc.rev.record.getSites()) NEQ ListLen(rc.revisionSites)) AND rc.rev.record.hasSites() >
-    <h3>Associated Sites <img src="assets/img/site.png" height="15"></h3>
-    
     <form action="<cfoutput>#buildURL('registration.saveSites')#</cfoutput>" method="post">
+        <h3>Associated Sites <img src="assets/img/site.png" height="15"></h3>
+        <input type="submit" name="save" value="Edit" />
+        <input type="submit" name="save" value="Delete" />
+        
         <!--- Hold the ID of the current application revision record --->
         <input name="id" type="hidden" value="<cfoutput>#rc.rev.record.getId()#</cfoutput>" />
 
@@ -117,12 +119,9 @@
                 </cfloop>
             </tbody>
         </table>
-
-        <input type="submit" name="save" value="Edit" />
-        <input type="submit" name="save" value="Delete" />
     </form>
 </cfif>
 <br /><br /><hr>
-<cfoutput><input type="button" value="Back to Revision Details" onclick="javascript:window.location='#buildURL('registration.rev&id=' & rc.rev.record.getId())#'" /></cfoutput>
-<cfoutput><input type="button" value="Close Revision" onclick="javascript:window.location='#buildURL('registration.app&id=' & rc.rev.record.getApplication().getId())#'" /></cfoutput>
-<cfoutput><input type="button" value="Start a new application" onclick="javascript:window.location='#buildURL('registration.app')#'" /></cfoutput>
+<cfoutput><input type="button" value="Back to Details" onclick="javascript:window.location='#buildURL('registration.rev&id=' & rc.rev.record.getId())#'" /></cfoutput>
+<cfoutput><input type="button" value="Close" onclick="javascript:window.location='#buildURL('registration.app&id=' & rc.rev.record.getApplication().getId())#'" /></cfoutput>
+<cfoutput><input type="button" style="float:right" value="Start a new application" onclick="javascript:window.location='#buildURL('registration.app')#'" /></cfoutput>

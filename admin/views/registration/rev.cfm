@@ -26,7 +26,7 @@ $(function() {
 });
 </script>
 
-<h3>Revision Details</h3>
+<h3>Details</h3>
 <cfoutput>Tracking ID <a href="#helper.linkTo('TrackingSystem',rc.rev.record.getCorrespondence().getCode())#" target="_blank">#rc.rev.record.getCorrespondence().getCode()#</a> #rc.rev.record.getCorrespondence().getProductName()#</cfoutput>
 
 <form action="<cfoutput>#buildURL('registration.saveRevision')#</cfoutput>" method="post" enctype="multipart/form-data">
@@ -84,6 +84,6 @@ $(function() {
 
     <input type="submit" name="Save" value="Save" />
     <input type="submit" name="Continue" value="Save and Continue"/>
-    <input type="button" name="Close" value="Close Revision" onclick="javascript:window.location='<cfoutput>#buildURL('registration.app&id=' & rc.rev.record.getApplication().getId())#</cfoutput>'"/>
+    <input type="button" name="Close" value="Close" onclick="javascript:window.location='<cfoutput>#buildURL('registration.app&id=' & rc.rev.record.getApplication().getId())#</cfoutput>'"/>
     
 </form>
