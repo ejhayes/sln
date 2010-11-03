@@ -39,4 +39,13 @@ component schema="SPECUSE" table="AR_APPLICATION_REVS"
         if( this.getRevisionNumber() == 0 ) return officialName;
         else return officialName & " rev. " & this.getRevisionNumber();
     }
+    
+    function getRevisionName(){
+        var revNo = this.getRevisionNumber();
+        if(revNo == 0){
+            return "Original";
+        } else {
+            return "Revision " & revNo;
+        }
+    }
 }
