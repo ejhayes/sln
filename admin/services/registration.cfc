@@ -429,10 +429,10 @@ component {
         string revisionSites="", // if we are updating this will not be empty
         string sites, 
         string qualifier, 
-        string reEntryInterval, 
-        string reEntryIntervalMeasurement, 
-        string preHarvestInterval, 
-        string preHarvestIntervalMeasurement){
+        string reEntryInterval="", 
+        string reEntryIntervalMeasurement="", 
+        string preHarvestInterval="", 
+        string preHarvestIntervalMeasurement=""){
     
         // save site information for the revision
         local.ret = {};
@@ -454,10 +454,25 @@ component {
                         local.revSite.setRevision(EntityLoadByPK("Revisions", arguments.id));
                         local.revSite.setSite(EntityLoadByPK("Sites",ListGetAt(arguments.sites,i)));
                         local.revSite.setQualifier(local.Qualifier);
-                        local.revSite.setReEntryInterval(arguments.reEntryInterval);
-                        local.revSite.setReEntryIntervalMeasurement(local.reEntryIntervalMeasurement);
-                        local.revSite.setPreHarvestInterval(arguments.preHarvestInterval);
-                        local.revSite.setPreHarvestIntervalMeasurement(local.preHarvestIntervalMeasurement);
+                        
+                        // re-entry interval (and corresponding measurement type
+                        if( arguments.reEntryInterval == "" ){
+                            local.revSite.setReEntryInterval(JavaCast("null",""));
+                            local.revSite.setReEntryIntervalMeasurement(JavaCast("null",""));
+                        } else {
+                            local.revSite.setReEntryInterval(arguments.reEntryInterval);
+                            local.revSite.setReEntryIntervalMeasurement(local.reEntryIntervalMeasurement);
+                        }
+                        
+                        // pre-harvest interval (and corresponding measurement type
+                        if( arguments.preHarvestInterval == "" ){
+                            local.revSite.setPreHarvestInterval(JavaCast("null",""));
+                            local.revSite.setPreHarvestIntervalMeasurement(JavaCast("null",""));
+                        } else {
+                            local.revSite.setPreHarvestInterval(arguments.preHarvestInterval);
+                            local.revSite.setPreHarvestIntervalMeasurement(local.preHarvestIntervalMeasurement);
+                        }
+                        
                         EntitySave(local.revSite);
                     }
                     break;
@@ -474,10 +489,25 @@ component {
                     for( i = 1; i <= ListLen(arguments.revisionSites); i++){
                         local.revSite = EntityLoadByPK("RevisionSites", ListGetAt(arguments.revisionSites,i));
                         local.revSite.setQualifier(local.Qualifier);
-                        local.revSite.setReEntryInterval(arguments.reEntryInterval);
-                        local.revSite.setReEntryIntervalMeasurement(local.reEntryIntervalMeasurement);
-                        local.revSite.setPreHarvestInterval(arguments.preHarvestInterval);
-                        local.revSite.setPreHarvestIntervalMeasurement(local.preHarvestIntervalMeasurement);
+                        
+                        // re-entry interval (and corresponding measurement type
+                        if( arguments.reEntryInterval == "" ){
+                            local.revSite.setReEntryInterval(JavaCast("null",""));
+                            local.revSite.setReEntryIntervalMeasurement(JavaCast("null",""));
+                        } else {
+                            local.revSite.setReEntryInterval(arguments.reEntryInterval);
+                            local.revSite.setReEntryIntervalMeasurement(local.reEntryIntervalMeasurement);
+                        }
+                        
+                        // pre-harvest interval (and corresponding measurement type
+                        if( arguments.preHarvestInterval == "" ){
+                            local.revSite.setPreHarvestInterval(JavaCast("null",""));
+                            local.revSite.setPreHarvestIntervalMeasurement(JavaCast("null",""));
+                        } else {
+                            local.revSite.setPreHarvestInterval(arguments.preHarvestInterval);
+                            local.revSite.setPreHarvestIntervalMeasurement(local.preHarvestIntervalMeasurement);
+                        }
+                        
                         EntitySave(local.revSite);
                     }
                     break;

@@ -25,8 +25,8 @@
                             <cfoutput>
                                 <td>#i.getSite().getDescription()#</td>
                                 <td>#i.getQualifier().getDescription()#</td>
-                                <td>#i.getPreHarvestInterval()# #i.getPreHarvestIntervalMeasurement().getDescription()#</td>
-                                <td>#i.getReEntryInterval()# #i.getReEntryIntervalMeasurement().getDescription()#</td>
+                                <td><cfif !isNull(i.getPreHarvestInterval())>#i.getPreHarvestInterval()# #i.getPreHarvestIntervalMeasurement().getDescription()#</cfif></td>
+                                <td><cfif !isNull(i.getReEntryInterval())>#i.getReEntryInterval()# #i.getReEntryIntervalMeasurement().getDescription()#</cfif></td>
                             </cfoutput>
                         </tr>
                     </cfif>
@@ -111,8 +111,8 @@
                                 <td><input type="checkbox" name="revisionSites" value="#i.getId()#" /></td>
                                 <td>#i.getSite().getDescription()#</td>
                                 <td>#i.getQualifier().getDescription()#</td>
-                                <td>#i.getPreHarvestInterval()# #i.getPreHarvestIntervalMeasurement().getDescription()#</td>
-                                <td>#i.getReEntryInterval()# #i.getReEntryIntervalMeasurement().getDescription()#</td>
+                                <td><cfif !isNull(i.getPreHarvestInterval())>#i.getPreHarvestInterval()# #i.getPreHarvestIntervalMeasurement().getDescription()#</cfif></td>
+                                <td><cfif !isNull(i.getReEntryInterval())>#i.getReEntryInterval()# #i.getReEntryIntervalMeasurement().getDescription()#</cfif></td>
                             </cfoutput>
                         </tr>
                     </cfif>
