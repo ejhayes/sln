@@ -12,7 +12,8 @@ $(function() {
     $.tablesorter.defaults.widgets = ['zebra']; 
     $('.tablesorter').each(function() { 
         $(this).tablesorter({ 
-            sortList: eval($(this).attr('data-sort'))
+            sortList: eval($(this).attr('data-sort')),
+            textExtraction: "complex"
         });
     });
     
