@@ -53,7 +53,7 @@ component {
         }
     
         // set the page title
-        rc.title = "Edit Application: " & rc.app.name;
+        rc.title = rc.app.name;
         
         // set the designId information
         if( rc.app.name == "NEW" ){
