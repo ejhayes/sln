@@ -13,10 +13,7 @@ $(function() {
     $('.tablesorter').each(function() { 
         $(this).tablesorter({ 
             sortList: eval($(this).attr('data-sort')),
-            textExtraction: function(node) { 
-                // extract data from markup and return it  
-                return (node.childNodes[0].innerHTML == undefined) ? node.childNodes[1].innerHTML : node.childNodes[0].innerHTML;
-            } 
+            textExtraction: "complex"
         });
     });
     

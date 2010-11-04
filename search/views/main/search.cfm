@@ -49,9 +49,9 @@ The following criteria were used for your search:
                 <td>#i.getStatus().getDescription()#</td>
                 <td>
                     <cfif this.isInternal >
-                        <a href="#buildURL('admin:registration.app&id=' & i.getId())#">#i.getSpecialUseNumber()#</a>
+                        <a href="#buildURL('admin:registration.app&id=' & i.getId())#">#i.getOfficialName()#</a>
                     <cfelse>
-                        #i.getSpecialUseNumber()#
+                        #i.getOfficialName()#
                     </cfif>
                 </td>
                 <td>#DateFormat(i.getExpired(),"m/d/yyyy")#</td>
