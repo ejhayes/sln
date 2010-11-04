@@ -29,7 +29,7 @@
                     <cfif this.isInternal >
                         <a href="#buildURL('admin:registration.rev&id=' & i.getId())#">#i.getRevisionName()#</a>
                     <cfelse>
-                        Revision #i.getRevisionName()#
+                        #i.getRevisionName()#
                     </cfif>
 
                     <cfif !isNull(i.getLabel()) >
@@ -144,7 +144,7 @@
         </cfloop>
         </div>
     <cfelse>
-        <em>This application does not currently contain any revisions.</em>
+        <em>This application does not currently contain any data.</em>
     </cfif>
     <hr style="margin:25px 0px 25px 0px;">
 </cfloop>
