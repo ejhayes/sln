@@ -101,8 +101,11 @@ $.widget("ui.multiselect", {
 		//this.element.hide();
 		this.busy = false;  // busy state
 		this.container = $('<div class="ui-multiselect ui-helper-clearfix ui-widget"></div>');
-		this.selectedContainer = $('<div class="ui-widget-content list-container selected"></div>').appendTo(this.container);
-		this.availableContainer = $('<div class="ui-widget-content list-container available"></div>').appendTo(this.container);
+		
+        // Set the location of the available/selected container
+        this.availableContainer = $('<div class="ui-widget-content list-container available"></div>').appendTo(this.container);
+        this.selectedContainer = $('<div class="ui-widget-content list-container selected"></div>').appendTo(this.container);
+		
 		this.selectedActions = $('<div class="actions ui-widget-header ui-helper-clearfix"><span class="count">'+$.tmpl($.ui.multiselect.locale.itemsCount,{count:0})+'</span><a href="#" class="remove-all">'+$.tmpl($.ui.multiselect.locale.removeAll)+'</a></div>').appendTo(this.selectedContainer);
 		this.availableActions = $('<div class="actions ui-widget-header ui-helper-clearfix"><span class="busy">'+$.tmpl($.ui.multiselect.locale.busy)+'</span><input type="text" class="search ui-widget-content ui-corner-all"/><a href="#" class="add-all">'+$.tmpl($.ui.multiselect.locale.addAll)+'</a></div>').appendTo(this.availableContainer);
 		this.selectedList = $('<ul class="list selected"><li class="ui-helper-hidden-accessible"></li></ul>').bind('selectstart', function(){return false;}).appendTo(this.selectedContainer);
