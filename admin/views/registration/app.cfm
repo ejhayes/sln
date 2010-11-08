@@ -20,11 +20,11 @@
             
         </tr>
         <tr>
-            <td><label>Special Use Number: </label></td>
+            <td><label>SLN Number: </label></td>
             <td><input name="specialUseNumber" type="text" value="<cfoutput>#rc.app.record.getSpecialUseNumber()#</cfoutput>" /></td>
         </tr>
         <tr>
-            <td><label>Special Use Type: </label></td>
+            <td><label>SLN Type: </label></td>
             <td>
                 <select name="registrationType">
                     <cfoutput query="rc.lookups.registrationTypes"><option value="#CODE#" <cfif rc.app.record.getRegistrationType().getCode() EQ CODE >selected="selected"</cfif> >#DESCRIPTION#</option></cfoutput>
