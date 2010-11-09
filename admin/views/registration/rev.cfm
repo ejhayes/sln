@@ -11,8 +11,6 @@ $(function() {
                 revisionId: '<cfoutput>#rc.rev.record.getId()#</cfoutput>',
             },
             success: function(data, textStatus) {
-                console.info(data);
-                console.info(textStatus);
                 // remove the quicklinks
                 if(data.success){
                     $("#labelQuicklinks").remove();

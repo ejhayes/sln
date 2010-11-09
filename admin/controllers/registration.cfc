@@ -190,4 +190,8 @@ component {
     function removeLabel(any rc){
         jsonView();
     }
+    
+    function removeRevision(any rc){
+        jsonView();
+    }
 }

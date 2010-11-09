@@ -36,6 +36,55 @@ component {
         return ret;
     }
     
+    // REMOVE A REVISION
+    function removeRevision(numeric revisionId=""){
+        local.rev = EntityLoadByPK("Revisions",arguments.revisionId);
+        local.ret = {"success" = true, "revisionId" = arguments.revisionId};
+        
+        // Remove the label for the revision
+        local.tmpRet = removeLabel(arguments.revisionId);
+        
+        // if anything fails, just return to the user
+        if (local.tmpRet["success"] != true) return local.tmpRet;
+        
+        // now go ahead and remove all revision related stuff!
+        try {
+            if( !isNull(local.rev) ){
+                // remove the pests
+                local.pests = local.rev.getPests();
+                for( i = 1; i <= arrayLen(local.pests); i++){
+                    EntityDelete(local.pests[i]);
+                }
+                
+                // remove the counties
+                local.counties = local.rev.getCounties();
+                for( i = 1; i <= arrayLen(local.counties); i++){
+                    EntityDelete(local.counties[i]);
+                }
+
+                // remove the sites
+                local.sites = local.rev.getSites();
+                for( i = 1; i <= arrayLen(local.sites); i++){
+                    EntityDelete(local.sites[i]);
+                }
+                
+                // We must clean up all the relations first before deleting the parent!
+                ormFlush();
+                
+                // Now we can cleanup the parent
+                EntityDelete(local.rev);
+                ormFlush();
+            }
+        }
+        catch(java.lang.Exception e){
+            // report any errors that may occur
+            ret["success"] = false;
+            ret["error"] = e["message"];
+        }
+        
+        return local.ret;
+    }
+    
     // LOOKUP FUNCTIONS
     function lookups(){
         // returns lookups needed by apps

@@ -1,5 +1,29 @@
 <cfset helper = new assets.cfc.helpers() />
 
+<script>
+$(function() {
+    // for removing a label file
+    $("#removeRevision").bind("click", function(){
+        $.ajax({
+            type:'POST',
+            url:'<cfoutput>#buildURL("registration.removeRevision")#</cfoutput>',
+            data: {
+                revisionid: $(this).parent().parent().attr('id'),
+            },
+            success: function(data, textStatus) {
+                // remove the quicklinks
+                if(data.success){
+                    $("#" + data.revisionid).remove();
+                } else {
+                    alert(data.error);
+                }
+            },
+            dataType: "json"
+        });
+    });
+});
+</script>
+
 <cfif StructKeyExists(rc,"data")>
 <cfdump var="#rc.data#" />
 </cfif>
@@ -99,8 +123,8 @@
             </thead> 
             <tbody>
                 <cfloop array="#rc.app.record.getRevisions()#" index="i">
-                <tr> 
-                    <td><cfoutput>#i.getRevisionNumber()#</cfoutput></td> 
+                <tr id="<cfoutput>#i.getId()#</cfoutput>"> 
+                    <td><a id="removeRevision" href="#">[x]</a> <cfoutput>#i.getRevisionNumber()#</cfoutput></td> 
                     <td>
                         <a href="<cfoutput>#helper.linkTo('TrackingSystem',i.getCorrespondence().getCode())#</cfoutput>" target="_blank"><cfoutput>#i.getCorrespondence().getCode()#</cfoutput></a>&nbsp;
                         <cfoutput><cfif i.hasProduct()>#Left(i.getProduct().getDescription(),50)#<cfelse>Product Not Specified</cfif></cfoutput>
