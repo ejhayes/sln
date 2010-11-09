@@ -96,7 +96,7 @@
         <table width="100%" class="tablesorter" data-sort="[[1,0]]" >
             <thead>
                 <tr>
-                    <th class="{sorter: false}"><input type="checkbox" class="checkAll" data-target="revisionSites" /></th>
+                    <th class="{sorter: false}"><input type="checkbox" class="checkAll" data-target="revisionSites" />&nbsp;All</th>
                     <th>Site</th>
                     <th>Qualifier</th>
                     <th>Pre-Harvest Interval</th>
