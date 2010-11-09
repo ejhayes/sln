@@ -4,22 +4,24 @@
 $(function() {
     // for removing a label file
     $("#removeRevision").bind("click", function(){
-        $.ajax({
-            type:'POST',
-            url:'<cfoutput>#buildURL("registration.removeRevision")#</cfoutput>',
-            data: {
-                revisionid: $(this).parent().parent().attr('id'),
-            },
-            success: function(data, textStatus) {
-                // remove the quicklinks
-                if(data.success){
-                    $("#" + data.revisionid).remove();
-                } else {
-                    alert(data.error);
-                }
-            },
-            dataType: "json"
-        });
+        if (confirm("Are you sure you want to remove this revision?")){
+            $.ajax({
+                type:'POST',
+                url:'<cfoutput>#buildURL("registration.removeRevision")#</cfoutput>',
+                data: {
+                    revisionid: $(this).parent().parent().attr('id'),
+                },
+                success: function(data, textStatus) {
+                    // remove the quicklinks
+                    if(data.success){
+                        $("#" + data.revisionid).remove();
+                    } else {
+                        alert(data.error);
+                    }
+                },
+                dataType: "json"
+            });
+        }
     });
 });
 </script>
