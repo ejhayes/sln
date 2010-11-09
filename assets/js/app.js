@@ -63,6 +63,12 @@ $(function() {
     });
     
     $(".checkAll").click(function() {
-        $("input[name=" + $(this).attr('data-target') + "]").attr('checked', $(this).is(':checked'))
+        $("input[name=" + $(this).attr('data-target') + "]").attr('checked', $(this).is(':checked'));
     });
+    
+    // since sometimes we want a href attribute on input buttons!
+    $("input[type=button][href]").bind('click', function(){
+        window.location = $(this).attr('href');
+    });
+    
 });

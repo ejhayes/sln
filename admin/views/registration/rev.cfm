@@ -84,6 +84,6 @@ $(function() {
 
     <input type="submit" name="Save" value="Save" />
     <input type="submit" name="Continue" value="Save and Continue"/>
-    <input type="button" name="Close" value="Close" onclick="javascript:window.location='<cfoutput>#buildURL('registration.app&id=' & rc.rev.record.getApplication().getId())#</cfoutput>'"/>
+    <input type="button" name="Close" value="Close" href="<cfoutput>#buildURL('registration.app&id=' & rc.rev.record.getApplication().getId())#</cfoutput>"/>
     
 </form>

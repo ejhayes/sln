@@ -46,7 +46,7 @@
     <br />
     
     <input type="submit" name="generate" value="Search" />
-    <cfoutput><input type="button" name="newSearch" value="Start Over" onclick="javascript:window.location='#buildURL('')#'" /></cfoutput>
+    <cfoutput><input type="button" name="newSearch" value="Start Over" href="#buildURL('')#" /></cfoutput>
 </form>
 <br />
 <h3>Or you can open a specific SLN:</h3>

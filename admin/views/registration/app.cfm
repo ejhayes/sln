@@ -72,11 +72,11 @@
         <input type="submit" name="submit" value="Create Application" />
     <cfelse>
         <input type="submit" name="submit" value="Update Application" />
-        <input type="button" name="viewReport" value="View Report" onclick="javascript:window.location='<cfoutput>#buildURL('search:main.report&applications=' & rc.app.record.getId())#</cfoutput>'"/>
+        <input type="button" name="viewReport" value="View Report" href="<cfoutput>#buildURL('search:main.report&applications=' & rc.app.record.getId())#</cfoutput>"/>
     </cfif>
     
     <!--- Close this application --->
-    <input type="button" name="cancel" value="Close" onclick="javascript:window.location='<cfoutput>#buildURL('')#</cfoutput>'"/>
+    <input type="button" name="cancel" value="Close" href="<cfoutput>#buildURL('')#</cfoutput>"/>
 </form>
 
 <!--- For existing applications, show the revision history --->

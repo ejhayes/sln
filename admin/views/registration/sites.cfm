@@ -77,7 +77,7 @@
     <!--- The save area --->
     <cfoutput>
         <input type="submit" name="save" value="#iif(rc.mode EQ 'add',de('Add'),de('Update'))#" />
-        <input type="button" name="cancel" value="Cancel" onclick="javascript:window.location='#buildURL('registration.sites&id=' & rc.id)#'"/>
+        <input type="button" name="cancel" value="Cancel" href="#buildURL('registration.sites&id=' & rc.id)#"/>
     </cfoutput>
     </div>
 </form>
@@ -122,6 +122,6 @@
     </form>
 </cfif>
 <br /><br /><hr>
-<cfoutput><input type="button" value="Back to Details" onclick="javascript:window.location='#buildURL('registration.rev&id=' & rc.rev.record.getId())#'" /></cfoutput>
-<cfoutput><input type="button" value="Close" onclick="javascript:window.location='#buildURL('registration.app&id=' & rc.rev.record.getApplication().getId())#'" /></cfoutput>
-<cfoutput><input type="button" style="float:right" value="Start a new application" onclick="javascript:window.location='#buildURL('registration.app')#'" /></cfoutput>
+<cfoutput><input type="button" value="Back to Details" href="#buildURL('registration.rev&id=' & rc.rev.record.getId())#" /></cfoutput>
+<cfoutput><input type="button" value="Close" href="#buildURL('registration.app&id=' & rc.rev.record.getApplication().getId())#" /></cfoutput>
+<cfoutput><input type="button" style="float:right" value="Start a new application" href="#buildURL('registration.app')#" /></cfoutput>
