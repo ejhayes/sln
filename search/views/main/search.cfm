@@ -16,7 +16,7 @@ The following criteria were used for your search:
     <table width="100%" class="tablesorter" data-sort="[[1,0]]">
         <thead>
             <tr>
-                <th class="{sorter: false}">Check<br>All<br><input type="checkbox" class="checkAll" data-target="applications" /></th>
+                <th class="{sorter: false}">All<br><input type="checkbox" class="checkAll" data-target="applications" /></th>
                 <th>Brand Name</th>
                 <th>Status</th>
                 <th>SLN Number</th>
