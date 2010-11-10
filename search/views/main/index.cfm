@@ -24,7 +24,7 @@
     </div>
     <h3>Other criteria you can search by:</h3>
     <h3 class="toggleMultiselect"><em>Site/Crop</em></h3>
-    <select name="sites" multiple="yes" class="multiselect" data-src="Sites" data-collapse="true"></select>
+    <select name="sites" multiple="yes" class="multiselect" data-src="SearchSites" data-collapse="true"></select>
     
     <h3 class="toggleMultiselect"><em>Pest</em></h3>
     <select name="pests" multiple="yes" class="multiselect container" data-src="Pests" data-collapse="true"></select>
@@ -34,15 +34,15 @@
 
     
     <h3 class="toggleMultiselect"><em>Chemical</em></h3>
-    <select name="chemicals" multiple="yes" class="multiselect" data-src="Chemicals" data-collapse="true"></select>
+    <select name="chemicals" multiple="yes" class="multiselect" data-src="SearchChemicals" data-collapse="true"></select>
 
 
     <h3 class="toggleMultiselect"><em>Brand Name</em></h3>
-    <select name="products" multiple="yes" class="multiselect" data-src="Products" data-collapse="true"></select>
+    <select name="products" multiple="yes" class="multiselect" data-src="SearchProducts" data-collapse="true"></select>
 
 
     <h3 class="toggleMultiselect"><em>Pesticide Type</em></h3>
-    <select name="pesticideTypes" multiple="yes" class="multiselect" data-src="PesticideTypes" data-collapse="true"></select>
+    <select name="pesticideTypes" multiple="yes" class="multiselect" data-src="SearchPesticideTypes" data-collapse="true"></select>
     <br />
     
     <input type="submit" name="generate" value="Search" />
