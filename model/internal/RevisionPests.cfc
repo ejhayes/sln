@@ -12,4 +12,17 @@ component schema="SPECUSE" table="ARP_APPLICATION_REV_PESTS"
     property name="Created" column="CREATED_DATE";
     property name="UpdatedBy" column="UPDATED_USER";
     property name="Updated" column="UPDATED_DATE" fieldtype="timestamp";  
+    
+    // Update Parent Revision
+    function touchRevision(){
+        this.getRevision().touch();
+    }
+    
+    function preUpdate(){
+        touchRevision();
+    }
+    
+    function preInsert(){
+        touchRevision();
+    }
 }

@@ -17,4 +17,17 @@ component schema="SPECUSE" table="ARS_APPLICATION_REV_SITES"
     property name="Created" column="CREATED_DATE";
     property name="UpdatedBy" column="UPDATED_USER";
     property name="Updated" column="UPDATED_DATE" fieldtype="timestamp";  
+    
+    // Update Parent Revision
+    function touchRevision(){
+        this.getRevision().touch();
+    }
+    
+    function preUpdate(){
+        touchRevision();
+    }
+    
+    function preInsert(){
+        touchRevision();
+    }
 }

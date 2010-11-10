@@ -53,4 +53,10 @@ component schema="SPECUSE" table="A_APPLICATIONS"
             return EntityLoadByPK("Revisions", ormExecuteQuery("select max(Id) from Revisions where Application.Id=" & this.getId())[1]);
         else return null;
     }
+    
+    // touch functionality
+    function touch(){
+        this.setUpdatedBy( cgi.auth_user);
+        this.setUpdated( now() );
+    }
 }

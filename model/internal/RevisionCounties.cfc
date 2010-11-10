@@ -12,4 +12,17 @@ component schema="SPECUSE" table="ARC_APPLICATION_REV_COUNTIES"
     property name="Created" column="CREATED_DATE";
     property name="UpdatedBy" column="UPDATED_USER";
     property name="Updated" column="UPDATED_DATE" fieldtype="timestamp";  
+    
+    // Update Parent Revision
+    function touchRevision(){
+        this.getRevision().touch();
+    }
+    
+    function preUpdate(){
+        touchRevision();
+    }
+    
+    function preInsert(){
+        touchRevision();
+    }
 }

@@ -48,4 +48,23 @@ component schema="SPECUSE" table="AR_APPLICATION_REVS"
             return "Revision " & revNo;
         }
     }
+    
+    // touch functionality
+    function touch(){
+        this.setUpdatedBy( cgi.auth_user);
+        this.setUpdated( now() );
+    }
+    
+    // Update Parent Application
+    function touchApplication(){
+        this.getApplication().touch();
+    }
+    
+    function preUpdate(){
+        touchApplication();
+    }
+    
+    function preInsert(){
+        touchApplication();
+    }
 }
