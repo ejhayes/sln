@@ -25,4 +25,8 @@ component schema="SPECUSE" table="ARC_APPLICATION_REV_COUNTIES"
     function preInsert(){
         touchRevision();
     }
+    
+    function preDelete(){
+        touchRevision();
+    }
 }
