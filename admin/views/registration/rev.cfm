@@ -21,6 +21,20 @@ $(function() {
             dataType: "json"
         });
     });
+    
+    // Can we apply an electronic stamp?
+    var checkApprovedDate = function(){
+        if( $("#approved").attr('value') == "" ){
+            $("#stampArea").hide();
+            $("#applyStamp").attr("checked",false);
+        } else {
+            $("#stampArea").show();
+        }
+    }
+    
+    checkApprovedDate();
+    
+    $("#approved").bind("change", checkApprovedDate);
 });
 </script>
 
@@ -47,7 +61,7 @@ $(function() {
     </tr>
     <tr>
         <td><label>Approval Date<br>(m/d/yyyy): </label></td>
-        <td><cfoutput><input name="approved" type="text" class="datepicker" value="#DateFormat(rc.rev.record.getApproved(),'mm/dd/yyyy')#" /></cfoutput></td>
+        <td><cfoutput><input id="approved" name="approved" type="text" class="datepicker" value="#DateFormat(rc.rev.record.getApproved(),'mm/dd/yyyy')#" /></cfoutput></td>
     </tr>
     <tr>
         <td><label>Product: </label></td>
@@ -56,7 +70,7 @@ $(function() {
     <tr>
         <td><label>Label PDF<cfif !isNull(rc.rev.record.getLabel())><br><cfoutput><span id="labelQuicklinks">(<a href="#helper.linkTo('Label',rc.rev.record.getLabel())#" target="_blank">view</a> | <a id="removeLabel" href="##">remove</a>)</span></cfoutput></cfif>: </label></td>
         <td>
-            <input id="applyStamp" name="applyStamp" type="checkbox"><label for="applyStamp">&nbsp;apply electronic stamp</label>&nbsp;
+            <span id="stampArea"><input id="applyStamp" name="applyStamp" type="checkbox"><label for="applyStamp">&nbsp;apply electronic stamp</label>&nbsp;</span>
             <input type="file" name="labelFile">
         </td>
     </tr>
