@@ -25,4 +25,8 @@ component schema="SPECUSE" table="ARP_APPLICATION_REV_PESTS"
     function preInsert(){
         touchRevision();
     }
+    
+    function preDelete(){
+        touchRevision();
+    }
 }
