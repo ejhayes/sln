@@ -1,7 +1,7 @@
 <cfset helper = new assets.cfc.helpers(this.config) />
 
 <div class="criteria">
-    <h3>Enter a Special Use Number to edit (or create a <a href="<cfoutput>#buildURL('registration.app')#</cfoutput>">new one</a>)</h3>
+    <h3>Enter a Special Local Need Number to edit (or create a <a href="<cfoutput>#buildURL('registration.app')#</cfoutput>">new one</a>)</h3>
     <form action="<cfoutput>#buildURL('registration.app')#</cfoutput>" method="post">
         <input name="specialUseNumber" type="text" />
         <input name="edit" type="submit" value="Edit" />
