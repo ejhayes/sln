@@ -30,6 +30,7 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="assets/js/tmpl/jquery.tmpl.1.1.1.js"></script> 
 	<script type="text/javascript" src="assets/js/blockUI/jquery.blockUI.js"></script> 
+    <script type="text/javascript" src="assets/js/jquery.placeholder.js"></script>
     <script type="text/javascript" src="assets/js/ui.multiselect.js"></script>
     <script type="text/javascript" src="assets/js/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="assets/js/jquery.metadata.js"></script>

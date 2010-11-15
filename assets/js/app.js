@@ -71,4 +71,5 @@ $(function() {
         window.location = $(this).attr('href');
     });
     
+    $('input[placeholder],textarea[placeholder]').placeholder();
 });
