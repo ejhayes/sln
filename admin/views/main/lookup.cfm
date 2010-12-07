@@ -1,2 +1,2 @@
-<cfset request.layout="no" /><cfcontent reset="yes" type="text/plain" /><cfif !IsSimpleValue(rc.data) ><cfoutput query="rc.data">#CODE#=#DESCRIPTION#
+<cfsetting showdebugoutput="no" /><cfset request.layout="no" /><cfcontent reset="yes" type="text/plain" /><cfif !IsSimpleValue(rc.data) ><cfoutput query="rc.data">#CODE#=#DESCRIPTION#
 </cfoutput></cfif><!--- Displays the page in a format that can be used by the multiselect box --->

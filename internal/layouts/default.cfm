@@ -1,3 +1,4 @@
+<cfsetting showdebugoutput="#iif(this.config.debug,de('YES'),de('NO'))#" />
 <cfscript>
     // How do we display the name?
     if (isDefined("rc.title")){
