@@ -123,7 +123,7 @@ component {
                 "Label"="./assets/registration/labels/",
                 "LabelUpload"="./assets/registration/labels/",
                 "Chemical"="http://apps.cdpr.ca.gov/cgi-bin/mon/bycode.pl?p_chemcode=",
-                "Product"="http://registration/label/cgi-bin/nl/pir.pl?p_prodno="
+                "Product"="/label/cgi-bin/nl/pir.pl?p_prodno="
             };
         } else {
             // EXTERNAL Places we can go
