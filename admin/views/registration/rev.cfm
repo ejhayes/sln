@@ -25,10 +25,10 @@ $(function() {
     // Can we apply an electronic stamp?
     var checkApprovedDate = function(){
         if( $("#approved").attr('value') == "" ){
-            $("#stampArea").hide();
+            $("#stampArea").parent().parent().hide();
             $("#applyStamp").attr("checked",false);
         } else {
-            $("#stampArea").show();
+            $("#stampArea").parent().parent().show();
         }
     }
     
