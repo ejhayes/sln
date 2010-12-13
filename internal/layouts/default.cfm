@@ -36,7 +36,7 @@
     <script type="text/javascript" src="assets/js/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="assets/js/jquery.metadata.js"></script>
     <script type="text/javascript" src="assets/js/app.js"></script>
-    <style>body{ background: ##7ABCEB; }</style>
+    <cfif UCASE(this.config.stage) NEQ "PRODUCTION"><style>body{ background: ##7ABCEB; }</style></cfif>
     </cfoutput>
 </head>
 <body>

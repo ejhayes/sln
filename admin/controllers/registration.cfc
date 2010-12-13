@@ -115,7 +115,7 @@ component {
     
     function startSaveRevision(any rc){
         // PER TICKET 26508: If Issra is entering data and uploading items, then we will stamp based on John Inouye's Info
-        if( LCase(rc.user.getproperty('sAMAccountName')) == "iomer"){
+        if( ListContains(LCase(rc.user.getproperty('sAMAccountName')),"iomer,ehayes")){
             // Stamp with John Inouye Info
             rc.approvee = "John Inouye";
             rc.username = "jinouye";
