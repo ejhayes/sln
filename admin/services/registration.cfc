@@ -448,9 +448,7 @@ component {
                                 local.ret.rev.getProduct().getRegistrationNumber()
                             ),
                             local.destination,
-                            arguments.approvee,
-                            arguments.username,
-                            local.ret.rev.getOfficialName()
+                            local.ret.rev.getId()
                         );
                     }
                     // label
@@ -678,15 +676,15 @@ component {
         return stamp;
     }
 
-    function stampPDF(any stamp,string pdfLocation, string approvee, string username, string officialName, numeric margin=7){
+    function stampPDF(any stamp,string pdfLocation, numeric revisionId, numeric margin=7){
         // applies a stamp to a pdf, encrypts it, then overwrites it
         var pdfService = new pdf();
+        var rev = EntityLoadByPK("Revisions", arguments.revisionId);
         var opts = {
-            author="Department of Pesticide Regulation",
-            keywords="Special Local Need Registration, 24(c), 24, SLN, " & arguments.officialName,
+            author="California Department of Pesticide Regulation, CDPR",
+            keywords="#rev.getProduct().getShortDescription()#, #rev.getProduct().getRegistrationNumber()#, #rev.getProduct().getCode()#",
             language="English",
-            title="Special Local Need Registration Label " & arguments.officialName,
-            subject="Approved by " & arguments.approvee & ", " & arguments.username & "@cdpr.ca.gov"
+            title="Special Local Need Registration Label " & rev.getOfficialName()
         };
         var pass = "XnEkFLTW7";
         
