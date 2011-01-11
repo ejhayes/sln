@@ -8,10 +8,8 @@
 
 <cfif !this.isInternal>
 <ul>
-    <li><cfoutput><a href="#buildURL('search:')#">Start a search</a></cfoutput></li>
+    <li><cfoutput><input type="button" href="#buildURL('search:')#" value="Start a search"></input></cfoutput></li>
 </ul>
-
-<h1 style="color:red">ATTENTION: this database currently contains SLN data from 2000-2010.  It will be updated on an ongoing basis.</h1><br>
 </cfif>
 
 For search-related questions, please contact:<br />

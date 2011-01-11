@@ -1,12 +1,13 @@
+<h1 style="color:red">This database contains comprehensive SLN data for 2000 onwards.  Historical data will be added on an ongoing basis.</h1><br>
 <form action="<cfoutput>#buildURL('main.search')#</cfoutput>" method="post">
     
     <div class="criteria">
-    <table class="padded">
+    <table class="padded" width="50%">
         <tbody>
             <tr>
-                <th><strong>Status:</strong></th>
-                <th colspan="2"><strong>Issued between (m/d/yyyy):</strong></th>
-                <th><strong>Registration Number:</strong></th>
+                <th>Status:</th>
+                <th>Issued between (m/d/yyyy):</th>
+                <th>Registration Number:</th>
             </tr>
             <tr>
                 <td>
@@ -15,8 +16,7 @@
                         <cfoutput query="rc.lookups.statuses"><option value="#CODE#" >#DESCRIPTION#</option></cfoutput>
                     </select>
                 </td>
-                <td><input name="issuedStart" type="text" class="datepicker" /> AND</td>
-                <td><input name="issuedEnd" type="text" class="datepicker" /></td>
+                <td><input name="issuedStart" type="text" class="datepicker" /> AND <input name="issuedEnd" type="text" class="datepicker" /></td>
                 <td><input name="registrationNumber" type="text" /></td>
             </tr>
         </tbody>
