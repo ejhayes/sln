@@ -1,8 +1,7 @@
-<h1 style="color:red">This database contains comprehensive SLN data for 2000 onwards.  Historical data will be added on an ongoing basis.</h1><br>
 <form action="<cfoutput>#buildURL('main.search')#</cfoutput>" method="post">
     
     <div class="criteria">
-    <table class="padded" width="50%">
+    <table class="padded">
         <tbody>
             <tr>
                 <th>Status:</th>
@@ -23,7 +22,7 @@
     </table>
     </div>
     <h3>Other criteria you can search by:</h3>
-    <p>The lists below contain partial information.  If you are looking for something specific use the search box.</p>
+    
     <h3 class="toggleMultiselect"><em>Site/Crop</em></h3>
     <select name="sites" multiple="yes" class="multiselect" data-src="SearchSites" data-collapse="true"></select>
     
