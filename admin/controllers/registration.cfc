@@ -114,8 +114,17 @@ component {
     }
     
     function startSaveRevision(any rc){
-        rc.approvee = rc.user.getproperty('cn');
-        rc.username = rc.user.getproperty('sAMAccountName');
+        // PER TICKET 26508: If Issra is entering data and uploading items, then we will stamp based on John Inouye's Info
+        if( ListContains("iomer,ehayes",LCase(rc.user.getproperty('sAMAccountName')))){
+            // Stamp with John Inouye Info
+            rc.approvee = "John Inouye";
+            rc.username = "jinouye";
+        } else {
+            // otherwise just stamp with the user information
+            rc.approvee = rc.user.getproperty('cn');
+            rc.username = rc.user.getproperty('sAMAccountName');
+        }
+        
     }
     
     function endSaveRevision(any rc){

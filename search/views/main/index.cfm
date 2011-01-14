@@ -4,9 +4,9 @@
     <table class="padded">
         <tbody>
             <tr>
-                <th><strong>Status:</strong></th>
-                <th colspan="2"><strong>Issued between (m/d/yyyy):</strong></th>
-                <th><strong>Registration Number:</strong></th>
+                <th>Status:</th>
+                <th>Issued between (m/d/yyyy):</th>
+                <th>Registration Number:</th>
             </tr>
             <tr>
                 <td>
@@ -15,15 +15,14 @@
                         <cfoutput query="rc.lookups.statuses"><option value="#CODE#" >#DESCRIPTION#</option></cfoutput>
                     </select>
                 </td>
-                <td><input name="issuedStart" type="text" class="datepicker" /> AND</td>
-                <td><input name="issuedEnd" type="text" class="datepicker" /></td>
+                <td><input name="issuedStart" type="text" class="datepicker" /> AND <input name="issuedEnd" type="text" class="datepicker" /></td>
                 <td><input name="registrationNumber" type="text" /></td>
             </tr>
         </tbody>
     </table>
     </div>
     <h3>Other criteria you can search by:</h3>
-    <p>The lists below contain partial information.  If you are looking for something specific use the search box.</p>
+    
     <h3 class="toggleMultiselect"><em>Site/Crop</em></h3>
     <select name="sites" multiple="yes" class="multiselect" data-src="SearchSites" data-collapse="true"></select>
     

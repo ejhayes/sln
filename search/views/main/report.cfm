@@ -83,7 +83,13 @@
                                 <cfif i.getProduct().hasChemicals()>
                                     <strong>Ingredient(s):</strong><br />
                                     <cfloop array="#i.getProduct().getChemicals()#" index="product">
-                                        #product.getPercent()#% <a href="#helper.linkTo('Chemical',product.getChemical().getCode())#" target="_blank">#product.getChemical().getDescription()#</a><br />
+                                        #product.getPercent()#% 
+                                        <cfif product.getChemical().getCode() EQ 0 >
+                                            #product.getChemical().getDescription()#
+                                        <cfelse>
+                                            <a href="#helper.linkTo('Chemical',product.getChemical().getCode())#" target="_blank">#product.getChemical().getDescription()#</a>
+                                        </cfif>
+                                        <br>
                                     </cfloop>
                                     <br />
                                 </cfif>
@@ -146,6 +152,6 @@
     <cfelse>
         <em>This application does not currently contain any data.</em>
     </cfif>
-    <hr style="margin:25px 0px 25px 0px;">
+    <hr class="spacer">
 </cfloop>
 </div>

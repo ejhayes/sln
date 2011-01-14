@@ -13,7 +13,7 @@ component {
         loadSearchCriteria(rc);
         
         if( isNull(rc.notice) ){    
-            rc.notice = {type="notice",message="Choose one or more criteria.  When you are finished, click the 'Search' button."};
+            rc.notice = {type="notice",message="Choose one or more criteria.  When you are finished, click the 'Search' button.  <br><br><strong>This database contains comprehensive SLN data for 1988 onwards.  Historical data will be added on an ongoing basis.</strong>"};
         }
     
 		rc.title = "Search Criteria";

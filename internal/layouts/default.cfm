@@ -20,7 +20,7 @@
 <head>
     <cfoutput>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title><cfoutput>#pageHeader#</cfoutput></title>
+    <title><cfoutput>#pageHeader#</cfoutput><cfif UCASE(this.config.stage) NEQ "PRODUCTION"> - <cfoutput>#this.config.stage#</cfoutput></cfif></title>
 	<link rel="stylesheet" href="assets/css/common.css" type="text/css" />
 	<link rel="stylesheet" href="assets/css/app.css" type="text/css" />
 	<link type="text/css" rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/ui.all.css" />
@@ -36,13 +36,14 @@
     <script type="text/javascript" src="assets/js/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="assets/js/jquery.metadata.js"></script>
     <script type="text/javascript" src="assets/js/app.js"></script>
+    <cfif UCASE(this.config.stage) NEQ "PRODUCTION"><style>body{ background: ##7ABCEB; }</style></cfif>
     </cfoutput>
 </head>
 <body>
 <div id="wrapper">
     <div id="header">
         <cfoutput>
-		<h1>#pageTitle#</h1>
+		<h1>#pageTitle# <cfif UCASE(this.config.stage) NEQ "PRODUCTION"> - <span style="color:red"><cfoutput>#this.config.stage# MODE</cfoutput></span></cfif></h1>
         <p>Logged in as #rc.user.getproperty('cn')# (#rc.user.getproperty('sAMAccountName')#)</p>
 		<p><a href="#buildURL('admin:')#">Home</a> | <a href="#buildURL('search:')#">Search</a> | <a href="#buildURL('admin:main.about')#">About</a></p>
         </cfoutput>
