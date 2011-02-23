@@ -1,6 +1,6 @@
 <cfscript>
     if( getSectionAndItem() == "main.about" ){
-        rc.title = "#this.config.name# Query";
+        rc.title = "Special Local Need (SLN) Registration Search";
     } else {
         rc.title = "#rc.title# - #this.config.name#";
     }
