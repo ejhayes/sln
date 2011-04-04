@@ -3,7 +3,7 @@
 <script>
 $(function() {
     // for removing a label file
-    $("#removeRevision").bind("click", function(){
+    $(".removeRevision").bind("click", function(){
         if (confirm("Are you sure you want to remove this revision?")){
             $.ajax({
                 type:'POST',
@@ -126,7 +126,7 @@ $(function() {
             <tbody>
                 <cfloop array="#rc.app.record.getRevisions()#" index="i">
                 <tr id="<cfoutput>#i.getId()#</cfoutput>"> 
-                    <td><a id="removeRevision" href="#">[x]</a> <cfoutput>#i.getRevisionNumber()#</cfoutput></td> 
+                    <td><a class="removeRevision" href="#">[x]</a> <cfoutput>#i.getRevisionNumber()#</cfoutput></td> 
                     <td>
                         <a href="<cfoutput>#helper.linkTo('TrackingSystem',i.getCorrespondence().getCode())#</cfoutput>" target="_blank"><cfoutput>#i.getCorrespondence().getCode()#</cfoutput></a>&nbsp;
                         <cfoutput><cfif i.hasProduct()>#Left(i.getProduct().getDescription(),50)#<cfelse>Product Not Specified</cfif></cfoutput>
