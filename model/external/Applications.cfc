@@ -43,7 +43,7 @@ component schema="SPECUSE" table="A_APPLICATIONS"
     // get the unique products associated with a record
     function getUniqueProducts(){
         // the map technique returns a java.util.HashMap object
-        return ormExecuteQuery("select new map(Product.Code as Code, Product.ShortDescription as Description, Product.RegistrationNumber as RegistrationNumber, Id as Id, Label as Label) from Revisions where Application.Id = ? order by Created", [this.getId()]);
+        return ormExecuteQuery("select new map(Product.Code as Code, Product.ShortDescription as Description, Product.RegistrationNumber as RegistrationNumber, Id as Id, Label as Label) from Revisions where Application.Id = ? order by Created desc", [this.getId()]);
     }
     
     // get the most current revision of the record
